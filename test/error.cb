@@ -1,0 +1,7 @@
+import hello.sys;
+
+
+int main(int argc, char ** argv) {
+    printf("hello world!", 123)
+    return 0;
+}
