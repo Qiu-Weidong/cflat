@@ -2,6 +2,8 @@
 #include "antlr4-runtime.h"
 #include "CflatLexer.h"
 #include "CflatParser.h"
+#include "CflatBaseListener.h"
+#include "CflatBaseVisitor.h"
 
 
 int main(int argc, const char ** argv) {
@@ -18,6 +20,14 @@ int main(int argc, const char ** argv) {
     antlr4::tree::ParseTree * tree = parser.compilationUnit();
     std::cout << tree->toStringTree(&parser);
 
+    // 遍历语法树 listener
+    antlr4::tree::ParseTreeWalker walker;
+    CflatBaseListener listener;
+    walker.walk(&listener, tree);
+    
+    // 遍历语法树 visitor
+    CflatBaseVisitor visitor;
+    visitor.visit(tree);
     return 0;
 
 }
