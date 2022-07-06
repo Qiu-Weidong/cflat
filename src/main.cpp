@@ -28,6 +28,11 @@ int main(int argc, const char ** argv) {
     // 遍历语法树 visitor
     CflatBaseVisitor visitor;
     visitor.visit(tree);
+
+
+
+    // semantic分析
+    // IR生成
     return 0;
 
 }

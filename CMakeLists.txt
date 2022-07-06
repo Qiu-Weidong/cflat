@@ -3,8 +3,14 @@ cmake_minimum_required(VERSION  3.15.0)
 
 project(cflat LANGUAGES CXX)
 
+# message(STATUS "CMAKE_SOURCE_DIR")
 # 添加antlr4
-include_directories("C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\include\\antlr4-runtime")
+include_directories(
+    "C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\include\\antlr4-runtime"
+    "${CMAKE_SOURCE_DIR}/src/parser"
+    "${CMAKE_SOURCE_DIR}/src/type"
+)
+
 link_directories("C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\lib")
 
 
@@ -17,9 +23,15 @@ link_directories("C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\lib")
 
 # file(GLOB_RECURSE _sources *.cpp )
 # file(GLOB _sources *.cpp )
-aux_source_directory(. SRC_MAIN)
-add_executable(cflat ${SRC_MAIN})
-target_link_libraries(cflat antlr4-runtime)
+# aux_source_directory(. SRC_MAIN)
+# add_executable(cflat ${SRC_MAIN})
+# target_link_libraries(cflat antlr4-runtime)
+
+
+
+add_subdirectory(src)
+
+
 
 
 
