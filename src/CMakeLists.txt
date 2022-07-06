@@ -1,10 +1,11 @@
-add_subdirectory(parser)
-add_subdirectory(type)
-add_subdirectory(compiler)
-add_subdirectory(entity)
-add_subdirectory(exception)
 
-add_executable(cflat main.cpp)
-target_link_libraries(cflat antlr4-runtime parser )
+aux_source_directory(parser PARSER_SRC)
+aux_source_directory(compiler COMPILER_SRC)
+aux_source_directory(entity ENTITY_SRC)
+aux_source_directory(type TYPE_SRC)
+aux_source_directory(exception EXCEPTION_SRC)
+
+add_executable(cflat main.cpp ${PARSER_SRC} ${COMPILER_SRC} ${ENTITY_SRC} ${TYPE_SRC} ${EXCEPTION_SRC} )
+target_link_libraries(cflat antlr4-runtime)
 
 
