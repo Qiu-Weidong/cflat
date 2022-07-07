@@ -23,9 +23,10 @@ public:
     T__50 = 51, T__51 = 52, T__52 = 53, T__53 = 54, T__54 = 55, T__55 = 56, 
     T__56 = 57, T__57 = 58, T__58 = 59, T__59 = 60, T__60 = 61, T__61 = 62, 
     T__62 = 63, T__63 = 64, T__64 = 65, T__65 = 66, T__66 = 67, T__67 = 68, 
-    HexLiteral = 69, DecimalLiteral = 70, OctalLiteral = 71, BoolLiteral = 72, 
-    FloatingPointLiteral = 73, CharacterLiteral = 74, StringLiteral = 75, 
-    Identifier = 76, BLOCK_COMMENT = 77, SPACES = 78, LINE_COMMENT = 79
+    T__68 = 69, T__69 = 70, HexLiteral = 71, DecimalLiteral = 72, OctalLiteral = 73, 
+    BoolLiteral = 74, FloatingPointLiteral = 75, CharacterLiteral = 76, 
+    StringLiteral = 77, Identifier = 78, BLOCK_COMMENT = 79, SPACES = 80, 
+    LINE_COMMENT = 81
   };
 
   explicit CflatLexer(antlr4::CharStream *input);

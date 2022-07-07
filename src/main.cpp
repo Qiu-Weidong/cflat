@@ -1,14 +1,23 @@
 #include <fstream>
+#include "llvm/Support/WithColor.h"
+#include "llvm/Support/CommandLine.h"
+#include "llvm/Support/InitLLVM.h"
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/TargetSelect.h"
+#include "llvm/Target/TargetMachine.h"
+
 #include "antlr4-runtime.h"
 #include "CflatLexer.h"
 #include "CflatParser.h"
 #include "CflatBaseListener.h"
 #include "LibraryLoader.h"
-// #include "CflatBaseVisitor.h"
+
 
 
 int main(int argc, const char ** argv) {
-    // if(argc <= 1)
+    llvm::InitLLVM X(argc, argv);
+    llvm::outs() << "hello world!\n" ;
+
     std::fstream is(argv[1], std::ios_base::in);
 
     if(!is.is_open()) { std::cout << "fuck!!!" << std::endl; return 0; }

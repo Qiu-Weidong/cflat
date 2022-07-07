@@ -39,15 +39,17 @@ public:
 
     Declarations loadLibrary(const std::string &libid)
     {
+        std::cout << "loadingLibrary: " << libid << std::endl;
         auto lib = loadedLibraries.find(libid);
         if (lib != loadedLibraries.end())
         {
+            std::cout << "library " << libid << "has already loaded..." << std::endl;
             return lib->second;
         }
 
         // 加载libid
         // 获取头文件路径
-        std::cout << "loadLibrary: " << libid << std::endl;
+        
 
         std::fstream is;
         // 打开并解析头文件
@@ -71,17 +73,21 @@ public:
 
         tree->accept(this);
         loadedLibraries.insert(std::make_pair(libid, Declarations()));
+
+        std::cout << libid << "load success!" << std::endl;
         return Declarations();
     }
 
     virtual antlrcpp::Any visitImportStmt(CflatParser::ImportStmtContext *ctx) override
     {
-        auto libs = ctx->name();
-        for (auto lib : libs)
-        {
-            auto libid = lib->Identifier()->getText();
-            loadLibrary(libid);
-        }
+        auto lib = ctx->libid()->getText();
+        std::cout << "visitImportStmt: " << lib << std::endl;
+        // for (auto lib : libs)
+        // {
+        //     auto libid = lib->Identifier()->getText();
+        //     loadLibrary(libid);
+        // }
+        loadLibrary(lib);
         return visitChildren(ctx);
     }
 };

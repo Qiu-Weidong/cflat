@@ -13,7 +13,8 @@ declarationFile:
 		| typeDef
 	)* EOF;
 importStmts: importStmt*;
-importStmt: 'import' name ('.' name)* ';';
+importStmt: 'import' libid ';';
+libid: name ('.' name)* ;
 name: Identifier;
 topDefs: (
 		defFunc

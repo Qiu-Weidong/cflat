@@ -26,6 +26,9 @@ public:
   virtual void enterImportStmt(CflatParser::ImportStmtContext *ctx) = 0;
   virtual void exitImportStmt(CflatParser::ImportStmtContext *ctx) = 0;
 
+  virtual void enterLibid(CflatParser::LibidContext *ctx) = 0;
+  virtual void exitLibid(CflatParser::LibidContext *ctx) = 0;
+
   virtual void enterName(CflatParser::NameContext *ctx) = 0;
   virtual void exitName(CflatParser::NameContext *ctx) = 0;
 

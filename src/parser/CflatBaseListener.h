@@ -28,6 +28,9 @@ public:
   virtual void enterImportStmt(CflatParser::ImportStmtContext * /*ctx*/) override { }
   virtual void exitImportStmt(CflatParser::ImportStmtContext * /*ctx*/) override { }
 
+  virtual void enterLibid(CflatParser::LibidContext * /*ctx*/) override { }
+  virtual void exitLibid(CflatParser::LibidContext * /*ctx*/) override { }
+
   virtual void enterName(CflatParser::NameContext * /*ctx*/) override { }
   virtual void exitName(CflatParser::NameContext * /*ctx*/) override { }
 
