@@ -1,0 +1,3 @@
+C:/Users/56838/Documents/llvm/cflat/CMakeFiles/ALL_BUILD.dir
+C:/Users/56838/Documents/llvm/cflat/CMakeFiles/ZERO_CHECK.dir
+C:/Users/56838/Documents/llvm/cflat/src/CMakeFiles/cflat.dir

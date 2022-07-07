@@ -58,6 +58,8 @@ typeRefBase:
 	| 'unsigned' 'short'
 	| 'unsigned' 'int'
 	| 'unsigned' 'long'
+	| 'float'
+	| 'double'
 	| 'struct' Identifier
 	| 'union' Identifier
 	| Identifier;

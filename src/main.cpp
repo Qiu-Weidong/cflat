@@ -3,7 +3,8 @@
 #include "CflatLexer.h"
 #include "CflatParser.h"
 #include "CflatBaseListener.h"
-#include "CflatBaseVisitor.h"
+#include "LibraryLoader.h"
+// #include "CflatBaseVisitor.h"
 
 
 int main(int argc, const char ** argv) {
@@ -21,12 +22,13 @@ int main(int argc, const char ** argv) {
     std::cout << tree->toStringTree(&parser);
 
     // 遍历语法树 listener
-    antlr4::tree::ParseTreeWalker walker;
-    CflatBaseListener listener;
-    walker.walk(&listener, tree);
+    // antlr4::tree::ParseTreeWalker walker;
+    // CflatBaseListener listener;
+    // walker.walk(&listener, tree);
     
     // 遍历语法树 visitor
-    CflatBaseVisitor visitor;
+    LibraryLoader visitor;
+    visitor.addLoadPath("./import");
     visitor.visit(tree);
 
 
