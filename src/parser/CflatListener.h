@@ -38,9 +38,6 @@ public:
   virtual void enterDefVars(CflatParser::DefVarsContext *ctx) = 0;
   virtual void exitDefVars(CflatParser::DefVarsContext *ctx) = 0;
 
-  virtual void enterDefConst(CflatParser::DefConstContext *ctx) = 0;
-  virtual void exitDefConst(CflatParser::DefConstContext *ctx) = 0;
-
   virtual void enterDefFunc(CflatParser::DefFuncContext *ctx) = 0;
   virtual void exitDefFunc(CflatParser::DefFuncContext *ctx) = 0;
 

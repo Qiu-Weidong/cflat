@@ -32,17 +32,17 @@ public:
   enum {
     RuleCompilationUnit = 0, RuleDeclarationFile = 1, RuleImportStmts = 2, 
     RuleImportStmt = 3, RuleLibid = 4, RuleName = 5, RuleTopDefs = 6, RuleDefVars = 7, 
-    RuleDefConst = 8, RuleDefFunc = 9, RuleParams = 10, RuleFixedParams = 11, 
-    RuleParam = 12, RuleBlock = 13, RuleDefVarList = 14, RuleDefStruct = 15, 
-    RuleDefUnion = 16, RuleMemberList = 17, RuleSlot = 18, RuleFuncDecl = 19, 
-    RuleVarDecl = 20, RuleType = 21, RuleTypeRef = 22, RuleInteger = 23, 
-    RuleParamTypeRefs = 24, RuleFixedParamTypeRefs = 25, RuleTypeRefBase = 26, 
-    RuleTypeDef = 27, RuleStmts = 28, RuleStmt = 29, RuleLabeledStmt = 30, 
-    RuleIfStmt = 31, RuleWhileStmt = 32, RuleDowhileStmt = 33, RuleForStmt = 34, 
-    RuleSwitchStmt = 35, RuleCaseClauses = 36, RuleCaseClause = 37, RuleCases = 38, 
-    RuleDefaultClause = 39, RuleCaseBody = 40, RuleGotoStmt = 41, RuleBreakStmt = 42, 
-    RuleContinueStmt = 43, RuleReturnStmt = 44, RuleExpr = 45, RuleExprList = 46, 
-    RuleArguments = 47, RulePrimary = 48, RuleLiteral = 49
+    RuleDefFunc = 8, RuleParams = 9, RuleFixedParams = 10, RuleParam = 11, 
+    RuleBlock = 12, RuleDefVarList = 13, RuleDefStruct = 14, RuleDefUnion = 15, 
+    RuleMemberList = 16, RuleSlot = 17, RuleFuncDecl = 18, RuleVarDecl = 19, 
+    RuleType = 20, RuleTypeRef = 21, RuleInteger = 22, RuleParamTypeRefs = 23, 
+    RuleFixedParamTypeRefs = 24, RuleTypeRefBase = 25, RuleTypeDef = 26, 
+    RuleStmts = 27, RuleStmt = 28, RuleLabeledStmt = 29, RuleIfStmt = 30, 
+    RuleWhileStmt = 31, RuleDowhileStmt = 32, RuleForStmt = 33, RuleSwitchStmt = 34, 
+    RuleCaseClauses = 35, RuleCaseClause = 36, RuleCases = 37, RuleDefaultClause = 38, 
+    RuleCaseBody = 39, RuleGotoStmt = 40, RuleBreakStmt = 41, RuleContinueStmt = 42, 
+    RuleReturnStmt = 43, RuleExpr = 44, RuleExprList = 45, RuleArguments = 46, 
+    RulePrimary = 47, RuleLiteral = 48
   };
 
   explicit CflatParser(antlr4::TokenStream *input);
@@ -63,7 +63,6 @@ public:
   class NameContext;
   class TopDefsContext;
   class DefVarsContext;
-  class DefConstContext;
   class DefFuncContext;
   class ParamsContext;
   class FixedParamsContext;
@@ -131,8 +130,6 @@ public:
     FuncDeclContext* funcDecl(size_t i);
     std::vector<VarDeclContext *> varDecl();
     VarDeclContext* varDecl(size_t i);
-    std::vector<DefConstContext *> defConst();
-    DefConstContext* defConst(size_t i);
     std::vector<DefStructContext *> defStruct();
     DefStructContext* defStruct(size_t i);
     std::vector<DefUnionContext *> defUnion();
@@ -209,8 +206,6 @@ public:
     DefFuncContext* defFunc(size_t i);
     std::vector<DefVarsContext *> defVars();
     DefVarsContext* defVars(size_t i);
-    std::vector<DefConstContext *> defConst();
-    DefConstContext* defConst(size_t i);
     std::vector<DefStructContext *> defStruct();
     DefStructContext* defStruct(size_t i);
     std::vector<DefUnionContext *> defUnion();
@@ -241,21 +236,6 @@ public:
   };
 
   DefVarsContext* defVars();
-
-  class  DefConstContext : public antlr4::ParserRuleContext {
-  public:
-    DefConstContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    TypeContext *type();
-    NameContext *name();
-    ExprContext *expr();
-
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-   
-  };
-
-  DefConstContext* defConst();
 
   class  DefFuncContext : public antlr4::ParserRuleContext {
   public:

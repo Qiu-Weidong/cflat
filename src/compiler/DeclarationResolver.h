@@ -3,6 +3,7 @@
 #include "CflatBaseVisitor.h"
 
 
+// 对头文件进行处理。主要识别 函数原型声明、extern变量声明、typedef类型声明、struct和union定义。
 class DeclarationResolver : public CflatBaseVisitor {
     
 }; 

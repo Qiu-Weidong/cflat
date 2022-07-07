@@ -40,9 +40,6 @@ public:
   virtual void enterDefVars(CflatParser::DefVarsContext * /*ctx*/) override { }
   virtual void exitDefVars(CflatParser::DefVarsContext * /*ctx*/) override { }
 
-  virtual void enterDefConst(CflatParser::DefConstContext * /*ctx*/) override { }
-  virtual void exitDefConst(CflatParser::DefConstContext * /*ctx*/) override { }
-
   virtual void enterDefFunc(CflatParser::DefFuncContext * /*ctx*/) override { }
   virtual void exitDefFunc(CflatParser::DefFuncContext * /*ctx*/) override { }
 

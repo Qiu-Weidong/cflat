@@ -7,7 +7,6 @@ declarationFile:
 	importStmts (
 		funcDecl
 		| varDecl
-		| defConst
 		| defStruct
 		| defUnion
 		| typeDef
@@ -19,18 +18,16 @@ name: Identifier;
 topDefs: (
 		defFunc
 		| defVars
-		| defConst
 		| defStruct
 		| defUnion
 		| typeDef
 	)*;
 defVars:
-	('static')? type name ('=' expr)? (',' name ('=' expr)?)* ';';
-defConst: 'const' type name '=' expr ';';
+	('static')? ('const')? type name ('=' expr)? (',' name ('=' expr)?)* ';';
 defFunc: ('static')? typeRef name '(' params ')' block;
 params: 'void' | fixedParams (',' '...')?;
 fixedParams: param (',' param)*;
-param: type name;
+param: 'const'? type name;
 block: '{' defVarList stmts '}';
 defVarList: defVars*;
 defStruct: 'struct' name memberList ';';
@@ -38,7 +35,7 @@ defUnion: 'union' name memberList ';';
 memberList: '{' (slot ';')* '}';
 slot: type name;
 funcDecl: 'extern' typeRef name '(' params ')' ';';
-varDecl: 'extern' type name ';';
+varDecl: 'extern' 'const'? type name ';';
 type: typeRef;
 typeRef:
 	typeRefBase (
@@ -48,7 +45,7 @@ typeRef:
 	)*;
 integer: HexLiteral | DecimalLiteral | OctalLiteral;
 paramTypeRefs: 'void' | fixedParamTypeRefs (',' '...')?;
-fixedParamTypeRefs: typeRef (',' typeRef)*;
+fixedParamTypeRefs: 'const'? typeRef (',' 'const'? typeRef)*;
 typeRefBase:
 	'void'
 	| 'char'
