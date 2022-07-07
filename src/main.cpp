@@ -13,14 +13,29 @@
 #include "LibraryLoader.h"
 
 
+void print_version(llvm::raw_ostream &os)
+{
+    os << "cflat 0.0.1\n" ;
+    // exit(EXIT_SUCCESS);
+}
 
-int main(int argc, const char ** argv) {
-    llvm::InitLLVM X(argc, argv);
-    llvm::outs() << "hello world!\n" ;
+static llvm::cl::list<std::string>
+    InputFiles(llvm::cl::Positional,
+               llvm::cl::desc("<input-files>"));
 
-    std::fstream is(argv[1], std::ios_base::in);
+static llvm::cl::opt<std::string>
+    MTriple("mtriple",
+            llvm::cl::desc("Override target triple for module"));
 
-    if(!is.is_open()) { std::cout << "fuck!!!" << std::endl; return 0; }
+static llvm::cl::opt<bool>
+    EmitLLVM("emit-llvm",
+             llvm::cl::desc("Emit IR code instead of assembler"),
+             llvm::cl::init(false));
+
+void compile(const std::string & filename) {
+    std::fstream is(filename, std::ios_base::in);
+
+    if(!is.is_open()) { std::cout << "fuck!!!" << std::endl; return ; }
 
     antlr4::ANTLRInputStream stream(is);
     CflatLexer lexer(&stream);
@@ -28,7 +43,7 @@ int main(int argc, const char ** argv) {
     CflatParser parser(&tokens);
 
     antlr4::tree::ParseTree * tree = parser.compilationUnit();
-    std::cout << tree->toStringTree(&parser);
+    std::cout << tree->toStringTree(&parser) << std::endl;
 
     // 遍历语法树 listener
     // antlr4::tree::ParseTreeWalker walker;
@@ -36,14 +51,35 @@ int main(int argc, const char ** argv) {
     // walker.walk(&listener, tree);
     
     // 遍历语法树 visitor
-    LibraryLoader visitor;
-    visitor.addLoadPath("./import");
-    visitor.visit(tree);
+    // LibraryLoader visitor;
+    // visitor.addLoadPath("./import");
+    // visitor.visit(tree);
 
 
 
     // semantic分析
     // IR生成
+}
+
+int main(int argc, const char ** argv) {
+    llvm::InitLLVM X(argc, argv);
+    
+    llvm::InitializeAllTargets();
+    llvm::InitializeAllTargetMCs();
+    llvm::InitializeAllAsmPrinters();
+    llvm::InitializeAllAsmParsers();
+
+    llvm::cl::AddExtraVersionPrinter(print_version);
+
+    llvm::cl::ParseCommandLineOptions(argc, argv, "hello cflat world!");
+
+
+    for (const auto &file : InputFiles)
+    {
+        compile(file);
+    }
+
+    std::cout << "build success!" << std::endl;
     return 0;
 
 }
