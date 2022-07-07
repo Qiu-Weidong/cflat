@@ -2,17 +2,30 @@
 #define CFLAT_COMPILER_COMPILER_H_
 #include <string>
 #include <vector>
+#include <fstream>
 
-class Compiler {
+#include "antlr4-runtime.h"
+#include "CflatLexer.h"
+#include "CflatParser.h"
+#include "CflatBaseListener.h"
+#include "LibraryLoader.h"
+
+class Compiler
+{
     std::string version;
-public :
-    void build(const std::vector<std::string> & ) ;
-    void compile(const std::string & );
+
+public:
+    Compiler();
+
+    void build(const std::vector<std::string> & sourceFiles)
+    {
+        for (const auto &file : sourceFiles)
+            compile(file);
+    };
+    void compile(const std::string &filename);
 
     std::string getVersion() const { return version; }
-    void setVersion(const std::string & version) { this->version = version; }
-    
+    void setVersion(const std::string &version) { this->version = version; }
 };
 
 #endif // CFLAT_COMPILER_COMPILER_H_
-
