@@ -1,19 +1,16 @@
 #ifndef CFLAT_TYPE_TYPE_H_
 #define CFLAT_TYPE_TYPE_H_
 
+// 表示类型的基类
 class Type {
     static const int sizeUnknown = -1;
 
 public:
     virtual int size() const = 0;
-    virtual bool isSameType(const Type & other) const = 0;
-    
-    // bool operator==(const Type & other) const { 
-    //     return isSameType(other);
-    // }
+    virtual bool operator==(const Type & other) const = 0;
 
-    int allocSize() const { return size(); }
-    int alignment() const { return allocSize(); }
+    virtual int allocSize() const { return size(); }
+    virtual int alignment() const { return allocSize(); }
 
     virtual bool isVoid() const  { return false; }
     virtual bool isInt() const  { return false; }
@@ -32,11 +29,9 @@ public:
     virtual bool isCallable() const { return false; }
 
     virtual bool isCompatible(const Type & other) const = 0;
-    virtual bool isCastbleTo(const Type & target) const = 0;
+    virtual bool isCastableTo(const Type & target) const = 0;
 
-    Type * baseType() {
-        return this; // Todo
-    }
+    virtual Type * getBaseType() { return this; }
 
 
 

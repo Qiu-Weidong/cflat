@@ -8,7 +8,7 @@ class IntegerType : public Type
 protected:
     int size;
     bool isSigned;
-    std::string name;
+    std::string name; // 候选项 char int short long unsigned ...
 
 public:
     IntegerType(int size, bool isSigned, const std::string &name)
@@ -31,24 +31,29 @@ public:
     {
         return minValue() <= x && x <= maxValue();
     }
-    
+
     virtual int size() const override { return size; }
-    
-    virtual bool isSameType(const Type & other) const override {
-        if(!other.isInteger()) return false;
-        IntegerType * p = (IntegerType *)(&other);
-        return p->isSigned == this->isSigned && p->size == this->size;
-    }
 
-
-    virtual bool isCompatible(const Type & other) const override {
+    virtual bool isCompatible(const Type &other) const override
+    {
         return (other.isInteger() && size <= other.size());
     }
-    virtual bool isCastbleTo(const Type & target) const override {
+    virtual bool isCastableTo(const Type &target) const override
+    {
         return (target.isInteger() || target.isPointer());
-    }     
-    
+    }
+
     std::string toString() { return name; }
+
+    virtual bool operator==(const Type &other) const override
+    {
+        if (!other.isInteger())
+            return false;
+        const IntegerType &otherInteger = dynamic_cast<const IntegerType &>(other);
+        return this->size == otherInteger.size &&
+               this->isSigned == otherInteger.isSigned &&
+               this->name == otherInteger.name;
+    }
 };
 
 #endif // CFLAT_TYPE_INTEGERTYPE_H_
