@@ -7,11 +7,11 @@
 class FloatType : public Type {
 protected:
     int size;          // 32 or 64
-    std::string name; // float or double
+    /* std::string name;*/ // float or double
 
 public:
-    FloatType(int size=32, const std::string & name = "float")
-        : size(size), name(name) {}
+    FloatType(int size=32 /* , const std::string & name = "float"*/)
+        : size(size) /*, name(name)*/ {}
     virtual bool isSigned() const override { return true; }
     virtual bool isFloat() const override { return true; }
 
@@ -20,7 +20,7 @@ public:
     virtual bool operator==(const Type & other) const override {
         if( ! other.isFloat() ) return false;
         const FloatType & otherFloat = dynamic_cast<const FloatType &>(other);
-        return this->size == otherFloat.size && this->name == otherFloat.name;
+        return this->size == otherFloat.size /*&& this->name == otherFloat.name*/;
     }
 
     virtual bool isCompatible(const Type &other) const override {

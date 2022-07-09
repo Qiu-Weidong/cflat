@@ -8,11 +8,11 @@ class IntegerType : public Type
 protected:
     int size;
     bool isSigned;
-    std::string name; // 候选项 char int short long unsigned ...
+    /*std::string name;*/ // 候选项 char int short long unsigned ...
 
 public:
-    IntegerType(int size, bool isSigned, const std::string &name)
-        : size(size), isSigned(isSigned), name(name) {}
+    IntegerType(int size, bool isSigned /*, const std::string &name*/)
+        : size(size), isSigned(isSigned) /*, name(name) */ {}
     virtual bool isInteger() const override { return true; }
     virtual bool isSigned() const override { return isSigned; }
     virtual bool isScalar() const override { return true; }
@@ -43,16 +43,14 @@ public:
         return (target.isInteger() || target.isPointer() || target.isFloat());
     }
 
-    std::string toString() { return name; }
-
     virtual bool operator==(const Type &other) const override
     {
         if (!other.isInteger())
             return false;
         const IntegerType &otherInteger = dynamic_cast<const IntegerType &>(other);
         return this->size == otherInteger.size &&
-               this->isSigned == otherInteger.isSigned &&
-               this->name == otherInteger.name;
+               this->isSigned == otherInteger.isSigned /*&&
+               this->name == otherInteger.name*/;
     }
 };
 

@@ -6,10 +6,10 @@
 
 class UserType : public Type {
 protected:
-    std::string name;
+    // std::string name;
     Type * realType;
 public:
-    UserType(const std::string & name, Type * realType) : name(name), realType(realType) {}
+    UserType(/* const std::string & name, */ Type * realType) :/* name(name),*/ realType(realType) {}
 
     Type * getRealType() const { return realType; }
 

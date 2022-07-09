@@ -2,7 +2,7 @@
 #define CFLAT_TYPE_VOIDTYPE_H_
 #include "Type.h"
 
-class VoidType : Type
+class VoidType : public Type
 {
 public:
     virtual bool isVoid() const override { return true; }
