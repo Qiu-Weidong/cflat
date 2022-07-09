@@ -6,7 +6,7 @@ void Compiler::compile(const std::string &filename)
 
     if (!is.is_open())
     {
-        std::cout << "fuck!!!" << std::endl;
+        std::cout << "can't open file " << filename << std::endl;
         return;
     }
 
@@ -18,6 +18,9 @@ void Compiler::compile(const std::string &filename)
     antlr4::tree::ParseTree *tree = parser.compilationUnit();
     std::cout << tree->toStringTree(&parser) << std::endl;
 
+    // 每次编译一个文件都要重置类型表，
+
+    
     // 遍历语法树 listener
     // antlr4::tree::ParseTreeWalker walker;
     // CflatBaseListener listener;

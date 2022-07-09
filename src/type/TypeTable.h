@@ -6,14 +6,30 @@
 #include "FloatType.h"
 #include "VoidType.h"
 
-class TypeTable {
+class TypeTable
+{
 private:
     std::map<std::string, Type *> table;
+    void freeTable()
+    {
+        for (auto it = table.begin(); it != table.end(); it++)
+        {
+            delete it->second;
+        }
+    }
+
 public:
-    TypeTable() {
+    TypeTable()
+    {
+        resetTable();
+    }
+
+    void resetTable()
+    {
+        freeTable();
         // 添加基础类型 `char` `unsigned char` 等。
         table.insert(std::make_pair("void", new VoidType()));
-        
+
         table.insert(std::make_pair("char", new IntegerType(1, true)));
         table.insert(std::make_pair("unsigned char", new IntegerType(1, false)));
         table.insert(std::make_pair("short", new IntegerType(2, true)));
@@ -29,19 +45,23 @@ public:
         table.insert(std::make_pair("double", new FloatType(8)));
     }
 
-    ~TypeTable() {
-        for(auto it = table.begin(); it != table.end(); it++) {
-            delete it->second;
-        }
+    ~TypeTable()
+    {
+        freeTable();
     }
 
-
-    bool isTypeDefined(const std::string & name) const { return table.find(name) != table.end(); }
-    void defineType(const std::string &name, Type * type) { table.insert(std::make_pair(name, type)); }
+    bool isTypeDefined(const std::string &name) const { return table.find(name) != table.end(); }
+    void defineType(const std::string &name, Type *type) { table.insert(std::make_pair(name, type)); }
     void undefineType(const std::string &name) { table.erase(name); } // warning 内存泄漏
-    
 };
 
 #endif // CFLAT_TYPE_TYPETABLE_H_
 
-
+/* 为保证名称主键相同，删除所有空格
+ * void                         ->  VoidType *
+ * char, int, short ...         ->  IntegerType *
+ * float, double                ->  FloatType *
+ * int[], point[][], float[]    ->  ArrayType *
+ * int*, int**, float*, float**, int(int*,point*)*, point* -> PointerType *
+ * point, car, sheet            ->  StructType *, UnionType *, UserType *
+ */
