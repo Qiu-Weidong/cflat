@@ -6,7 +6,6 @@ project(cflat LANGUAGES CXX)
 find_package(LLVM REQUIRED CONFIG)
 message(STATUS "Using LLVM version ${LLVM_VERSION}")
 
-# message(STATUS "CMAKE_SOURCE_DIR")
 # 添加antlr4
 include_directories(
     "C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\include\\antlr4-runtime"
@@ -23,7 +22,7 @@ link_directories(
     "${LLVM_LIBRARY_DIRS}"
 )
 add_subdirectory(src)
-
+add_subdirectory(test)
 
 
 
