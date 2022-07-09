@@ -3,6 +3,7 @@
 
 // 表示类型的基类
 class Type {
+protected:
     static const int sizeUnknown = -1;
 
 public:
@@ -10,10 +11,9 @@ public:
     virtual bool operator==(const Type & other) const = 0;
     virtual bool operator!=(const Type & other) const { return ! ((*this) == other); }
     virtual int allocSize() const { return getSize(); }
-    virtual int alignment() const { return allocSize(); }
+    /* virtual int alignment() const { return allocSize(); } */
 
     virtual bool isVoid() const  { return false; }
-    // virtual bool isInt() const  { return false; }
     virtual bool isInteger() const { return false; }
     virtual bool isSigned() const { return false; }
     virtual bool isFloat() const { return false; }
@@ -23,6 +23,7 @@ public:
     virtual bool isUnion() const { return false; }
     virtual bool isUserType() const { return false; }
     virtual bool isFunction() const { return false; }
+    virtual bool isCompositeType() const { return false; }
 
     virtual bool isAllocatedArray() const { return false; }
     virtual bool isIncompleteArray() const { return false; }

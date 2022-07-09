@@ -15,7 +15,7 @@ public:
 
     virtual int getSize() const override { return realType->getSize(); }
     virtual int allocSize() const override { return realType->allocSize(); }
-    virtual int alignment() const override { return realType->alignment(); }
+    /*virtual int alignment() const override { return realType->alignment(); }*/
 
     virtual bool isVoid() const override { return realType->isVoid(); }
     virtual bool isInteger() const override { return realType->isInteger(); }

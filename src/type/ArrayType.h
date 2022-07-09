@@ -32,7 +32,7 @@ public:
     virtual int allocSize() const override {
         return length == undefined ? getSize() : baseType->allocSize() * length;
     }
-    virtual int alignment() const override { return baseType->alignment(); }
+    /*virtual int alignment() const override { return baseType->alignment(); }*/
     virtual bool operator==(const Type & other) const override {
         if(! other.isPointer() && !other.isArray()) return false;
         return (*baseType) == *other.getBaseType();
