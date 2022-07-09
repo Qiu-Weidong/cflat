@@ -3,6 +3,7 @@
 
 
 #include "CflatListener.h"
+#include "CflatVisitor.h"
 
 #include "CflatParser.h"
 
@@ -64,6 +65,14 @@ void CflatParser::CompilationUnitContext::exitRule(tree::ParseTreeListener *list
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCompilationUnit(this);
+}
+
+
+antlrcpp::Any CflatParser::CompilationUnitContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitCompilationUnit(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::CompilationUnitContext* CflatParser::compilationUnit() {
@@ -165,6 +174,14 @@ void CflatParser::DeclarationFileContext::exitRule(tree::ParseTreeListener *list
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitDeclarationFile(this);
+}
+
+
+antlrcpp::Any CflatParser::DeclarationFileContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDeclarationFile(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::DeclarationFileContext* CflatParser::declarationFile() {
@@ -275,6 +292,14 @@ void CflatParser::ImportStmtsContext::exitRule(tree::ParseTreeListener *listener
     parserListener->exitImportStmts(this);
 }
 
+
+antlrcpp::Any CflatParser::ImportStmtsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitImportStmts(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::ImportStmtsContext* CflatParser::importStmts() {
   ImportStmtsContext *_localctx = _tracker.createInstance<ImportStmtsContext>(_ctx, getState());
   enterRule(_localctx, 4, CflatParser::RuleImportStmts);
@@ -337,6 +362,14 @@ void CflatParser::ImportStmtContext::exitRule(tree::ParseTreeListener *listener)
     parserListener->exitImportStmt(this);
 }
 
+
+antlrcpp::Any CflatParser::ImportStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitImportStmt(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::ImportStmtContext* CflatParser::importStmt() {
   ImportStmtContext *_localctx = _tracker.createInstance<ImportStmtContext>(_ctx, getState());
   enterRule(_localctx, 6, CflatParser::RuleImportStmt);
@@ -396,6 +429,14 @@ void CflatParser::LibidContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitLibid(this);
+}
+
+
+antlrcpp::Any CflatParser::LibidContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitLibid(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::LibidContext* CflatParser::libid() {
@@ -462,6 +503,14 @@ void CflatParser::NameContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitName(this);
+}
+
+
+antlrcpp::Any CflatParser::NameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitName(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::NameContext* CflatParser::name() {
@@ -551,6 +600,14 @@ void CflatParser::TopDefsContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitTopDefs(this);
+}
+
+
+antlrcpp::Any CflatParser::TopDefsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitTopDefs(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::TopDefsContext* CflatParser::topDefs() {
@@ -678,6 +735,14 @@ void CflatParser::DefVarsContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitDefVars(this);
 }
 
+
+antlrcpp::Any CflatParser::DefVarsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDefVars(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::DefVarsContext* CflatParser::defVars() {
   DefVarsContext *_localctx = _tracker.createInstance<DefVarsContext>(_ctx, getState());
   enterRule(_localctx, 14, CflatParser::RuleDefVars);
@@ -796,6 +861,14 @@ void CflatParser::DefFuncContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitDefFunc(this);
 }
 
+
+antlrcpp::Any CflatParser::DefFuncContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDefFunc(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::DefFuncContext* CflatParser::defFunc() {
   DefFuncContext *_localctx = _tracker.createInstance<DefFuncContext>(_ctx, getState());
   enterRule(_localctx, 16, CflatParser::RuleDefFunc);
@@ -866,6 +939,14 @@ void CflatParser::ParamsContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitParams(this);
+}
+
+
+antlrcpp::Any CflatParser::ParamsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitParams(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::ParamsContext* CflatParser::params() {
@@ -953,6 +1034,14 @@ void CflatParser::FixedParamsContext::exitRule(tree::ParseTreeListener *listener
     parserListener->exitFixedParams(this);
 }
 
+
+antlrcpp::Any CflatParser::FixedParamsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitFixedParams(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::FixedParamsContext* CflatParser::fixedParams() {
   FixedParamsContext *_localctx = _tracker.createInstance<FixedParamsContext>(_ctx, getState());
   enterRule(_localctx, 20, CflatParser::RuleFixedParams);
@@ -1025,6 +1114,14 @@ void CflatParser::ParamContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitParam(this);
 }
 
+
+antlrcpp::Any CflatParser::ParamContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitParam(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::ParamContext* CflatParser::param() {
   ParamContext *_localctx = _tracker.createInstance<ParamContext>(_ctx, getState());
   enterRule(_localctx, 22, CflatParser::RuleParam);
@@ -1093,6 +1190,14 @@ void CflatParser::BlockContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitBlock(this);
 }
 
+
+antlrcpp::Any CflatParser::BlockContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitBlock(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::BlockContext* CflatParser::block() {
   BlockContext *_localctx = _tracker.createInstance<BlockContext>(_ctx, getState());
   enterRule(_localctx, 24, CflatParser::RuleBlock);
@@ -1154,6 +1259,14 @@ void CflatParser::DefVarListContext::exitRule(tree::ParseTreeListener *listener)
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitDefVarList(this);
+}
+
+
+antlrcpp::Any CflatParser::DefVarListContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDefVarList(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::DefVarListContext* CflatParser::defVarList() {
@@ -1224,6 +1337,14 @@ void CflatParser::DefStructContext::exitRule(tree::ParseTreeListener *listener) 
     parserListener->exitDefStruct(this);
 }
 
+
+antlrcpp::Any CflatParser::DefStructContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDefStruct(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::DefStructContext* CflatParser::defStruct() {
   DefStructContext *_localctx = _tracker.createInstance<DefStructContext>(_ctx, getState());
   enterRule(_localctx, 28, CflatParser::RuleDefStruct);
@@ -1287,6 +1408,14 @@ void CflatParser::DefUnionContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitDefUnion(this);
 }
 
+
+antlrcpp::Any CflatParser::DefUnionContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDefUnion(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::DefUnionContext* CflatParser::defUnion() {
   DefUnionContext *_localctx = _tracker.createInstance<DefUnionContext>(_ctx, getState());
   enterRule(_localctx, 30, CflatParser::RuleDefUnion);
@@ -1348,6 +1477,14 @@ void CflatParser::MemberListContext::exitRule(tree::ParseTreeListener *listener)
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMemberList(this);
+}
+
+
+antlrcpp::Any CflatParser::MemberListContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitMemberList(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::MemberListContext* CflatParser::memberList() {
@@ -1432,6 +1569,14 @@ void CflatParser::SlotContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitSlot(this);
 }
 
+
+antlrcpp::Any CflatParser::SlotContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitSlot(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::SlotContext* CflatParser::slot() {
   SlotContext *_localctx = _tracker.createInstance<SlotContext>(_ctx, getState());
   enterRule(_localctx, 34, CflatParser::RuleSlot);
@@ -1493,6 +1638,14 @@ void CflatParser::FuncDeclContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitFuncDecl(this);
+}
+
+
+antlrcpp::Any CflatParser::FuncDeclContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitFuncDecl(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::FuncDeclContext* CflatParser::funcDecl() {
@@ -1564,6 +1717,14 @@ void CflatParser::VarDeclContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitVarDecl(this);
 }
 
+
+antlrcpp::Any CflatParser::VarDeclContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitVarDecl(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::VarDeclContext* CflatParser::varDecl() {
   VarDeclContext *_localctx = _tracker.createInstance<VarDeclContext>(_ctx, getState());
   enterRule(_localctx, 38, CflatParser::RuleVarDecl);
@@ -1630,6 +1791,14 @@ void CflatParser::TypeContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitType(this);
+}
+
+
+antlrcpp::Any CflatParser::TypeContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitType(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::TypeContext* CflatParser::type() {
@@ -1699,6 +1868,14 @@ void CflatParser::TypeRefContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitTypeRef(this);
+}
+
+
+antlrcpp::Any CflatParser::TypeRefContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitTypeRef(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::TypeRefContext* CflatParser::typeRef() {
@@ -1815,6 +1992,14 @@ void CflatParser::IntegerContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitInteger(this);
 }
 
+
+antlrcpp::Any CflatParser::IntegerContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitInteger(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::IntegerContext* CflatParser::integer() {
   IntegerContext *_localctx = _tracker.createInstance<IntegerContext>(_ctx, getState());
   enterRule(_localctx, 44, CflatParser::RuleInteger);
@@ -1877,6 +2062,14 @@ void CflatParser::ParamTypeRefsContext::exitRule(tree::ParseTreeListener *listen
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitParamTypeRefs(this);
+}
+
+
+antlrcpp::Any CflatParser::ParamTypeRefsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitParamTypeRefs(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::ParamTypeRefsContext* CflatParser::paramTypeRefs() {
@@ -1964,6 +2157,14 @@ void CflatParser::FixedParamTypeRefsContext::exitRule(tree::ParseTreeListener *l
     parserListener->exitFixedParamTypeRefs(this);
 }
 
+
+antlrcpp::Any CflatParser::FixedParamTypeRefsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitFixedParamTypeRefs(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::FixedParamTypeRefsContext* CflatParser::fixedParamTypeRefs() {
   FixedParamTypeRefsContext *_localctx = _tracker.createInstance<FixedParamTypeRefsContext>(_ctx, getState());
   enterRule(_localctx, 48, CflatParser::RuleFixedParamTypeRefs);
@@ -2047,6 +2248,14 @@ void CflatParser::TypeRefBaseContext::exitRule(tree::ParseTreeListener *listener
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitTypeRefBase(this);
+}
+
+
+antlrcpp::Any CflatParser::TypeRefBaseContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitTypeRefBase(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::TypeRefBaseContext* CflatParser::typeRefBase() {
@@ -2219,6 +2428,14 @@ void CflatParser::TypeDefContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitTypeDef(this);
 }
 
+
+antlrcpp::Any CflatParser::TypeDefContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitTypeDef(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::TypeDefContext* CflatParser::typeDef() {
   TypeDefContext *_localctx = _tracker.createInstance<TypeDefContext>(_ctx, getState());
   enterRule(_localctx, 52, CflatParser::RuleTypeDef);
@@ -2280,6 +2497,14 @@ void CflatParser::StmtsContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitStmts(this);
+}
+
+
+antlrcpp::Any CflatParser::StmtsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitStmts(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::StmtsContext* CflatParser::stmts() {
@@ -2416,6 +2641,14 @@ void CflatParser::StmtContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitStmt(this);
+}
+
+
+antlrcpp::Any CflatParser::StmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitStmt(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::StmtContext* CflatParser::stmt() {
@@ -2571,6 +2804,14 @@ void CflatParser::LabeledStmtContext::exitRule(tree::ParseTreeListener *listener
     parserListener->exitLabeledStmt(this);
 }
 
+
+antlrcpp::Any CflatParser::LabeledStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitLabeledStmt(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::LabeledStmtContext* CflatParser::labeledStmt() {
   LabeledStmtContext *_localctx = _tracker.createInstance<LabeledStmtContext>(_ctx, getState());
   enterRule(_localctx, 58, CflatParser::RuleLabeledStmt);
@@ -2634,6 +2875,14 @@ void CflatParser::IfStmtContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitIfStmt(this);
+}
+
+
+antlrcpp::Any CflatParser::IfStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitIfStmt(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::IfStmtContext* CflatParser::ifStmt() {
@@ -2716,6 +2965,14 @@ void CflatParser::WhileStmtContext::exitRule(tree::ParseTreeListener *listener) 
     parserListener->exitWhileStmt(this);
 }
 
+
+antlrcpp::Any CflatParser::WhileStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitWhileStmt(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::WhileStmtContext* CflatParser::whileStmt() {
   WhileStmtContext *_localctx = _tracker.createInstance<WhileStmtContext>(_ctx, getState());
   enterRule(_localctx, 62, CflatParser::RuleWhileStmt);
@@ -2779,6 +3036,14 @@ void CflatParser::DowhileStmtContext::exitRule(tree::ParseTreeListener *listener
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitDowhileStmt(this);
+}
+
+
+antlrcpp::Any CflatParser::DowhileStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDowhileStmt(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::DowhileStmtContext* CflatParser::dowhileStmt() {
@@ -2852,6 +3117,14 @@ void CflatParser::ForStmtContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitForStmt(this);
+}
+
+
+antlrcpp::Any CflatParser::ForStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitForStmt(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::ForStmtContext* CflatParser::forStmt() {
@@ -2978,6 +3251,14 @@ void CflatParser::SwitchStmtContext::exitRule(tree::ParseTreeListener *listener)
     parserListener->exitSwitchStmt(this);
 }
 
+
+antlrcpp::Any CflatParser::SwitchStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitSwitchStmt(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::SwitchStmtContext* CflatParser::switchStmt() {
   SwitchStmtContext *_localctx = _tracker.createInstance<SwitchStmtContext>(_ctx, getState());
   enterRule(_localctx, 68, CflatParser::RuleSwitchStmt);
@@ -3049,6 +3330,14 @@ void CflatParser::CaseClausesContext::exitRule(tree::ParseTreeListener *listener
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCaseClauses(this);
+}
+
+
+antlrcpp::Any CflatParser::CaseClausesContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitCaseClauses(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::CaseClausesContext* CflatParser::caseClauses() {
@@ -3125,6 +3414,14 @@ void CflatParser::CaseClauseContext::exitRule(tree::ParseTreeListener *listener)
     parserListener->exitCaseClause(this);
 }
 
+
+antlrcpp::Any CflatParser::CaseClauseContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitCaseClause(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::CaseClauseContext* CflatParser::caseClause() {
   CaseClauseContext *_localctx = _tracker.createInstance<CaseClauseContext>(_ctx, getState());
   enterRule(_localctx, 72, CflatParser::RuleCaseClause);
@@ -3182,6 +3479,14 @@ void CflatParser::CasesContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCases(this);
+}
+
+
+antlrcpp::Any CflatParser::CasesContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitCases(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::CasesContext* CflatParser::cases() {
@@ -3250,6 +3555,14 @@ void CflatParser::DefaultClauseContext::exitRule(tree::ParseTreeListener *listen
     parserListener->exitDefaultClause(this);
 }
 
+
+antlrcpp::Any CflatParser::DefaultClauseContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitDefaultClause(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::DefaultClauseContext* CflatParser::defaultClause() {
   DefaultClauseContext *_localctx = _tracker.createInstance<DefaultClauseContext>(_ctx, getState());
   enterRule(_localctx, 76, CflatParser::RuleDefaultClause);
@@ -3309,6 +3622,14 @@ void CflatParser::CaseBodyContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCaseBody(this);
+}
+
+
+antlrcpp::Any CflatParser::CaseBodyContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitCaseBody(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::CaseBodyContext* CflatParser::caseBody() {
@@ -3403,6 +3724,14 @@ void CflatParser::GotoStmtContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitGotoStmt(this);
 }
 
+
+antlrcpp::Any CflatParser::GotoStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitGotoStmt(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::GotoStmtContext* CflatParser::gotoStmt() {
   GotoStmtContext *_localctx = _tracker.createInstance<GotoStmtContext>(_ctx, getState());
   enterRule(_localctx, 80, CflatParser::RuleGotoStmt);
@@ -3456,6 +3785,14 @@ void CflatParser::BreakStmtContext::exitRule(tree::ParseTreeListener *listener) 
     parserListener->exitBreakStmt(this);
 }
 
+
+antlrcpp::Any CflatParser::BreakStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitBreakStmt(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::BreakStmtContext* CflatParser::breakStmt() {
   BreakStmtContext *_localctx = _tracker.createInstance<BreakStmtContext>(_ctx, getState());
   enterRule(_localctx, 82, CflatParser::RuleBreakStmt);
@@ -3505,6 +3842,14 @@ void CflatParser::ContinueStmtContext::exitRule(tree::ParseTreeListener *listene
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitContinueStmt(this);
+}
+
+
+antlrcpp::Any CflatParser::ContinueStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitContinueStmt(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::ContinueStmtContext* CflatParser::continueStmt() {
@@ -3560,6 +3905,14 @@ void CflatParser::ReturnStmtContext::exitRule(tree::ParseTreeListener *listener)
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitReturnStmt(this);
+}
+
+
+antlrcpp::Any CflatParser::ReturnStmtContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitReturnStmt(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::ReturnStmtContext* CflatParser::returnStmt() {
@@ -3663,6 +4016,14 @@ void CflatParser::ExprContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitExpr(this);
+}
+
+
+antlrcpp::Any CflatParser::ExprContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitExpr(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 
@@ -4260,6 +4621,14 @@ void CflatParser::ExprListContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitExprList(this);
 }
 
+
+antlrcpp::Any CflatParser::ExprListContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitExprList(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 CflatParser::ExprListContext* CflatParser::exprList() {
   ExprListContext *_localctx = _tracker.createInstance<ExprListContext>(_ctx, getState());
   enterRule(_localctx, 90, CflatParser::RuleExprList);
@@ -4324,6 +4693,14 @@ void CflatParser::ArgumentsContext::exitRule(tree::ParseTreeListener *listener) 
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitArguments(this);
+}
+
+
+antlrcpp::Any CflatParser::ArgumentsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitArguments(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::ArgumentsContext* CflatParser::arguments() {
@@ -4415,6 +4792,14 @@ void CflatParser::PrimaryContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitPrimary(this);
+}
+
+
+antlrcpp::Any CflatParser::PrimaryContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitPrimary(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::PrimaryContext* CflatParser::primary() {
@@ -4527,6 +4912,14 @@ void CflatParser::LiteralContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<CflatListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitLiteral(this);
+}
+
+
+antlrcpp::Any CflatParser::LiteralContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
+    return parserVisitor->visitLiteral(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 CflatParser::LiteralContext* CflatParser::literal() {

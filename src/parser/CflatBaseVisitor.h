@@ -31,6 +31,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitLibid(CflatParser::LibidContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitName(CflatParser::NameContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -40,10 +44,6 @@ public:
   }
 
   virtual antlrcpp::Any visitDefVars(CflatParser::DefVarsContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitDefConst(CflatParser::DefConstContext *ctx) override {
     return visitChildren(ctx);
   }
 

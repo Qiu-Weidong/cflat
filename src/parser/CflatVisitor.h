@@ -27,13 +27,13 @@ public:
 
     virtual antlrcpp::Any visitImportStmt(CflatParser::ImportStmtContext *context) = 0;
 
+    virtual antlrcpp::Any visitLibid(CflatParser::LibidContext *context) = 0;
+
     virtual antlrcpp::Any visitName(CflatParser::NameContext *context) = 0;
 
     virtual antlrcpp::Any visitTopDefs(CflatParser::TopDefsContext *context) = 0;
 
     virtual antlrcpp::Any visitDefVars(CflatParser::DefVarsContext *context) = 0;
-
-    virtual antlrcpp::Any visitDefConst(CflatParser::DefConstContext *context) = 0;
 
     virtual antlrcpp::Any visitDefFunc(CflatParser::DefFuncContext *context) = 0;
 
