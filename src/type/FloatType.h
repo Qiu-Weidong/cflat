@@ -1,0 +1,36 @@
+#ifndef CFLAT_TYPE_FLOATTYPE_H_
+#define CFLAT_TYPE_FLOATTYPE_H_
+#include <string>
+#include "Type.h"
+
+
+class FloatType : public Type {
+protected:
+    int size;          // 32 or 64
+    std::string name; // float or double
+
+public:
+    FloatType(int size=32, const std::string & name = "float")
+        : size(size), name(name) {}
+    virtual bool isSigned() const override { return true; }
+    virtual bool isFloat() const override { return true; }
+
+    virtual int size() const override { return size; }
+
+    virtual bool operator==(const Type & other) const override {
+        if( ! other.isFloat() ) return false;
+        const FloatType & otherFloat = dynamic_cast<const FloatType &>(other);
+        return this->size == otherFloat.size && this->name == otherFloat.name;
+    }
+
+    virtual bool isCompatible(const Type &other) const override {
+        return other.isFloat() && size <= other.size();
+    }
+
+    virtual bool isCastableTo(const Type &target) const override {
+        return target.isFloat() || target.isInteger();
+    }
+
+};
+
+#endif // CFLAT_TYPE_FLOATTYPE_H_

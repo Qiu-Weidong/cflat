@@ -40,7 +40,7 @@ public:
     }
     virtual bool isCastableTo(const Type &target) const override
     {
-        return (target.isInteger() || target.isPointer());
+        return (target.isInteger() || target.isPointer() || target.isFloat());
     }
 
     std::string toString() { return name; }
