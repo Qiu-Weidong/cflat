@@ -6,7 +6,7 @@ class VoidType : Type
 {
 public:
     virtual bool isVoid() const override { return true; }
-    virtual int size() const override { return 1; }
+    virtual int getSize() const override { return 1; }
 
     virtual bool operator==(const Type &other) const override
     {

@@ -10,7 +10,7 @@ protected:
 public:
     PointerType(int size, Type * baseType) : size(size), baseType(baseType) {}
 
-    virtual int size() const override { return size; }
+    virtual int getSize() const override { return size; }
     virtual bool operator==(const Type & other) const override {
         if(! other.isPointer()) return false;
         return (*baseType) == *other.getBaseType();

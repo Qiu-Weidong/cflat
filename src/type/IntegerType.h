@@ -32,11 +32,11 @@ public:
         return minValue() <= x && x <= maxValue();
     }
 
-    virtual int size() const override { return size; }
+    virtual int getSize() const override { return size; }
 
     virtual bool isCompatible(const Type &other) const override
     {
-        return (other.isInteger() && size <= other.size());
+        return (other.isInteger() && size <= other.getSize());
     }
     virtual bool isCastableTo(const Type &target) const override
     {

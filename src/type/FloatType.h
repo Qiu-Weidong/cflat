@@ -15,7 +15,7 @@ public:
     virtual bool isSigned() const override { return true; }
     virtual bool isFloat() const override { return true; }
 
-    virtual int size() const override { return size; }
+    virtual int getSize() const override { return size; }
 
     virtual bool operator==(const Type & other) const override {
         if( ! other.isFloat() ) return false;
@@ -24,7 +24,7 @@ public:
     }
 
     virtual bool isCompatible(const Type &other) const override {
-        return other.isFloat() && size <= other.size();
+        return other.isFloat() && size <= other.getSize();
     }
 
     virtual bool isCastableTo(const Type &target) const override {

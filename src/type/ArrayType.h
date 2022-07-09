@@ -28,9 +28,9 @@ public:
 
     virtual Type * getBaseType() const override { return baseType; }
     int getLength() const { return length; }
-    virtual int size() const override { return pointerSize; }
+    virtual int getSize() const override { return pointerSize; }
     virtual int allocSize() const override {
-        return length == undefined ? size() : baseType->allocSize() * length;
+        return length == undefined ? getSize() : baseType->allocSize() * length;
     }
     virtual int alignment() const override { return baseType->alignment(); }
     virtual bool operator==(const Type & other) const override {
@@ -43,7 +43,7 @@ public:
         else if(other.getBaseType()->isVoid()) return true;
         else
         return baseType->isCompatible(*other.getBaseType())
-            && baseType->size() == other.getBaseType()->size(); 
+            && baseType->getSize() == other.getBaseType()->getSize(); 
     }
 
     virtual bool isCastableTo(const Type & target ) const override {

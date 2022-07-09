@@ -6,14 +6,14 @@ class Type {
     static const int sizeUnknown = -1;
 
 public:
-    virtual int size() const = 0;
+    virtual int getSize() const = 0;
     virtual bool operator==(const Type & other) const = 0;
-
-    virtual int allocSize() const { return size(); }
+    virtual bool operator!=(const Type & other) const { return ! ((*this) == other); }
+    virtual int allocSize() const { return getSize(); }
     virtual int alignment() const { return allocSize(); }
 
     virtual bool isVoid() const  { return false; }
-    virtual bool isInt() const  { return false; }
+    // virtual bool isInt() const  { return false; }
     virtual bool isInteger() const { return false; }
     virtual bool isSigned() const { return false; }
     virtual bool isFloat() const { return false; }
