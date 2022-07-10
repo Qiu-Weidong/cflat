@@ -39,7 +39,8 @@ public:
         else return it->second;
     }
     void setMembers(const std::map<std::string, std::shared_ptr<Type>> & members) { this->members = members; }
-    void insertMember(const std::string & name, std::shared_ptr<Type> type) { members.insert(std::make_pair(name, type)); }
+    bool insertMember(const std::string & name, std::shared_ptr<Type> type) { return members.insert(std::make_pair(name, type)).second; }
+    bool insertOrAssignMember(const std::string &name, std::shared_ptr<Type> type) { return members.insert_or_assign(name, type).second; }
 };
 
 #endif // CFLAT_TYPE_COMPOSITETYPE_H_
