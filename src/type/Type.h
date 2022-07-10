@@ -34,7 +34,7 @@ public:
     virtual bool isCompatible(const Type & other) const = 0;
     virtual bool isCastableTo(const Type & target) const = 0;
 
-    virtual std::shared_ptr<Type> getBaseType() const { return nullptr; }
+    virtual std::shared_ptr<Type> getBaseType() const { return std::shared_ptr<Type>(nullptr); }
 
 
 

@@ -12,8 +12,8 @@ protected:
     static const int undefined = -1;
 
 public:
-    ArrayType(Type * baseType, int pointerSize) : baseType(baseType), pointerSize(pointerSize), length(undefined) {}
-    ArrayType(Type * baseType, int length, int pointerSize) 
+    ArrayType(std::shared_ptr<Type> baseType, int pointerSize) : baseType(baseType), pointerSize(pointerSize), length(undefined) {}
+    ArrayType(std::shared_ptr<Type> baseType, int length, int pointerSize) 
         : baseType(baseType), length(length), pointerSize(pointerSize) {}
     
     virtual bool isArray() const override { return true; }
