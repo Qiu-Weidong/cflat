@@ -12,10 +12,10 @@ public:
     UserType(std::shared_ptr<Type> realType) : realType(realType) {}
 
     std::shared_ptr<Type> getRealType() const { return realType; }
+    void setRealType(std::shared_ptr<Type> realType) { this->realType = realType; }
 
     virtual int getSize() const override { return realType->getSize(); }
     virtual int allocSize() const override { return realType->allocSize(); }
-    /*virtual int alignment() const override { return realType->alignment(); }*/
 
     virtual bool isVoid() const override { return realType->isVoid(); }
     virtual bool isInteger() const override { return realType->isInteger(); }
@@ -40,7 +40,7 @@ public:
     {
         return realType->isCastableTo(target);
     }
-    virtual std::shared_ptr<Type> getBaseType() const override { return realType->getBaseType(); }
+
     virtual bool operator==(const Type &other) { return (*realType) == other; }
 };
 #endif // CFLAT_TYPE_USERTYPE_H_

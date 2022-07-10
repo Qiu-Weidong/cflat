@@ -2,35 +2,22 @@
 #define CFLAT_TYPE_UNIONTYPE_H_
 #include <string>
 #include <map>
-#include "Type.h"
+#include "CompositeType.h"
 
-class UnionType : public Type
+class UnionType : public CompositeType
 {
 protected:
     std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    UnionType(const std::map<std::string, std::shared_ptr<Type>> &members) : members(members) {}
+    UnionType(const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isUnion() const override { return true; }
     virtual bool operator==(const Type &other) const override
     {
         if (!other.isUnion())
             return false;
-        const UnionType &otherType = dynamic_cast<const UnionType &>(other);
-        if (members.size() != otherType.members.size())
-            return false;
-        auto it1 = members.begin();
-        while (it1 != members.end())
-        {
-            auto it2 = otherType.members.find(it1->first);
-            if (it2 == otherType.members.end())
-                return false;
-            else if (*(it1->second) != *(it2->second))
-                return false;
-            it1++;
-        }
-        return true;
+        return CompositeType::operator==(other);
     }
     virtual int getSize() const override
     {
@@ -52,6 +39,8 @@ public:
             return false;
         return true; // todo
     }
+
+
 };
 
 #endif // CFLAT_TYPE_UNIONTYPE_H_

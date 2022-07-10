@@ -55,5 +55,11 @@ public:
     std::shared_ptr<Type> getReturnType() const { return returnType; }
     std::vector<std::shared_ptr<Type>> getParamTypes() const { return paramTypes; }
     bool isVararg() const { return vararg; }
+
+    void setReturnType(std::shared_ptr<Type> returnType) { this->returnType = returnType; }
+    void setParamTypes(const std::vector<std::shared_ptr<Type> > & paramTypes) { this->paramTypes = paramTypes; }
+    void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); }
+    void setVararg(bool vararg) { this->vararg = vararg; }
+
 };
 #endif // CFLAT_TYPE_FUNCTIONTYPE_H_

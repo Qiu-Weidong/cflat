@@ -19,6 +19,8 @@ public:
 
     void resetTable()
     {
+        table.clear();
+        
         // 添加基础类型 `char` `unsigned char` 等。
         table.insert(std::make_pair("void", std::make_shared<VoidType>()));
 

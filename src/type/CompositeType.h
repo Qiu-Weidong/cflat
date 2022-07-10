@@ -8,67 +8,38 @@
 class CompositeType : public Type
 {
 protected:
-    std::map<std::string, Type *> members;
+    std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    CompositeType(const std::map<std::string, Type *> &members)
+    CompositeType(const std::map<std::string, std::shared_ptr<Type>> &members)
         : members(members) {}
     virtual bool isCompositeType() const override { return true; }
 
     virtual bool operator==(const Type &other) const override
     {
-        if (isStruct() && !other.isStruct())
-            return false;
-        if (isUnion() && !other.isUnion())
-            return false;
+        if(! isCompositeType()) return false;
         const CompositeType &otherType = dynamic_cast<const CompositeType &>(other);
         if (members.size() != otherType.members.size())
             return false;
         auto it1 = members.begin();
-        while (it1 != members.end())
-        {
-            auto it2 = otherType.members.find(it1->first);
-            if (it2 == otherType.members.end())
-                return false;
-            else if (*(it1->second) != *(it2->second))
-                return false;
-            it1++;
+        auto it2 = otherType.members.begin();
+
+        while(it1 != members.end() && it2 != otherType.members.end()) {
+            if(it1->first != it2->first || *(it1->second) != *(it2->second)) return false;
+            it1++, it2++;
         }
+
         return true;
     }
 
-    virtual bool isCompatible(const Type &other) const override
-    {
-        if (isStruct() && !other.isStruct())
-            return false;
-        if (isUnion() && !other.isUnion())
-            return false;
-        return true; // todo
+    std::map<std::string, std::shared_ptr<Type>> getMembers() const { return members; }
+    std::shared_ptr<Type> getMemberType(const std::string & name) { 
+        auto it = members.find(name);
+        if(it == members.end()) return std::shared_ptr<Type>(nullptr);
+        else return it->second;
     }
-    virtual bool isCastableTo(const Type &target) const override
-    {
-        if (isStruct() && !target.isStruct())
-            return false;
-        if (isUnion() && !target.isUnion())
-            return false;
-        return true; // todo
-    }
-
-    virtual int getSize() const override
-    {
-        int ret = 0;
-        if (isStruct())
-        {
-            for (auto slot = members.begin(); slot != members.end(); slot++)
-                ret += (slot->second)->getSize();
-        }
-        else if (isUnion())
-        {
-            for (auto slot = members.begin(); slot != members.end(); slot++)
-                ret = ret > (slot->second)->getSize() ? ret : (slot->second)->getSize();
-        }
-        return ret;
-    }
+    void setMembers(const std::map<std::string, std::shared_ptr<Type>> & members) { this->members = members; }
+    void insertMember(const std::string & name, std::shared_ptr<Type> type) { members.insert(std::make_pair(name, type)); }
 };
 
 #endif // CFLAT_TYPE_COMPOSITETYPE_H_

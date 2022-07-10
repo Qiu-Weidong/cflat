@@ -16,21 +16,25 @@ public:
     {
         if (!other.isPointer())
             return false;
-        return (*baseType) == *other.getBaseType();
+        const PointerType & otherType = dynamic_cast<const PointerType &>(other);
+        return (*baseType) == *otherType.getBaseType();
     }
     virtual bool isPointer() const override { return true; }
     virtual bool isScalar() const override { return true; }
     virtual bool isCallable() const override { return baseType->isFunction(); }
 
-    virtual std::shared_ptr<Type> getBaseType() const override { return baseType; }
+    std::shared_ptr<Type> getBaseType() const  { return baseType; }
+    void setBaseType(std::shared_ptr<Type> baseType) { this->baseType = baseType; }
 
     virtual bool isCompatible(const Type &other) const override
     {
         if (!other.isPointer())
             return false;
-        else if (baseType->isVoid() || other.getBaseType()->isVoid())
+        const PointerType & otherType = dynamic_cast<const PointerType &>(other);
+        if (baseType->isVoid() || otherType.getBaseType()->isVoid())
             return true;
-        return baseType->isCompatible(*other.getBaseType());
+        
+        return baseType->isCompatible(*otherType.getBaseType());
     }
 
     virtual bool isCastableTo(const Type &other) const override

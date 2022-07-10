@@ -11,7 +11,7 @@ protected:
 public:
     virtual int getSize() const = 0;
     virtual bool operator==(const Type &other) const = 0;
-    virtual bool operator!=(const Type &other) const { return !((*this) == other); }
+    virtual bool operator!=(const Type &other) const { return ! this->operator==(other); }
     virtual int allocSize() const { return getSize(); }
 
     virtual bool isVoid() const { return false; }
@@ -31,10 +31,8 @@ public:
     virtual bool isScalar() const { return false; } // scalar 在 C 语言中是整数类型、指针以及枚举类型的总称
     virtual bool isCallable() const { return false; }
 
-    virtual bool isCompatible(const Type &other) const = 0;
-    virtual bool isCastableTo(const Type &target) const = 0;
-
-    virtual std::shared_ptr<Type> getBaseType() const { return std::shared_ptr<Type>(nullptr); }
+    virtual bool isCompatible(const Type &other) const = 0; // 是否能够隐式转换
+    virtual bool isCastableTo(const Type &target) const = 0; // 是否能够强制转换
 };
 
 #endif // CFLAT_TYPE_TYPE_H_

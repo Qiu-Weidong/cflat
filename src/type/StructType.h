@@ -2,35 +2,22 @@
 #define CFLAT_TYPE_STRUCTTYPE_H_
 #include <string>
 #include <map>
-#include "Type.h"
+#include "CompositeType.h"
 
-class StructType : public Type
+class StructType : public CompositeType
 {
 protected:
     std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    StructType(const std::map<std::string, std::shared_ptr<Type>> &members) : members(members) {}
+    StructType(const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isStruct() const override { return true; }
     virtual bool operator==(const Type &other) const override
     {
         if (!other.isStruct())
             return false;
-        const StructType &otherType = dynamic_cast<const StructType &>(other);
-        if (members.size() != otherType.members.size())
-            return false;
-        auto it1 = members.begin();
-        while (it1 != members.end())
-        {
-            auto it2 = otherType.members.find(it1->first);
-            if (it2 == otherType.members.end())
-                return false;
-            else if (*(it1->second) != *(it2->second))
-                return false;
-            it1++;
-        }
-        return true;
+        return CompositeType::operator==(other);
     }
     virtual int getSize() const override
     {
@@ -45,6 +32,8 @@ public:
     {
         if (!other.isStruct())
             return false;
+        const StructType & otherStruct = dynamic_cast<const StructType &>(other);
+        if(members.size() != otherStruct.members.size()) return false;
         return true; // todo
     }
     virtual bool isCastableTo(const Type &target) const override
@@ -53,6 +42,7 @@ public:
             return false;
         return true; // todo
     }
+
 };
 
 #endif // CFLAT_TYPE_STRUCTTYPE_H_
