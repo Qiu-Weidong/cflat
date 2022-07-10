@@ -3,18 +3,18 @@
 #include <memory>
 
 // 表示类型的基类
-class Type {
+class Type
+{
 protected:
     static const int sizeUnknown = -1;
 
 public:
     virtual int getSize() const = 0;
-    virtual bool operator==(const Type & other) const = 0;
-    virtual bool operator!=(const Type & other) const { return ! ((*this) == other); }
+    virtual bool operator==(const Type &other) const = 0;
+    virtual bool operator!=(const Type &other) const { return !((*this) == other); }
     virtual int allocSize() const { return getSize(); }
-    /* virtual int alignment() const { return allocSize(); } */
 
-    virtual bool isVoid() const  { return false; }
+    virtual bool isVoid() const { return false; }
     virtual bool isInteger() const { return false; }
     virtual bool isSigned() const { return false; }
     virtual bool isFloat() const { return false; }
@@ -31,16 +31,10 @@ public:
     virtual bool isScalar() const { return false; } // scalar 在 C 语言中是整数类型、指针以及枚举类型的总称
     virtual bool isCallable() const { return false; }
 
-    virtual bool isCompatible(const Type & other) const = 0;
-    virtual bool isCastableTo(const Type & target) const = 0;
+    virtual bool isCompatible(const Type &other) const = 0;
+    virtual bool isCastableTo(const Type &target) const = 0;
 
     virtual std::shared_ptr<Type> getBaseType() const { return std::shared_ptr<Type>(nullptr); }
-
-
-
-
 };
 
-
 #endif // CFLAT_TYPE_TYPE_H_
-

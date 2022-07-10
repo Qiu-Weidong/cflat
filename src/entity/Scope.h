@@ -3,5 +3,4 @@
 
 // 变量符号表
 
-
 #endif // CFLAT_ENTITY_SCOPE_H_

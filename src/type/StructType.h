@@ -13,9 +13,11 @@ public:
     StructType(const std::map<std::string, std::shared_ptr<Type>> &members) : members(members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isStruct() const override { return true; }
-    virtual bool operator==(const Type & other) const override {
-        if(!other.isStruct()) return false;
-        const StructType & otherType = dynamic_cast<const StructType &>(other);
+    virtual bool operator==(const Type &other) const override
+    {
+        if (!other.isStruct())
+            return false;
+        const StructType &otherType = dynamic_cast<const StructType &>(other);
         if (members.size() != otherType.members.size())
             return false;
         auto it1 = members.begin();
@@ -41,7 +43,7 @@ public:
 
     virtual bool isCompatible(const Type &other) const override
     {
-        if (! other.isStruct())
+        if (!other.isStruct())
             return false;
         return true; // todo
     }
@@ -51,7 +53,6 @@ public:
             return false;
         return true; // todo
     }
-
 };
 
 #endif // CFLAT_TYPE_STRUCTTYPE_H_

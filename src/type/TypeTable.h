@@ -37,7 +37,6 @@ public:
         table.insert(std::make_pair("double", std::make_shared<FloatType>(8)));
     }
 
-
     bool isTypeDefined(const std::string &name) const { return table.find(name) != table.end(); }
     void defineType(const std::string &name, std::shared_ptr<Type> type) { table.insert(std::make_pair(name, type)); }
     void undefineType(const std::string &name) { table.erase(name); } // warning 内存泄漏

@@ -20,7 +20,6 @@ void Compiler::compile(const std::string &filename)
 
     // 每次编译一个文件都要重置类型表，
 
-    
     // 遍历语法树 listener
     // antlr4::tree::ParseTreeWalker walker;
     // CflatBaseListener listener;
@@ -39,4 +38,3 @@ Compiler::Compiler()
 {
     this->version = "v1.0.0";
 }
-

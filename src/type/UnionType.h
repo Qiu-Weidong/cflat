@@ -13,9 +13,11 @@ public:
     UnionType(const std::map<std::string, std::shared_ptr<Type>> &members) : members(members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isUnion() const override { return true; }
-    virtual bool operator==(const Type & other) const override {
-        if(!other.isUnion()) return false;
-        const UnionType & otherType = dynamic_cast<const UnionType &>(other);
+    virtual bool operator==(const Type &other) const override
+    {
+        if (!other.isUnion())
+            return false;
+        const UnionType &otherType = dynamic_cast<const UnionType &>(other);
         if (members.size() != otherType.members.size())
             return false;
         auto it1 = members.begin();
@@ -34,13 +36,13 @@ public:
     {
         int ret = 0;
         for (auto slot = members.begin(); slot != members.end(); slot++)
-            ret = ret > (slot->second)->getSize() ? ret : (slot->second)->getSize() ;
+            ret = ret > (slot->second)->getSize() ? ret : (slot->second)->getSize();
         return ret;
     }
 
     virtual bool isCompatible(const Type &other) const override
     {
-        if (! other.isUnion())
+        if (!other.isUnion())
             return false;
         return true; // todo
     }
@@ -50,9 +52,6 @@ public:
             return false;
         return true; // todo
     }
-
 };
-
-
 
 #endif // CFLAT_TYPE_UNIONTYPE_H_

@@ -49,7 +49,6 @@ public:
 
         // 加载libid
         // 获取头文件路径
-        
 
         std::fstream is;
         // 打开并解析头文件
@@ -69,7 +68,7 @@ public:
         CflatLexer lexer(&stream);
         antlr4::CommonTokenStream tokens(&lexer);
         CflatParser parser(&tokens);
-        antlr4::tree::ParseTree * tree = parser.declarationFile();
+        antlr4::tree::ParseTree *tree = parser.declarationFile();
 
         tree->accept(this);
         loadedLibraries.insert(std::make_pair(libid, Declarations()));

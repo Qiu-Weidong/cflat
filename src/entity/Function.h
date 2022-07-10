@@ -7,7 +7,7 @@
 class Function : public Entity
 {
 public:
-    std::vector<Variable> parameters(); 
+    std::vector<Variable> parameters();
 };
 
 #endif // CFLAT_ENTITY_FUNCTION_H_

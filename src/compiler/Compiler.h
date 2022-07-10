@@ -17,7 +17,7 @@ class Compiler
 public:
     Compiler();
 
-    void build(const std::vector<std::string> & sourceFiles)
+    void build(const std::vector<std::string> &sourceFiles)
     {
         for (const auto &file : sourceFiles)
             compile(file);

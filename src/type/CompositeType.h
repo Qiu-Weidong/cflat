@@ -9,12 +9,10 @@ class CompositeType : public Type
 {
 protected:
     std::map<std::string, Type *> members;
-    // int cachedSize;
-    // int cachedAlign;
 
 public:
     CompositeType(const std::map<std::string, Type *> &members)
-        : members(members) /*, cachedSize(Type::sizeUnknown), cachedAlign(Type::sizeUnknown)*/ {}
+        : members(members) {}
     virtual bool isCompositeType() const override { return true; }
 
     virtual bool operator==(const Type &other) const override

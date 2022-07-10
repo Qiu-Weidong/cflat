@@ -18,7 +18,8 @@ public:
         return other.isVoid();
     }
 
-    virtual bool isCastableTo(const Type & other) const override {
+    virtual bool isCastableTo(const Type &other) const override
+    {
         return other.isVoid();
     }
 };

@@ -2,17 +2,20 @@
 #define CFLAT_TYPE_POINTERTYPE_H_
 #include "Type.h"
 
-
-class PointerType : public Type {
+class PointerType : public Type
+{
 protected:
     int size;
     std::shared_ptr<Type> baseType;
+
 public:
     PointerType(int size, std::shared_ptr<Type> baseType) : size(size), baseType(baseType) {}
 
     virtual int getSize() const override { return size; }
-    virtual bool operator==(const Type & other) const override {
-        if(! other.isPointer()) return false;
+    virtual bool operator==(const Type &other) const override
+    {
+        if (!other.isPointer())
+            return false;
         return (*baseType) == *other.getBaseType();
     }
     virtual bool isPointer() const override { return true; }
@@ -21,15 +24,18 @@ public:
 
     virtual std::shared_ptr<Type> getBaseType() const override { return baseType; }
 
-    virtual bool isCompatible(const Type & other) const override {
-        if(! other.isPointer()) return false;
-        else if(baseType->isVoid() || other.getBaseType()->isVoid()) return true;
+    virtual bool isCompatible(const Type &other) const override
+    {
+        if (!other.isPointer())
+            return false;
+        else if (baseType->isVoid() || other.getBaseType()->isVoid())
+            return true;
         return baseType->isCompatible(*other.getBaseType());
     }
 
-    virtual bool isCastableTo(const Type & other) const override {
+    virtual bool isCastableTo(const Type &other) const override
+    {
         return other.isPointer() || other.isInteger();
     }
 };
 #endif // CFLAT_TYPE_POINTERTYPE_H_
-
