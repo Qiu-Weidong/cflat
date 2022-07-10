@@ -7,10 +7,10 @@
 class StructType : public Type
 {
 protected:
-    std::map<std::string, Type *> members;
+    std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    StructType(const std::map<std::string, Type *> &members) : members(members) {}
+    StructType(const std::map<std::string, std::shared_ptr<Type>> &members) : members(members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isStruct() const override { return true; }
     virtual bool operator==(const Type & other) const override {

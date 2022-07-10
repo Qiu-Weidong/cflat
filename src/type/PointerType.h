@@ -6,9 +6,9 @@
 class PointerType : public Type {
 protected:
     int size;
-    Type * baseType;
+    std::shared_ptr<Type> baseType;
 public:
-    PointerType(int size, Type * baseType) : size(size), baseType(baseType) {}
+    PointerType(int size, std::shared_ptr<Type> baseType) : size(size), baseType(baseType) {}
 
     virtual int getSize() const override { return size; }
     virtual bool operator==(const Type & other) const override {
@@ -19,7 +19,7 @@ public:
     virtual bool isScalar() const override { return true; }
     virtual bool isCallable() const override { return baseType->isFunction(); }
 
-    virtual Type * getBaseType() const override { return baseType; }
+    virtual std::shared_ptr<Type> getBaseType() const override { return baseType; }
 
     virtual bool isCompatible(const Type & other) const override {
         if(! other.isPointer()) return false;

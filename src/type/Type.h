@@ -1,5 +1,6 @@
 #ifndef CFLAT_TYPE_TYPE_H_
 #define CFLAT_TYPE_TYPE_H_
+#include <memory>
 
 // 表示类型的基类
 class Type {
@@ -33,7 +34,7 @@ public:
     virtual bool isCompatible(const Type & other) const = 0;
     virtual bool isCastableTo(const Type & target) const = 0;
 
-    virtual Type * getBaseType() const { return nullptr; }
+    virtual std::shared_ptr<Type> getBaseType() const { return nullptr; }
 
 
 

@@ -7,11 +7,11 @@
 
 class FunctionType : public Type {
 protected:
-    Type * returnType;
-    std::vector<Type * > paramTypes;
+    std::shared_ptr<Type> returnType;
+    std::vector<std::shared_ptr<Type> > paramTypes;
     bool vararg;
 public:
-    FunctionType(Type * ret, const std::vector<Type *> & paramTypes, bool vararg=false)
+    FunctionType(std::shared_ptr<Type> ret, const std::vector<std::shared_ptr<Type>> & paramTypes, bool vararg=false)
         : returnType(ret), paramTypes(paramTypes), vararg(vararg) {}
     virtual bool isFunction() const override { return true; }
     virtual bool isCallable() const override { return true; }
@@ -41,8 +41,8 @@ public:
     }
 
     virtual int getSize() const override { return 1; }
-    Type * getReturnType() const  { return returnType; }
-    std::vector<Type *> getParamTypes() const { return paramTypes; }
+    std::shared_ptr<Type> getReturnType() const  { return returnType; }
+    std::vector<std::shared_ptr<Type>> getParamTypes() const { return paramTypes; }
     bool isVararg() const { return vararg; }
 };
 #endif // CFLAT_TYPE_FUNCTIONTYPE_H_

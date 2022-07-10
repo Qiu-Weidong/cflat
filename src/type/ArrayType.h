@@ -1,11 +1,12 @@
 #ifndef CFLAT_TYPE_ARRAYTYPE_H_
 #define CFLAT_TYPE_ARRAYTYPE_H_
+#include <memory>
 #include "Type.h"
 
 
 class ArrayType : public Type {
 protected:  
-    Type * baseType;
+    std::shared_ptr<Type> baseType;
     int length;
     int pointerSize;
     static const int undefined = -1;
@@ -26,7 +27,7 @@ public:
         return ! baseType->isAllocatedArray();
     }
 
-    virtual Type * getBaseType() const override { return baseType; }
+    virtual std::shared_ptr<Type> getBaseType() const override { return baseType; }
     int getLength() const { return length; }
     virtual int getSize() const override { return pointerSize; }
     virtual int allocSize() const override {

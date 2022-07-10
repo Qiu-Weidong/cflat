@@ -9,14 +9,7 @@
 class TypeTable
 {
 private:
-    std::map<std::string, Type *> table;
-    void freeTable()
-    {
-        for (auto it = table.begin(); it != table.end(); it++)
-        {
-            delete it->second;
-        }
-    }
+    std::map<std::string, std::shared_ptr<Type>> table;
 
 public:
     TypeTable()
@@ -26,7 +19,6 @@ public:
 
     void resetTable()
     {
-        freeTable();
         // 添加基础类型 `char` `unsigned char` 等。
         table.insert(std::make_pair("void", new VoidType()));
 
@@ -45,10 +37,6 @@ public:
         table.insert(std::make_pair("double", new FloatType(8)));
     }
 
-    ~TypeTable()
-    {
-        freeTable();
-    }
 
     bool isTypeDefined(const std::string &name) const { return table.find(name) != table.end(); }
     void defineType(const std::string &name, Type *type) { table.insert(std::make_pair(name, type)); }

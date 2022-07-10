@@ -1,6 +1,7 @@
 #ifndef CFLAT_ENTITY_ENTITY_H_
 #define CFLAT_ENTITY_ENTITY_H_
 #include <string>
+#include <memory>
 #include "Type.h"
 
 // 表示函数和变量等实体的类
@@ -10,7 +11,7 @@ protected:
     bool isPrivate;   // 是否私有，如果变量或函数有static修饰，即为私有
     bool isDefined;   // 是否定义
     // 类型, 变量才有类型, 将相同函数签名的函数视为同一类型。
-    Type * type;
+    std::shared_ptr<Type> type;
     int nRefered;     // 引用次数
 
 public:

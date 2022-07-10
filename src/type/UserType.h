@@ -7,11 +7,11 @@
 class UserType : public Type {
 protected:
     // std::string name;
-    Type * realType;
+    std::shared_ptr<Type> realType;
 public:
-    UserType(/* const std::string & name, */ Type * realType) :/* name(name),*/ realType(realType) {}
+    UserType(/* const std::string & name, */ std::shared_ptr<Type> realType) :/* name(name),*/ realType(realType) {}
 
-    Type * getRealType() const { return realType; }
+    std::shared_ptr<Type> getRealType() const { return realType; }
 
     virtual int getSize() const override { return realType->getSize(); }
     virtual int allocSize() const override { return realType->allocSize(); }
@@ -38,7 +38,7 @@ public:
     virtual bool isCastableTo(const Type & target) const override {
         return realType->isCastableTo(target);
     }
-    virtual Type * getBaseType() const override { return realType->getBaseType(); }
+    virtual std::shared_ptr<Type> getBaseType() const override { return realType->getBaseType(); }
     virtual bool operator==(const Type & other) { return (*realType) == other; }
 };
 #endif // CFLAT_TYPE_USERTYPE_H_
