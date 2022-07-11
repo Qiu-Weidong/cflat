@@ -13,24 +13,28 @@ private:
 
     std::map<std::string, std::shared_ptr<Entity> > entities;
 public:
-    Scope(std::shared_ptr<Scope> parent) : parent(parent) {}
+    Scope(std::shared_ptr<Scope> parent=std::shared_ptr<Scope>(nullptr)) : parent(parent) {}
 
     bool isGlobalScope() const { return !parent; }
 
-    // std::shared_ptr<Scope> getGlobalScope() const { return parent ? parent->getGlobalScope() : std::shared_ptr<Scope>(nullptr); }
     std::shared_ptr<Scope> getParent() const { return parent; }
     void setParent(std::shared_ptr<Scope> parent) { this->parent = parent; }
     std::vector<std::shared_ptr<Scope> > getChildren() const { return children; }
     void addChild(std::shared_ptr<Scope> child) { children.push_back(child); }
 
-    std::shared_ptr<Entity> get(const std::string & name) const {
+    std::shared_ptr<Entity> getEntity(const std::string & name) const {
         auto it = entities.find(name);
         if(it != entities.end()) return it->second;
-        else if(parent) return parent->get(name);
+        else if(parent) return parent->getEntity(name);
         else return std::shared_ptr<Entity>(nullptr);
     }
-    bool insertEntity(const std::string &name, std::shared_ptr<Entity> entity) { return entities.insert(std::make_pair(name, entity)).second; }
-    bool insertOrAssignEntity(const std::string &name, std::shared_ptr<Entity> entity) { return entities.insert_or_assign(name, entity).second; }
+    bool declareEntity(std::shared_ptr<Entity> entity) { return entities.insert(std::make_pair(entity->getName(), entity)).second; }
+    bool defineEntity(std::shared_ptr<Entity> entity) { 
+        auto it = entities.find(entity->getName());
+        if(it != entities.end() && it->second->isDefined()) { return false; }
+        return entities.insert(std::make_pair(entity->getName(), entity)).second; }
+    
+    bool defineEntityForce(const std::string &name, std::shared_ptr<Entity> entity) { return entities.insert_or_assign(name, entity).second; }
 
 
 };

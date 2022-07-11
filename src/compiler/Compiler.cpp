@@ -1,4 +1,5 @@
 #include "Compiler.h"
+#include "TypeResolver.h"
 
 void Compiler::compile(const std::string &filename)
 {
@@ -15,10 +16,15 @@ void Compiler::compile(const std::string &filename)
     antlr4::CommonTokenStream tokens(&lexer);
     CflatParser parser(&tokens);
 
-    antlr4::tree::ParseTree *tree = parser.compilationUnit();
-    std::cout << tree->toStringTree(&parser) << std::endl;
+    // antlr4::tree::ParseTree *tree = parser.compilationUnit();
+    ast = std::make_shared<antlr4::tree::ParseTree>(parser.compilationUnit());
+    std::cout << ast->toStringTree(&parser) << std::endl;
 
     // 每次编译一个文件都要重置类型表，
+    types.resetTable();
+    // TypeResolver type_resolver(types);
+    TypeResolver(types).resolve(ast);
+
 
     // 遍历语法树 listener
     // antlr4::tree::ParseTreeWalker walker;
@@ -37,4 +43,12 @@ void Compiler::compile(const std::string &filename)
 Compiler::Compiler()
 {
     this->version = "v1.0.0";
+    this->top_scope = std::make_shared<Scope>(std::shared_ptr<Scope>(nullptr));
+    scope_stack.push(top_scope);
 }
+
+void Compiler::semanticAnalyze()
+{
+
+}
+

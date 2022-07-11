@@ -3,16 +3,18 @@
 #include <vector>
 #include <memory>
 #include "Entity.h"
-#include "Variable.h"
+#include "Parameter.h"
 #include "Scope.h"
 
 class Function : public Entity
 {
 protected:
-    std::vector<Variable> parameters;
+    std::vector<std::shared_ptr<Parameter>  > parameters;
     std::shared_ptr<Scope> scope;
+
+    // ir
 public:
-    std::vector<Variable> getParameters() const { return parameters; }
+    std::vector<std::shared_ptr<Parameter>> getParameters() const { return parameters; }
     std::shared_ptr<Scope> getScope() const { return scope; }
 
     virtual bool isFunction() const override { return true; }

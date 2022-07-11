@@ -6,10 +6,10 @@ class PointerType : public Type
 {
 protected:
     int size;
-    std::shared_ptr<Type> baseType;
+    std::shared_ptr<Type> base_type;
 
 public:
-    PointerType(int size, std::shared_ptr<Type> baseType) : size(size), baseType(baseType) {}
+    PointerType(int size, std::shared_ptr<Type> base_type) : size(size), base_type(base_type) {}
 
     virtual int getSize() const override { return size; }
     virtual bool operator==(const Type &other) const override
@@ -17,24 +17,24 @@ public:
         if (!other.isPointer())
             return false;
         const PointerType & otherType = dynamic_cast<const PointerType &>(other);
-        return (*baseType) == *otherType.getBaseType();
+        return (*base_type) == *otherType.getBaseType();
     }
     virtual bool isPointer() const override { return true; }
     virtual bool isScalar() const override { return true; }
-    virtual bool isCallable() const override { return baseType->isFunction(); }
+    virtual bool isCallable() const override { return base_type->isFunction(); }
 
-    std::shared_ptr<Type> getBaseType() const  { return baseType; }
-    void setBaseType(std::shared_ptr<Type> baseType) { this->baseType = baseType; }
+    std::shared_ptr<Type> getBaseType() const  { return base_type; }
+    void setBaseType(std::shared_ptr<Type> base_type) { this->base_type = base_type; }
 
     virtual bool isCompatible(const Type &other) const override
     {
         if (!other.isPointer())
             return false;
         const PointerType & otherType = dynamic_cast<const PointerType &>(other);
-        if (baseType->isVoid() || otherType.getBaseType()->isVoid())
+        if (base_type->isVoid() || otherType.getBaseType()->isVoid())
             return true;
         
-        return baseType->isCompatible(*otherType.getBaseType());
+        return base_type->isCompatible(*otherType.getBaseType());
     }
 
     virtual bool isCastableTo(const Type &other) const override

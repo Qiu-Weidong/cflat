@@ -7,23 +7,23 @@ class IntegerType : public Type
 {
 protected:
     int size;
-    bool isSigned;
+    bool is_signed;
 
 public:
-    IntegerType(int size, bool isSigned)
-        : size(size), isSigned(isSigned) {}
+    IntegerType(int size, bool is_signed)
+        : size(size), is_signed(is_signed) {}
     virtual bool isInteger() const override { return true; }
-    virtual bool isSigned() const override { return isSigned; }
+    virtual bool isSigned() const override { return is_signed; }
     virtual bool isScalar() const override { return true; }
 
     long long minValue() const
     {
-        return isSigned ? -(1ll << (size * 8 - 1)) : 0;
+        return is_signed ? -(1ll << (size * 8 - 1)) : 0;
     }
 
     long long maxValue() const
     {
-        return isSigned ? (1ll << (size * 8 - 1)) - 1 : (1ll << (size * 8)) - 1;
+        return is_signed ? (1ll << (size * 8 - 1)) - 1 : (1ll << (size * 8)) - 1;
     }
 
     bool isInDomain(long long x)
@@ -48,7 +48,7 @@ public:
             return false;
         const IntegerType &otherInteger = dynamic_cast<const IntegerType &>(other);
         return this->size == otherInteger.size &&
-               this->isSigned == otherInteger.isSigned;
+               this->is_signed == otherInteger.is_signed;
     }
 };
 
