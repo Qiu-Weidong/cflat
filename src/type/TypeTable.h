@@ -20,7 +20,7 @@ public:
     void resetTable()
     {
         table.clear();
-        
+
         // 添加基础类型 `char` `unsigned char` 等。
         table.insert(std::make_pair("void", std::make_shared<VoidType>()));
 
@@ -40,6 +40,12 @@ public:
     }
 
     bool isTypeDefined(const std::string &name) const { return table.find(name) != table.end(); }
+    std::shared_ptr<Type> getType(const std::string &name) const
+    {
+        auto ret = table.find(name);
+        if(ret == table.end()) return std::shared_ptr<Type>(nullptr);
+        else return table.find(name)->second;
+    }
     void defineType(const std::string &name, std::shared_ptr<Type> type) { table.insert(std::make_pair(name, type)); }
     void undefineType(const std::string &name) { table.erase(name); } // warning 内存泄漏
 };

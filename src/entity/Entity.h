@@ -16,24 +16,25 @@ protected:
     int nRefered; // 引用次数
 
 public:
-    Entity(bool priv, const std::string &name)
-        : name(name), isPrivate(priv), nRefered(0) {}
+    Entity(const std::string &name, std::shared_ptr<Type> type, bool priv=false, bool defined=false)
+        : name(name), isPrivate(priv), isDefined(defined), nRefered(0), type(type) {}
 
     std::string getName() const { return name; }
     virtual std::string symbolString() const { return getName(); }
-
+    std::shared_ptr<Type> getType() const { return type; }
     bool isDefined() const { return isDefined; }
-
-    // value
-
     bool isPrivate() const { return isPrivate; }
-
     bool isRefered() const { return nRefered > 0; }
 
     void refer() { nRefered++; }
-
     void setName(const std::string &name) { this->name = name; }
     void setPrivate(bool isPrivate) { this->isPrivate = isPrivate; }
+    void setDefined(bool isDefined) { this->isDefined = isDefined; }
+    void setType(std::shared_ptr<Type> type) { this->type = type; }
+
+    virtual bool isVariable() const { return false; }
+    virtual bool isParameter() const { return false; }
+    virtual bool isFunction() const { return false; }
 };
 
 #endif // CFLAT_ENTITY_ENTITY_H_
