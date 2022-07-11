@@ -23,7 +23,7 @@ void Compiler::compile(const std::string &filename)
     // 每次编译一个文件都要重置类型表，
     types.resetTable();
     // TypeResolver type_resolver(types);
-    TypeResolver(types).resolve(ast);
+    // TypeResolver(types).resolve(ast);
 
 
     // 遍历语法树 listener
@@ -44,7 +44,6 @@ Compiler::Compiler()
 {
     this->version = "v1.0.0";
     this->top_scope = std::make_shared<Scope>(std::shared_ptr<Scope>(nullptr));
-    scope_stack.push(top_scope);
 }
 
 void Compiler::semanticAnalyze()

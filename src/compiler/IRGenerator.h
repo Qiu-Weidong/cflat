@@ -1,8 +1,8 @@
 #ifndef CFLAT_COMPILER_IRGENERATOR_H_
 #define CFLAT_COMPILER_IRGENERATOR_H_
-#include "CflatBaseVisitor.h"
+#include "Visitor.h"
 
-class IRGenerator : public CflatBaseVisitor
+class IRGenerator : public Visitor
 {
 };
 

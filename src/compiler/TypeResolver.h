@@ -1,17 +1,17 @@
 #ifndef CFLAT_COMPILER_TYPERESOLVER_H_
 #define CFLAT_COMPILER_TYPERESOLVER_H_
 #include <memory>
-#include "CflatBaseVisitor.h"
+#include "Visitor.h"
 #include "TypeTable.h"
 #include "tree/ParseTree.h"
 
-class TypeResolver : public CflatBaseVisitor
+class TypeResolver : public Visitor
 {
-private:
-    TypeTable & types;
-public :
-    TypeResolver(TypeTable & types) : types(types) {}
-    void resolve(std::shared_ptr<antlr4::tree::ParseTree> ast);
+public:
+    TypeResolver(std::shared_ptr<TypeTable> types,
+                 std::shared_ptr<Scope> top_scope,
+                 std::shared_ptr<antlr4::tree::ParseTree> ast) : Visitor(types, top_scope, ast) {}
+    void resolve();
 };
 
 #endif // CFLAT_COMPILER_TYPERESOLVER_H_

@@ -1,8 +1,8 @@
 #ifndef CFLAT_COMPILER_TYPECHECKER_H_
 #define CFLAT_COMPILER_TYPECHECKER_H_
-#include "CflatBaseVisitor.h"
+#include "Visitor.h"
 
-class TypeChecker : public CflatBaseVisitor
+class TypeChecker : public Visitor
 {
 };
 

@@ -8,15 +8,10 @@
 static llvm::cl::list<std::string>
     InputFiles(llvm::cl::Positional,
                llvm::cl::desc("<input-files>"));
-
 static llvm::cl::opt<std::string>
-    MTriple("mtriple",
-            llvm::cl::desc("Override target triple for module"));
+    OutputFile("-o",
+                llvm::cl::desc("<output-file>"));
 
-static llvm::cl::opt<bool>
-    EmitLLVM("emit-llvm",
-             llvm::cl::desc("Emit IR code instead of assembler"),
-             llvm::cl::init(false));
 int main(int argc, const char ** argv) {
     llvm::InitializeAllTargets();
     llvm::InitializeAllTargetMCs();

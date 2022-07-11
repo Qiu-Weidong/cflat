@@ -1,8 +1,8 @@
 #ifndef CFLAT_COMPILER_DEREFERENCECHECHER_H_
 #define CFLAT_COMPILER_DEREFERENCECHECHER_H_
-#include "CflatBaseVisitor.h"
+#include "Visitor.h"
 
-class DereferenceChecker : public CflatBaseVisitor
+class DereferenceChecker : public Visitor
 {
 };
 

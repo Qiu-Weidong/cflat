@@ -2,7 +2,6 @@
 #define CFLAT_COMPILER_COMPILER_H_
 #include <string>
 #include <vector>
-#include <stack>
 #include <fstream>
 
 #include "antlr4-runtime.h"
@@ -18,8 +17,6 @@ class Compiler
     TypeTable types;
     // 符號表
     std::shared_ptr<Scope> top_scope;
-    // 符號表棧
-    std::stack<std::shared_ptr<Scope> > scope_stack;
     // 語法樹
     std::shared_ptr<antlr4::tree::ParseTree> ast;
     

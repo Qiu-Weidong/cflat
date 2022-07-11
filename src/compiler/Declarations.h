@@ -1,8 +1,0 @@
-#ifndef CFLAT_PARSER_DECLARATIONS_H_
-#define CFLAT_PARSER_DECLARATIONS_H_
-
-class Declarations
-{
-};
-
-#endif // CFLAT_PARSER_DECLARATIONS_H_
