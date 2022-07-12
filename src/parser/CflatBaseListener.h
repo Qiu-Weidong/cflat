@@ -91,8 +91,56 @@ public:
   virtual void enterFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext * /*ctx*/) override { }
   virtual void exitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext * /*ctx*/) override { }
 
-  virtual void enterTypeRefBase(CflatParser::TypeRefBaseContext * /*ctx*/) override { }
-  virtual void exitTypeRefBase(CflatParser::TypeRefBaseContext * /*ctx*/) override { }
+  virtual void enterVoidTypeBase(CflatParser::VoidTypeBaseContext * /*ctx*/) override { }
+  virtual void exitVoidTypeBase(CflatParser::VoidTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterCharTypeBase(CflatParser::CharTypeBaseContext * /*ctx*/) override { }
+  virtual void exitCharTypeBase(CflatParser::CharTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterShortTypeBase(CflatParser::ShortTypeBaseContext * /*ctx*/) override { }
+  virtual void exitShortTypeBase(CflatParser::ShortTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterIntTypeBase(CflatParser::IntTypeBaseContext * /*ctx*/) override { }
+  virtual void exitIntTypeBase(CflatParser::IntTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterLongTypeBase(CflatParser::LongTypeBaseContext * /*ctx*/) override { }
+  virtual void exitLongTypeBase(CflatParser::LongTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterUnsignedCharTypeBase(CflatParser::UnsignedCharTypeBaseContext * /*ctx*/) override { }
+  virtual void exitUnsignedCharTypeBase(CflatParser::UnsignedCharTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterUnsignedShortTypeBase(CflatParser::UnsignedShortTypeBaseContext * /*ctx*/) override { }
+  virtual void exitUnsignedShortTypeBase(CflatParser::UnsignedShortTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterUnsignedIntTypeBase(CflatParser::UnsignedIntTypeBaseContext * /*ctx*/) override { }
+  virtual void exitUnsignedIntTypeBase(CflatParser::UnsignedIntTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterUnsignedLongTypeBase(CflatParser::UnsignedLongTypeBaseContext * /*ctx*/) override { }
+  virtual void exitUnsignedLongTypeBase(CflatParser::UnsignedLongTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterFloatTypeBase(CflatParser::FloatTypeBaseContext * /*ctx*/) override { }
+  virtual void exitFloatTypeBase(CflatParser::FloatTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterDoubleTypeBase(CflatParser::DoubleTypeBaseContext * /*ctx*/) override { }
+  virtual void exitDoubleTypeBase(CflatParser::DoubleTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterStructTypeBase(CflatParser::StructTypeBaseContext * /*ctx*/) override { }
+  virtual void exitStructTypeBase(CflatParser::StructTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterUnionTypeBase(CflatParser::UnionTypeBaseContext * /*ctx*/) override { }
+  virtual void exitUnionTypeBase(CflatParser::UnionTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterUserTypeBase(CflatParser::UserTypeBaseContext * /*ctx*/) override { }
+  virtual void exitUserTypeBase(CflatParser::UserTypeBaseContext * /*ctx*/) override { }
+
+  virtual void enterArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext * /*ctx*/) override { }
+  virtual void exitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext * /*ctx*/) override { }
+
+  virtual void enterPointerTypeSuffix(CflatParser::PointerTypeSuffixContext * /*ctx*/) override { }
+  virtual void exitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext * /*ctx*/) override { }
+
+  virtual void enterFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext * /*ctx*/) override { }
+  virtual void exitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext * /*ctx*/) override { }
 
   virtual void enterTypeDef(CflatParser::TypeDefContext * /*ctx*/) override { }
   virtual void exitTypeDef(CflatParser::TypeDefContext * /*ctx*/) override { }

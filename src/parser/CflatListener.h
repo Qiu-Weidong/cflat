@@ -89,8 +89,56 @@ public:
   virtual void enterFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) = 0;
   virtual void exitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) = 0;
 
-  virtual void enterTypeRefBase(CflatParser::TypeRefBaseContext *ctx) = 0;
-  virtual void exitTypeRefBase(CflatParser::TypeRefBaseContext *ctx) = 0;
+  virtual void enterVoidTypeBase(CflatParser::VoidTypeBaseContext *ctx) = 0;
+  virtual void exitVoidTypeBase(CflatParser::VoidTypeBaseContext *ctx) = 0;
+
+  virtual void enterCharTypeBase(CflatParser::CharTypeBaseContext *ctx) = 0;
+  virtual void exitCharTypeBase(CflatParser::CharTypeBaseContext *ctx) = 0;
+
+  virtual void enterShortTypeBase(CflatParser::ShortTypeBaseContext *ctx) = 0;
+  virtual void exitShortTypeBase(CflatParser::ShortTypeBaseContext *ctx) = 0;
+
+  virtual void enterIntTypeBase(CflatParser::IntTypeBaseContext *ctx) = 0;
+  virtual void exitIntTypeBase(CflatParser::IntTypeBaseContext *ctx) = 0;
+
+  virtual void enterLongTypeBase(CflatParser::LongTypeBaseContext *ctx) = 0;
+  virtual void exitLongTypeBase(CflatParser::LongTypeBaseContext *ctx) = 0;
+
+  virtual void enterUnsignedCharTypeBase(CflatParser::UnsignedCharTypeBaseContext *ctx) = 0;
+  virtual void exitUnsignedCharTypeBase(CflatParser::UnsignedCharTypeBaseContext *ctx) = 0;
+
+  virtual void enterUnsignedShortTypeBase(CflatParser::UnsignedShortTypeBaseContext *ctx) = 0;
+  virtual void exitUnsignedShortTypeBase(CflatParser::UnsignedShortTypeBaseContext *ctx) = 0;
+
+  virtual void enterUnsignedIntTypeBase(CflatParser::UnsignedIntTypeBaseContext *ctx) = 0;
+  virtual void exitUnsignedIntTypeBase(CflatParser::UnsignedIntTypeBaseContext *ctx) = 0;
+
+  virtual void enterUnsignedLongTypeBase(CflatParser::UnsignedLongTypeBaseContext *ctx) = 0;
+  virtual void exitUnsignedLongTypeBase(CflatParser::UnsignedLongTypeBaseContext *ctx) = 0;
+
+  virtual void enterFloatTypeBase(CflatParser::FloatTypeBaseContext *ctx) = 0;
+  virtual void exitFloatTypeBase(CflatParser::FloatTypeBaseContext *ctx) = 0;
+
+  virtual void enterDoubleTypeBase(CflatParser::DoubleTypeBaseContext *ctx) = 0;
+  virtual void exitDoubleTypeBase(CflatParser::DoubleTypeBaseContext *ctx) = 0;
+
+  virtual void enterStructTypeBase(CflatParser::StructTypeBaseContext *ctx) = 0;
+  virtual void exitStructTypeBase(CflatParser::StructTypeBaseContext *ctx) = 0;
+
+  virtual void enterUnionTypeBase(CflatParser::UnionTypeBaseContext *ctx) = 0;
+  virtual void exitUnionTypeBase(CflatParser::UnionTypeBaseContext *ctx) = 0;
+
+  virtual void enterUserTypeBase(CflatParser::UserTypeBaseContext *ctx) = 0;
+  virtual void exitUserTypeBase(CflatParser::UserTypeBaseContext *ctx) = 0;
+
+  virtual void enterArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *ctx) = 0;
+  virtual void exitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *ctx) = 0;
+
+  virtual void enterPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *ctx) = 0;
+  virtual void exitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *ctx) = 0;
+
+  virtual void enterFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *ctx) = 0;
+  virtual void exitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *ctx) = 0;
 
   virtual void enterTypeDef(CflatParser::TypeDefContext *ctx) = 0;
   virtual void exitTypeDef(CflatParser::TypeDefContext *ctx) = 0;

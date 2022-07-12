@@ -41,6 +41,15 @@ public:
     void setMembers(const std::map<std::string, std::shared_ptr<Type>> & members) { this->members = members; }
     bool insertMember(const std::string & name, std::shared_ptr<Type> type) { return members.insert(std::make_pair(name, type)).second; }
     bool insertOrAssignMember(const std::string &name, std::shared_ptr<Type> type) { return members.insert_or_assign(name, type).second; }
+
+    friend std::ostream & operator<<(std::ostream &os, const CompositeType & composite) {
+        os << "{ Composite Type -> members: " ;
+        for(auto it=composite.members.begin(); it != composite.members.end(); it++) {
+            os <<  it->first << " -> " << *(it->second) << ", ";
+        }
+        os << "}";
+        return os;
+    }
 };
 
 #endif // CFLAT_TYPE_COMPOSITETYPE_H_

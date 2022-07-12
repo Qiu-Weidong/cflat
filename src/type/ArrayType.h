@@ -11,22 +11,22 @@ protected:
     static const int undefined = -1;
 
 public:
-    ArrayType(std::shared_ptr<Type> baseType, int pointerSize) : PointerType(pointerSize, baseType), length(undefined) {}
-    ArrayType(std::shared_ptr<Type> baseType, int length, int pointerSize)
-        : PointerType(pointerSize, baseType), length(length) {}
+    ArrayType(std::shared_ptr<Type> base_type, int pointerSize) : PointerType(pointerSize, base_type), length(undefined) {}
+    ArrayType(std::shared_ptr<Type> base_type, int length, int pointerSize)
+        : PointerType(pointerSize, base_type), length(length) {}
 
     virtual bool isArray() const override { return true; }
     virtual bool isAllocatedArray() const override
     {
         return length != undefined &&
-               (!baseType->isArray() || baseType->isAllocatedArray());
+               (!base_type->isArray() || base_type->isAllocatedArray());
     }
 
     virtual bool isIncompleteArray() const override
     {
-        if (!baseType->isArray())
+        if (!base_type->isArray())
             return false;
-        return !baseType->isAllocatedArray();
+        return !base_type->isAllocatedArray();
     }
 
     int getLength() const { return length; }
@@ -34,7 +34,7 @@ public:
     
     virtual int allocSize() const override
     {
-        return length == undefined ? getSize() : baseType->allocSize() * length;
+        return length == undefined ? getSize() : base_type->allocSize() * length;
     }
 
     virtual bool operator==(const Type &other) const override
@@ -43,7 +43,7 @@ public:
             return false;
         // 确保了是array类型，dynamic_cast不会失败
         const PointerType &otherType = dynamic_cast<const PointerType &>(other);
-        return (*baseType) == *otherType.getBaseType();
+        return (*base_type) == *otherType.getBaseType();
     }
 
     virtual bool isCompatible(const Type &other) const override
@@ -55,12 +55,17 @@ public:
         if (otherType.getBaseType()->isVoid())
             return true;
         else
-            return baseType->isCompatible(*otherType.getBaseType()) && baseType->getSize() == otherType.getBaseType()->getSize();
+            return base_type->isCompatible(*otherType.getBaseType()) && base_type->getSize() == otherType.getBaseType()->getSize();
     }
 
     virtual bool isCastableTo(const Type &target) const override
     {
         return target.isPointer() || target.isArray();
+    }
+
+    friend std::ostream & operator<<(std::ostream & os, const ArrayType & array) {
+        os << "{ Array Type" << array.length << " -> " << *(array.base_type) << " }";
+        return os;
     }
 };
 

@@ -50,6 +50,11 @@ public:
         return this->size == otherInteger.size &&
                this->is_signed == otherInteger.is_signed;
     }
+
+    friend std::ostream & operator<<(std::ostream &os, const IntegerType & integer) {
+        os << "{ Integer Type }";
+        return os;
+    }
 };
 
 #endif // CFLAT_TYPE_INTEGERTYPE_H_

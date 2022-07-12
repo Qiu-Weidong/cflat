@@ -1,5 +1,6 @@
 #include "Compiler.h"
 #include "ImportResolver.h"
+#include "DeclarationResolver.h"
 #include "TypeResolver.h"
 
 void Compiler::compile(const std::string &filename)
@@ -19,13 +20,19 @@ void Compiler::compile(const std::string &filename)
 
     // antlr4::tree::ParseTree *tree = parser.compilationUnit();
     ast = std::shared_ptr<antlr4::tree::ParseTree>(parser.compilationUnit());
-    std::cout << ast->toStringTree(&parser) << std::endl;
+    // std::cout << ast->toStringTree(&parser) << std::endl;
 
     // 每次编译一个文件都要重置类型表，
     types->resetTable();
-    ImportResolver(types, top_scope, ast).resolve();
-    // TypeResolver type_resolver(types);
-    // TypeResolver(types).resolve(ast);
+    // ImportResolver(types, top_scope, ast).resolve();
+    ImportResolver resolver(types, top_scope, ast);
+    resolver.addLoadPath("./import");
+    resolver.resolve();
+
+    auto imports = resolver.getLibraries();
+
+    DeclarationResolver declare_resolver(types, top_scope, ast, imports);
+    declare_resolver.resolve();
 
 
     // 遍历语法树 listener

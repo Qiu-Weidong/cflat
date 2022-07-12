@@ -46,7 +46,8 @@ public:
         if(ret == table.end()) return std::shared_ptr<Type>(nullptr);
         else return table.find(name)->second;
     }
-    void defineType(const std::string &name, std::shared_ptr<Type> type) { table.insert(std::make_pair(name, type)); }
+    bool defineType(const std::string &name, std::shared_ptr<Type> type) { return table.insert(std::make_pair(name, type)).second; }
+    bool defineTypeForce(const std::string &name, std::shared_ptr<Type> type) { return table.insert_or_assign(name, type).second; }
     void undefineType(const std::string &name) { table.erase(name); } // warning 内存泄漏
 };
 

@@ -33,6 +33,11 @@ public:
     {
         return target.isFloat() || target.isInteger();
     }
+
+    friend std::ostream & operator<<(std::ostream &os, const FloatType & floatType) {
+        os << "{ Float Type }";
+        return os;
+    }
 };
 
 #endif // CFLAT_TYPE_FLOATTYPE_H_

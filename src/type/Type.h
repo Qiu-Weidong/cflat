@@ -1,6 +1,7 @@
 #ifndef CFLAT_TYPE_TYPE_H_
 #define CFLAT_TYPE_TYPE_H_
 #include <memory>
+#include <iostream>
 
 // 表示类型的基类
 class Type
@@ -33,6 +34,9 @@ public:
 
     virtual bool isCompatible(const Type &other) const = 0; // 是否能够隐式转换
     virtual bool isCastableTo(const Type &target) const = 0; // 是否能够强制转换
+
+    // 爲方便調試，增添輸出操作
+    friend std::ostream & operator<<(std::ostream & os, const Type & type) { os << "{Abstract Type}" ; return os; }
 };
 
 #endif // CFLAT_TYPE_TYPE_H_

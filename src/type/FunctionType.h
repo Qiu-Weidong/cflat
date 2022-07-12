@@ -61,5 +61,11 @@ public:
     void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); }
     void setVararg(bool vararg) { this->vararg = vararg; }
 
+    friend std::ostream &operator<<(std::ostream &os, const FunctionType & func) {
+        os << "{ Function Type -> return : " << *func.returnType << ", params : ";
+        for(auto param : func.paramTypes) { os << *param << ", "; }
+        os << "}";
+        return os;
+    }
 };
 #endif // CFLAT_TYPE_FUNCTIONTYPE_H_

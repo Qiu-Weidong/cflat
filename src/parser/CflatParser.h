@@ -36,13 +36,13 @@ public:
     RuleBlock = 12, RuleDefVarList = 13, RuleDefStruct = 14, RuleDefUnion = 15, 
     RuleMemberList = 16, RuleSlot = 17, RuleFuncDecl = 18, RuleVarDecl = 19, 
     RuleType = 20, RuleTypeRef = 21, RuleInteger = 22, RuleParamTypeRefs = 23, 
-    RuleFixedParamTypeRefs = 24, RuleTypeRefBase = 25, RuleTypeDef = 26, 
-    RuleStmts = 27, RuleStmt = 28, RuleLabeledStmt = 29, RuleIfStmt = 30, 
-    RuleWhileStmt = 31, RuleDowhileStmt = 32, RuleForStmt = 33, RuleSwitchStmt = 34, 
-    RuleCaseClauses = 35, RuleCaseClause = 36, RuleCases = 37, RuleDefaultClause = 38, 
-    RuleCaseBody = 39, RuleGotoStmt = 40, RuleBreakStmt = 41, RuleContinueStmt = 42, 
-    RuleReturnStmt = 43, RuleExpr = 44, RuleExprList = 45, RuleArguments = 46, 
-    RulePrimary = 47, RuleLiteral = 48
+    RuleFixedParamTypeRefs = 24, RuleTypeRefBase = 25, RuleTypeRefSuffix = 26, 
+    RuleTypeDef = 27, RuleStmts = 28, RuleStmt = 29, RuleLabeledStmt = 30, 
+    RuleIfStmt = 31, RuleWhileStmt = 32, RuleDowhileStmt = 33, RuleForStmt = 34, 
+    RuleSwitchStmt = 35, RuleCaseClauses = 36, RuleCaseClause = 37, RuleCases = 38, 
+    RuleDefaultClause = 39, RuleCaseBody = 40, RuleGotoStmt = 41, RuleBreakStmt = 42, 
+    RuleContinueStmt = 43, RuleReturnStmt = 44, RuleExpr = 45, RuleExprList = 46, 
+    RuleArguments = 47, RulePrimary = 48, RuleLiteral = 49
   };
 
   explicit CflatParser(antlr4::TokenStream *input);
@@ -81,6 +81,7 @@ public:
   class ParamTypeRefsContext;
   class FixedParamTypeRefsContext;
   class TypeRefBaseContext;
+  class TypeRefSuffixContext;
   class TypeDefContext;
   class StmtsContext;
   class StmtContext;
@@ -467,10 +468,8 @@ public:
     TypeRefContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     TypeRefBaseContext *typeRefBase();
-    std::vector<ParamTypeRefsContext *> paramTypeRefs();
-    ParamTypeRefsContext* paramTypeRefs(size_t i);
-    std::vector<IntegerContext *> integer();
-    IntegerContext* integer(size_t i);
+    std::vector<TypeRefSuffixContext *> typeRefSuffix();
+    TypeRefSuffixContext* typeRefSuffix(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -532,17 +531,207 @@ public:
   class  TypeRefBaseContext : public antlr4::ParserRuleContext {
   public:
     TypeRefBaseContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    TypeRefBaseContext() = default;
+    void copyFrom(TypeRefBaseContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *Identifier();
+
+   
+  };
+
+  class  FloatTypeBaseContext : public TypeRefBaseContext {
+  public:
+    FloatTypeBaseContext(TypeRefBaseContext *ctx);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
+  };
+
+  class  LongTypeBaseContext : public TypeRefBaseContext {
+  public:
+    LongTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  UnsignedShortTypeBaseContext : public TypeRefBaseContext {
+  public:
+    UnsignedShortTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  DoubleTypeBaseContext : public TypeRefBaseContext {
+  public:
+    DoubleTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  VoidTypeBaseContext : public TypeRefBaseContext {
+  public:
+    VoidTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ShortTypeBaseContext : public TypeRefBaseContext {
+  public:
+    ShortTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  IntTypeBaseContext : public TypeRefBaseContext {
+  public:
+    IntTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  UnsignedLongTypeBaseContext : public TypeRefBaseContext {
+  public:
+    UnsignedLongTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  UnsignedCharTypeBaseContext : public TypeRefBaseContext {
+  public:
+    UnsignedCharTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StructTypeBaseContext : public TypeRefBaseContext {
+  public:
+    StructTypeBaseContext(TypeRefBaseContext *ctx);
+
+    antlr4::tree::TerminalNode *Identifier();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  CharTypeBaseContext : public TypeRefBaseContext {
+  public:
+    CharTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  UserTypeBaseContext : public TypeRefBaseContext {
+  public:
+    UserTypeBaseContext(TypeRefBaseContext *ctx);
+
+    antlr4::tree::TerminalNode *Identifier();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  UnsignedIntTypeBaseContext : public TypeRefBaseContext {
+  public:
+    UnsignedIntTypeBaseContext(TypeRefBaseContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  UnionTypeBaseContext : public TypeRefBaseContext {
+  public:
+    UnionTypeBaseContext(TypeRefBaseContext *ctx);
+
+    antlr4::tree::TerminalNode *Identifier();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   TypeRefBaseContext* typeRefBase();
+
+  class  TypeRefSuffixContext : public antlr4::ParserRuleContext {
+  public:
+    TypeRefSuffixContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    TypeRefSuffixContext() = default;
+    void copyFrom(TypeRefSuffixContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  FunctionTypeSuffixContext : public TypeRefSuffixContext {
+  public:
+    FunctionTypeSuffixContext(TypeRefSuffixContext *ctx);
+
+    ParamTypeRefsContext *paramTypeRefs();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  PointerTypeSuffixContext : public TypeRefSuffixContext {
+  public:
+    PointerTypeSuffixContext(TypeRefSuffixContext *ctx);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ArrayTypeSuffixContext : public TypeRefSuffixContext {
+  public:
+    ArrayTypeSuffixContext(TypeRefSuffixContext *ctx);
+
+    IntegerContext *integer();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  TypeRefSuffixContext* typeRefSuffix();
 
   class  TypeDefContext : public antlr4::ParserRuleContext {
   public:

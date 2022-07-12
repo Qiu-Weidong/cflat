@@ -40,7 +40,14 @@ public:
         return true; // todo
     }
 
-
+    friend std::ostream &operator<<(std::ostream &os, const UnionType & unionType) {
+        os << "{ Union Type -> members: " ;
+        for(auto it=unionType.members.begin(); it != unionType.members.end(); it++) {
+            os <<  it->first << " -> " << *(it->second) << ", ";
+        }
+        os << "}";
+        return os;
+    }
 };
 
 #endif // CFLAT_TYPE_UNIONTYPE_H_

@@ -41,5 +41,10 @@ public:
     {
         return other.isPointer() || other.isInteger();
     }
+
+    friend std::ostream & operator<<(std::ostream & os, const PointerType & pointer) {
+        os << "{ Pointer Type -> " << *(pointer.base_type) << " }";
+        return os;
+    }
 };
 #endif // CFLAT_TYPE_POINTERTYPE_H_

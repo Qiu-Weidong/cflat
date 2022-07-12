@@ -42,5 +42,8 @@ public:
     }
 
     virtual bool operator==(const Type &other) { return (*real_type) == other; }
+
+    friend std::ostream & operator<<(std::ostream & os, const UserType & type) { 
+        os << "{ User Type -> " << *(type.real_type) << "}" ; return os; }
 };
 #endif // CFLAT_TYPE_USERTYPE_H_

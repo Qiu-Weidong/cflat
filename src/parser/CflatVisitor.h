@@ -69,7 +69,39 @@ public:
 
     virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *context) = 0;
 
-    virtual antlrcpp::Any visitTypeRefBase(CflatParser::TypeRefBaseContext *context) = 0;
+    virtual antlrcpp::Any visitVoidTypeBase(CflatParser::VoidTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitCharTypeBase(CflatParser::CharTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitShortTypeBase(CflatParser::ShortTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitIntTypeBase(CflatParser::IntTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitLongTypeBase(CflatParser::LongTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitUnsignedCharTypeBase(CflatParser::UnsignedCharTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitUnsignedShortTypeBase(CflatParser::UnsignedShortTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitUnsignedIntTypeBase(CflatParser::UnsignedIntTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitUnsignedLongTypeBase(CflatParser::UnsignedLongTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitFloatTypeBase(CflatParser::FloatTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitDoubleTypeBase(CflatParser::DoubleTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitStructTypeBase(CflatParser::StructTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitUnionTypeBase(CflatParser::UnionTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitUserTypeBase(CflatParser::UserTypeBaseContext *context) = 0;
+
+    virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *context) = 0;
+
+    virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *context) = 0;
+
+    virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *context) = 0;
 
     virtual antlrcpp::Any visitTypeDef(CflatParser::TypeDefContext *context) = 0;
 

@@ -43,6 +43,14 @@ public:
         return true; // todo
     }
 
+    friend std::ostream &operator<<(std::ostream &os, const StructType & structType) {
+        os << "{ Struct Type -> members: " ;
+        for(auto it=structType.members.begin(); it != structType.members.end(); it++) {
+            os <<  it->first << " -> " << *(it->second) << ", ";
+        }
+        os << "}";
+        return os;
+    }
 };
 
 #endif // CFLAT_TYPE_STRUCTTYPE_H_

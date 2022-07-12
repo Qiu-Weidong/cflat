@@ -13,17 +13,13 @@ declarationFile:
 	)* EOF;
 importStmts: importStmt*;
 importStmt: 'import' libid ';';
-libid: name ('.' name)* ;
+libid: name ('.' name)*;
 name: Identifier;
-topDefs: (
-		defFunc
-		| defVars
-		| defStruct
-		| defUnion
-		| typeDef
-	)*;
+topDefs: ( defFunc | defVars | defStruct | defUnion | typeDef)*;
 defVars:
-	('static')? ('const')? type name ('=' expr)? (',' name ('=' expr)?)* ';';
+	('static')? ('const')? type name ('=' expr)? (
+		',' name ('=' expr)?
+	)* ';';
 defFunc: ('static')? typeRef name '(' params ')' block;
 params: 'void' | fixedParams (',' '...')?;
 fixedParams: param (',' param)*;
@@ -38,29 +34,30 @@ funcDecl: 'extern' typeRef name '(' params ')' ';';
 varDecl: 'extern' 'const'? type name ';';
 type: typeRef;
 typeRef:
-	typeRefBase (
-		'[' integer? ']'
-		| '*'
-		| '(' paramTypeRefs ')'
-	)*;
+	typeRefBase typeRefSuffix*;
 integer: HexLiteral | DecimalLiteral | OctalLiteral;
 paramTypeRefs: 'void' | fixedParamTypeRefs (',' '...')?;
 fixedParamTypeRefs: 'const'? typeRef (',' 'const'? typeRef)*;
 typeRefBase:
-	'void'
-	| 'char'
-	| 'short'
-	| 'int'
-	| 'long'
-	| 'unsigned' 'char'
-	| 'unsigned' 'short'
-	| 'unsigned' 'int'
-	| 'unsigned' 'long'
-	| 'float'
-	| 'double'
-	| 'struct' Identifier
-	| 'union' Identifier
-	| Identifier;
+	'void'						# VoidTypeBase
+	| 'char'					# CharTypeBase
+	| 'short'					# ShortTypeBase
+	| 'int'						# IntTypeBase
+	| 'long'					# LongTypeBase
+	| 'unsigned' 'char'			# UnsignedCharTypeBase
+	| 'unsigned' 'short'		# UnsignedShortTypeBase
+	| 'unsigned' 'int'			# UnsignedIntTypeBase
+	| 'unsigned' 'long'			# UnsignedLongTypeBase
+	| 'float'					# FloatTypeBase
+	| 'double'					# DoubleTypeBase
+	| 'struct' Identifier		# StructTypeBase
+	| 'union' Identifier		# UnionTypeBase 
+	| Identifier 				# UserTypeBase 
+	;
+typeRefSuffix: '[' integer? ']' # ArrayTypeSuffix 
+	| '*' 						# PointerTypeSuffix
+	| '(' paramTypeRefs ')'		# FunctionTypeSuffix
+	;
 typeDef: 'typedef' typeRef Identifier ';';
 stmts: stmt*;
 stmt:
