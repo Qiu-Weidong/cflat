@@ -9,7 +9,7 @@ class ImportResolver : public Resolver
     // 頭文件的搜索路徑，可以通過-I指定
     std::vector<std::string> load_paths;
 
-    std::map<std::string, std::shared_ptr<antlr4::tree::ParseTree>> loaded_libraries;
+    std::map<std::string, std::shared_ptr<CflatParser::DeclarationFileContext>> loaded_libraries;
 
 public:
     ImportResolver(std::shared_ptr<TypeTable> types,
@@ -44,15 +44,15 @@ public:
         if (!is.is_open())
         {
             std::cerr << "fail to open file: " << libid << std::endl;
-            return antlrcpp::Any(std::shared_ptr<antlr4::tree::ParseTree>(nullptr));
+            return antlrcpp::Any(std::shared_ptr<CflatParser::DeclarationFileContext>(nullptr));
         }
 
         antlr4::ANTLRInputStream stream(is);
         CflatLexer lexer(&stream);
         antlr4::CommonTokenStream tokens(&lexer);
         CflatParser parser(&tokens);
-        std::shared_ptr<antlr4::tree::ParseTree> tree = std::shared_ptr<antlr4::tree::ParseTree>(parser.declarationFile());
-
+        std::shared_ptr<CflatParser::DeclarationFileContext> tree = std::shared_ptr<CflatParser::DeclarationFileContext>(parser.declarationFile());
+        if(!tree) { std::cout << "parse tree fail!!!" << std::endl; }
         // 將語法樹添加到load_libraries中
         if (!loaded_libraries.insert_or_assign(libid, tree).second)
         {
@@ -82,8 +82,8 @@ public:
         return antlrcpp::Any(ctx->Identifier()->getText());
     }
 
-    std::vector< std::shared_ptr<antlr4::tree::ParseTree> > getLibraries() const {
-        std::vector<std::shared_ptr<antlr4::tree::ParseTree>> ret;
+    std::vector< std::shared_ptr<CflatParser::DeclarationFileContext> > getLibraries() const {
+        std::vector<std::shared_ptr<CflatParser::DeclarationFileContext>> ret;
         for(const auto library: loaded_libraries) {
             ret.push_back(library.second);
         }

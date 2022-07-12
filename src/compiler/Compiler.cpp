@@ -31,9 +31,12 @@ void Compiler::compile(const std::string &filename)
 
     auto imports = resolver.getLibraries();
 
+    std::cout << "imports size: " << imports.size() << std::endl;
+
     DeclarationResolver declare_resolver(types, top_scope, ast, imports);
     declare_resolver.resolve();
 
+    std::cout << "declare resolve done..." << std::endl;
     for(const auto type : types->getAllTypes()) { std::cout << *(type) << std::endl; }
 
 

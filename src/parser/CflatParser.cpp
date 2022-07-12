@@ -178,6 +178,7 @@ void CflatParser::DeclarationFileContext::exitRule(tree::ParseTreeListener *list
 
 
 antlrcpp::Any CflatParser::DeclarationFileContext::accept(tree::ParseTreeVisitor *visitor) {
+  std::cout << "declarationFileContext" << std::endl;
   if (auto parserVisitor = dynamic_cast<CflatVisitor*>(visitor))
     return parserVisitor->visitDeclarationFile(this);
   else

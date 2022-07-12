@@ -9,21 +9,31 @@
 
 class DeclarationResolver : public Resolver
 {
-    std::vector<std::shared_ptr<antlr4::tree::ParseTree>> headers;
+    std::vector<std::shared_ptr<CflatParser::DeclarationFileContext>> headers;
 
 public:
     DeclarationResolver(std::shared_ptr<TypeTable> types,
                         std::shared_ptr<Scope> top_scope,
                         std::shared_ptr<antlr4::tree::ParseTree> ast,
-                        const std::vector<std::shared_ptr<antlr4::tree::ParseTree>> &headers)
+                        const std::vector<std::shared_ptr<CflatParser::DeclarationFileContext>> &headers)
         : Resolver(types, top_scope, ast), headers(headers) {}
     virtual void resolve() override
     {
+        std::cout << "resolve ast" << std::endl;
         ast->accept(this);
+        std::cout << "resolve header" << std::endl;
         for (auto header : headers)
         {
-            header->accept(this);
+            // // std::cout << "$$" << std::endl;
+            // std::shared_ptr<CflatParser::DeclarationFileContext> declareFileContext = std::shared_ptr<CflatParser::DeclarationFileContext>(
+            //     dynamic_cast<CflatParser::DeclarationFileContext *>(header.get())
+            // );
+            // if(!declareFileContext) { std::cerr << "fuck!!!" << std::endl; }
+            // declareFileContext->accept(this);
+            if(!header) { std::cerr << "fuck!!" << std::endl; }
+            else { header->accept(this); }
         }
+        std::cout << "resolve header done" << std::endl;
     }
 
     virtual antlrcpp::Any visitDefStruct(CflatParser::DefStructContext *ctx) override
