@@ -6,7 +6,7 @@
 #include "TypeTable.h"
 #include "Scope.h"
 
-class Visitor : public CflatBaseVisitor
+class Resolver : public CflatBaseVisitor
 {
 protected:
     // 類型表
@@ -19,11 +19,13 @@ protected:
     std::shared_ptr<antlr4::tree::ParseTree> ast;
 
 public:
-    Visitor(
+    Resolver(
         std::shared_ptr<TypeTable> types,
         std::shared_ptr<Scope> top_scope,
         std::shared_ptr<antlr4::tree::ParseTree> ast)
         : types(types), top_scope(top_scope), current_scope(top_scope), ast(ast) {}
+    
+    virtual void resolve() { ast->accept(this); }
 };
 
 #endif // VFLAT_COMPILER_VISITOR_H_

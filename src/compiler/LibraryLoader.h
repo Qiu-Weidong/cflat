@@ -7,10 +7,10 @@
 #include "antlr4-runtime.h"
 #include "CflatLexer.h"
 #include "CflatParser.h"
-#include "Visitor.h"
+// #include "Visitor.h"
 
 
-class LibraryLoader : public Visitor
+class LibraryLoader
 {
 protected:
     // 搜索路径，可以通过-I指定

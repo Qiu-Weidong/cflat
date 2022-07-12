@@ -14,7 +14,7 @@ class Compiler
 {
     std::string version;
     // 類型表
-    TypeTable types;
+    std::shared_ptr<TypeTable> types;
     // 符號表
     std::shared_ptr<Scope> top_scope;
     // 語法樹

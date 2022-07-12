@@ -1,4 +1,5 @@
 #include "Compiler.h"
+#include "ImportResolver.h"
 #include "TypeResolver.h"
 
 void Compiler::compile(const std::string &filename)
@@ -17,11 +18,12 @@ void Compiler::compile(const std::string &filename)
     CflatParser parser(&tokens);
 
     // antlr4::tree::ParseTree *tree = parser.compilationUnit();
-    ast = std::make_shared<antlr4::tree::ParseTree>(parser.compilationUnit());
+    ast = std::shared_ptr<antlr4::tree::ParseTree>(parser.compilationUnit());
     std::cout << ast->toStringTree(&parser) << std::endl;
 
     // 每次编译一个文件都要重置类型表，
-    types.resetTable();
+    types->resetTable();
+    ImportResolver(types, top_scope, ast).resolve();
     // TypeResolver type_resolver(types);
     // TypeResolver(types).resolve(ast);
 
@@ -44,6 +46,8 @@ Compiler::Compiler()
 {
     this->version = "v1.0.0";
     this->top_scope = std::make_shared<Scope>(std::shared_ptr<Scope>(nullptr));
+    this->ast = std::shared_ptr<antlr4::tree::ParseTree>(nullptr);
+    this->types = std::make_shared<TypeTable>();
 }
 
 void Compiler::semanticAnalyze()
