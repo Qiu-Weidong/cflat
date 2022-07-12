@@ -9,7 +9,7 @@ protected:
     std::shared_ptr<Type> real_type;
 
 public:
-    UserType(std::shared_ptr<Type> real_type) : real_type(real_type) {}
+    UserType(const std::string &name, std::shared_ptr<Type> real_type) : real_type(real_type) { this->name = name; }
 
     std::shared_ptr<Type> getRealType() const { return real_type; }
     void setRealType(std::shared_ptr<Type> real_type) { this->real_type = real_type; }
@@ -41,9 +41,9 @@ public:
         return real_type->isCastableTo(target);
     }
 
-    virtual bool operator==(const Type &other) { return (*real_type) == other; }
+    virtual bool operator==(const Type &other) { return real_type->operator==(other); }
 
     friend std::ostream & operator<<(std::ostream & os, const UserType & type) { 
-        os << "{ User Type -> " << *(type.real_type) << "}" ; return os; }
+        os << "{ User Type " << type.name <<" -> " << *(type.real_type) << "}" ; return os; }
 };
 #endif // CFLAT_TYPE_USERTYPE_H_

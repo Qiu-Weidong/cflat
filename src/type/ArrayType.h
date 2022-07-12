@@ -5,15 +5,17 @@
 
 class ArrayType : public PointerType
 {
+private:
+    void resetName() {
+        this->name = base_type->getTypeName() + "[" + (length == undefined ? "" : std::to_string( length )) + "]";
+    }
 protected:
     int length;
-
+public:
     static const int undefined = -1;
 
-public:
-    ArrayType(std::shared_ptr<Type> base_type, int pointerSize) : PointerType(pointerSize, base_type), length(undefined) {}
-    ArrayType(std::shared_ptr<Type> base_type, int length, int pointerSize)
-        : PointerType(pointerSize, base_type), length(length) {}
+    ArrayType(std::shared_ptr<Type> base_type, int length=undefined, int pointerSize=8)
+        : PointerType(pointerSize, base_type), length(length) { if(base_type) resetName(); }
 
     virtual bool isArray() const override { return true; }
     virtual bool isAllocatedArray() const override
@@ -30,7 +32,10 @@ public:
     }
 
     int getLength() const { return length; }
-    void setLength(int length) { this->length = length; }
+    void setLength(int length) { this->length = length; if(base_type) resetName(); }
+    virtual void setBaseType(std::shared_ptr<Type> base_type) { 
+        this->base_type = base_type; 
+        resetName(); }
     
     virtual int allocSize() const override
     {
@@ -64,7 +69,7 @@ public:
     }
 
     friend std::ostream & operator<<(std::ostream & os, const ArrayType & array) {
-        os << "{ Array Type" << array.length << " -> " << *(array.base_type) << " }";
+        os << "{ Array Type" << array.name << " -> " << *(array.base_type) << " }";
         return os;
     }
 };

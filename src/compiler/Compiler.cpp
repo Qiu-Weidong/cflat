@@ -34,6 +34,8 @@ void Compiler::compile(const std::string &filename)
     DeclarationResolver declare_resolver(types, top_scope, ast, imports);
     declare_resolver.resolve();
 
+    for(const auto type : types->getAllTypes()) { std::cout << *(type) << std::endl; }
+
 
     // 遍历语法树 listener
     // antlr4::tree::ParseTreeWalker walker;

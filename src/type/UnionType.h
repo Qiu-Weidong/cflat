@@ -10,7 +10,7 @@ protected:
     std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    UnionType(const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(members) {}
+    UnionType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(name, members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isUnion() const override { return true; }
     virtual bool operator==(const Type &other) const override
@@ -41,7 +41,7 @@ public:
     }
 
     friend std::ostream &operator<<(std::ostream &os, const UnionType & unionType) {
-        os << "{ Union Type -> members: " ;
+        os << "{ Union Type " << unionType.name <<  " -> members: " ;
         for(auto it=unionType.members.begin(); it != unionType.members.end(); it++) {
             os <<  it->first << " -> " << *(it->second) << ", ";
         }

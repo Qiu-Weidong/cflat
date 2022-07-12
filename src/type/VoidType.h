@@ -5,6 +5,8 @@
 class VoidType : public Type
 {
 public:
+    VoidType(const std::string &name="void") { this->name = name; }
+
     virtual bool isVoid() const override { return true; }
     virtual int getSize() const override { return 1; }
 
@@ -24,7 +26,7 @@ public:
     }
 
     friend std::ostream & operator<<(std::ostream & os, const VoidType & type) { 
-        os << "{ Void Type }" ; return os; }
+        os << "{ VoidType " << type.name << " }" ; return os; }
 };
 
 #endif // CFLAT_TYPE_VOIDTYPE_H_

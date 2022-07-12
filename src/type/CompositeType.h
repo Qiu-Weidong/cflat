@@ -11,8 +11,8 @@ protected:
     std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    CompositeType(const std::map<std::string, std::shared_ptr<Type>> &members)
-        : members(members) {}
+    CompositeType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members)
+        : members(members) { this->name = name; }
     virtual bool isCompositeType() const override { return true; }
 
     virtual bool operator==(const Type &other) const override
@@ -43,7 +43,7 @@ public:
     bool insertOrAssignMember(const std::string &name, std::shared_ptr<Type> type) { return members.insert_or_assign(name, type).second; }
 
     friend std::ostream & operator<<(std::ostream &os, const CompositeType & composite) {
-        os << "{ Composite Type -> members: " ;
+        os << "{ Composite Type " << composite.name << " -> members: " ;
         for(auto it=composite.members.begin(); it != composite.members.end(); it++) {
             os <<  it->first << " -> " << *(it->second) << ", ";
         }

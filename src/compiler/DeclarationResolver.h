@@ -1,5 +1,6 @@
 #ifndef CFLAT_COMPILER_DECLARATIONRESOLVER_H_
 #define CFLAT_COMPILER_DECLARATIONRESOLVER_H_
+#include <cassert>
 #include "Resolver.h"
 #include "UserType.h"
 #include "StructType.h"
@@ -50,19 +51,26 @@ public:
     virtual antlrcpp::Any visitTypeDef(CflatParser::TypeDefContext *ctx) override
     {
         std::string type_name = ctx->Identifier()->getText();
+        if(types->isTypeDefined(type_name)) { std::cerr << type_name << " has defined!" << std::endl; return antlrcpp::Any(nullptr); }
+
         auto real_type = ctx->typeRef()->accept(this).as<std::shared_ptr<Type>>();
-        std::shared_ptr<Type> user_type = std::make_shared<UserType>(real_type);
+        if(!types->isTypeDefined(real_type->getTypeName())) { std::cerr << "Unknown type: " << real_type->getTypeName() << std::endl; return antlrcpp::Any(nullptr); }
+        
+        std::shared_ptr<Type> user_type = std::make_shared<UserType>(type_name, real_type);
         if (!types->defineType(type_name, user_type))
         {
             std::cerr << "fail to define type: " << type_name << std::endl;
         }
+        
         return antlrcpp::Any(user_type);
     }
 
     // return std::shared_ptr<Type>
     virtual antlrcpp::Any visitTypeRef(CflatParser::TypeRefContext *ctx) override
     {
-        auto base_type = ctx->typeRefBase()->accept(this).as<std::shared_ptr<Type>>();
+        auto base_type = ctx->typeRefBase()->accept(this).as<std::shared_ptr<Type>>(); // 一定是有的，且一定是從typetable中取出來的
+        assert(base_type);
+
         for(auto suffix : ctx->typeRefSuffix()) {
             std::shared_ptr<Type> type = suffix->accept(this).as<std::shared_ptr<Type>>();
 
@@ -71,6 +79,8 @@ public:
             if(funType) {
                 funType->setReturnType(base_type);
                 base_type = funType;
+                // 查看funType是否加入類型表
+                if(!types->isTypeDefined(funType->getTypeName())) { types->defineType(funType->getTypeName(), funType); }
                 continue;
             }
 
@@ -78,13 +88,15 @@ public:
             if(arrayType) {
                 arrayType->setBaseType(base_type);
                 base_type = arrayType;
+                if(!types->isTypeDefined(arrayType->getTypeName())) { types->defineType(arrayType->getTypeName(), arrayType); }
                 continue;
             }
-
+            // 注意，PointType要放在ArrayType後面，因爲ArrayType繼承自PointerType
             std::shared_ptr<PointerType> pointerType = std::shared_ptr<PointerType>(dynamic_cast<PointerType *>(type.get()));
             if(pointerType) {
                 pointerType->setBaseType(base_type);
                 base_type = pointerType;
+                if(!types->isTypeDefined(pointerType->getTypeName())) { types->defineType(pointerType->getTypeName(), pointerType); }
                 continue;
             }
 
@@ -100,7 +112,7 @@ public:
         if(ctx->integer() != nullptr) {
             n = std::stoi(ctx->integer()->getText());
         }
-        std::shared_ptr<Type> array = std::make_shared<ArrayType>(std::shared_ptr<Type>(nullptr), n, 8);
+        std::shared_ptr<Type> array = std::make_shared<ArrayType>(std::shared_ptr<Type>(nullptr), n, 8); // 暫時未知base_type
         return antlrcpp::Any(array);
     }
 

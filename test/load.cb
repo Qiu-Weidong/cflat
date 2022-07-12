@@ -1,1 +1,6 @@
 import loadtest.hello.fuck.shit;
+
+typedef long LL;
+typedef int fuck;
+typedef float fuckyou;
+

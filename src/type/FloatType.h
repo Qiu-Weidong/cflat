@@ -9,8 +9,8 @@ protected:
     int size;
 
 public:
-    FloatType(int size = 32)
-        : size(size) {}
+    FloatType(const std::string &name="float", int size = 32)
+        : size(size) { this->name = name; }
     virtual bool isSigned() const override { return true; }
     virtual bool isFloat() const override { return true; }
 
@@ -35,7 +35,7 @@ public:
     }
 
     friend std::ostream & operator<<(std::ostream &os, const FloatType & floatType) {
-        os << "{ Float Type }";
+        os << "{ Float Type " + floatType.name << " }";
         return os;
     }
 };

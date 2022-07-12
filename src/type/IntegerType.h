@@ -10,8 +10,8 @@ protected:
     bool is_signed;
 
 public:
-    IntegerType(int size, bool is_signed)
-        : size(size), is_signed(is_signed) {}
+    IntegerType(const std::string &name="int", int size=4, bool is_signed=true)
+        : size(size), is_signed(is_signed) { this->name = name; }
     virtual bool isInteger() const override { return true; }
     virtual bool isSigned() const override { return is_signed; }
     virtual bool isScalar() const override { return true; }
@@ -52,7 +52,7 @@ public:
     }
 
     friend std::ostream & operator<<(std::ostream &os, const IntegerType & integer) {
-        os << "{ Integer Type }";
+        os << "{ Integer Type " << integer.name << " }";
         return os;
     }
 };

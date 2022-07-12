@@ -8,10 +8,14 @@ class Type
 {
 protected:
     static const int sizeUnknown = -1;
+    std::string name;
 
 public:
+    virtual std::string getTypeName() const { return name; }
+    virtual void setTypeName(const std::string & name) { this->name = name; }
+
     virtual int getSize() const = 0;
-    virtual bool operator==(const Type &other) const = 0;
+    virtual bool operator==(const Type &other) const { return this->name == other.name; };
     virtual bool operator!=(const Type &other) const { return ! this->operator==(other); }
     virtual int allocSize() const { return getSize(); }
 
@@ -36,7 +40,7 @@ public:
     virtual bool isCastableTo(const Type &target) const = 0; // 是否能够强制转换
 
     // 爲方便調試，增添輸出操作
-    friend std::ostream & operator<<(std::ostream & os, const Type & type) { os << "{Abstract Type}" ; return os; }
+    friend std::ostream & operator<<(std::ostream & os, const Type & type) { os << "{ Abstract Type }" ; return os; }
 };
 
 #endif // CFLAT_TYPE_TYPE_H_

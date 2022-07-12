@@ -6,6 +6,23 @@
 
 class FunctionType : public Type
 {
+private:
+    void resetName()
+    {
+        this->name = (returnType ? returnType->getTypeName() : "") + "(";
+        for (const auto param : paramTypes)
+        {
+            this->name += param->getTypeName() + ",";
+        }
+        if (*(this->name.rbegin()) == ',')
+        {
+            this->name.pop_back();
+        } // 刪除末尾多餘的逗號
+        if (vararg)
+            this->name += "...";
+        this->name += ")";
+    }
+
 protected:
     std::shared_ptr<Type> returnType;
     std::vector<std::shared_ptr<Type>> paramTypes;
@@ -13,7 +30,7 @@ protected:
 
 public:
     FunctionType(std::shared_ptr<Type> ret, const std::vector<std::shared_ptr<Type>> &paramTypes, bool vararg = false)
-        : returnType(ret), paramTypes(paramTypes), vararg(vararg) {}
+        : returnType(ret), paramTypes(paramTypes), vararg(vararg) { resetName(); }
     virtual bool isFunction() const override { return true; }
     virtual bool isCallable() const override { return true; }
 
@@ -56,14 +73,18 @@ public:
     std::vector<std::shared_ptr<Type>> getParamTypes() const { return paramTypes; }
     bool isVararg() const { return vararg; }
 
-    void setReturnType(std::shared_ptr<Type> returnType) { this->returnType = returnType; }
-    void setParamTypes(const std::vector<std::shared_ptr<Type> > & paramTypes) { this->paramTypes = paramTypes; }
-    void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); }
-    void setVararg(bool vararg) { this->vararg = vararg; }
+    void setReturnType(std::shared_ptr<Type> returnType) { this->returnType = returnType; resetName(); }
+    void setParamTypes(const std::vector<std::shared_ptr<Type>> &paramTypes) { this->paramTypes = paramTypes; resetName(); }
+    void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); resetName(); }
+    void setVararg(bool vararg) { this->vararg = vararg; resetName(); }
 
-    friend std::ostream &operator<<(std::ostream &os, const FunctionType & func) {
-        os << "{ Function Type -> return : " << *func.returnType << ", params : ";
-        for(auto param : func.paramTypes) { os << *param << ", "; }
+    friend std::ostream &operator<<(std::ostream &os, const FunctionType &func)
+    {
+        os << "{ Function Type " << func.name << " -> return : " << *func.returnType << ", params : ";
+        for (auto param : func.paramTypes)
+        {
+            os << *param << ", ";
+        }
         os << "}";
         return os;
     }

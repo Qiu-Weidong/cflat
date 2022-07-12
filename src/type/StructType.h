@@ -10,7 +10,7 @@ protected:
     std::map<std::string, std::shared_ptr<Type>> members;
 
 public:
-    StructType(const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(members) {}
+    StructType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(name, members) {}
     virtual bool isCompositeType() const override { return true; }
     virtual bool isStruct() const override { return true; }
     virtual bool operator==(const Type &other) const override
@@ -44,7 +44,7 @@ public:
     }
 
     friend std::ostream &operator<<(std::ostream &os, const StructType & structType) {
-        os << "{ Struct Type -> members: " ;
+        os << "{ Struct Type " << structType.name <<  " -> members: " ;
         for(auto it=structType.members.begin(); it != structType.members.end(); it++) {
             os <<  it->first << " -> " << *(it->second) << ", ";
         }
