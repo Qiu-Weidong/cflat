@@ -24,12 +24,6 @@ public:
         std::cout << "resolve header" << std::endl;
         for (auto header : headers)
         {
-            // // std::cout << "$$" << std::endl;
-            // std::shared_ptr<CflatParser::DeclarationFileContext> declareFileContext = std::shared_ptr<CflatParser::DeclarationFileContext>(
-            //     dynamic_cast<CflatParser::DeclarationFileContext *>(header.get())
-            // );
-            // if(!declareFileContext) { std::cerr << "fuck!!!" << std::endl; }
-            // declareFileContext->accept(this);
             if(!header) { std::cerr << "fuck!!" << std::endl; }
             else { header->accept(this); }
         }
