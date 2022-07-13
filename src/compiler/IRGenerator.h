@@ -2,8 +2,6 @@
 #define CFLAT_COMPILER_IRGENERATOR_H_
 // #include "Visitor.h"
 
-class IRGenerator 
-{
-};
+class IRGenerator {};
 
 #endif // CFLAT_COMPILER_IRGENERATOR_H_

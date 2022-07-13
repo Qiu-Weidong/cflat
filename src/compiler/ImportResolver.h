@@ -61,10 +61,9 @@ public:
     //   // std::cerr << "add to libraries fail! " << libid << std::endl;
     //   return antlrcpp::Any(tree);
     // }
-    if(loaded_libraries.insert(std::make_pair(libid, tree)).second) {
-        return antlrcpp::Any(tree);
+    if (loaded_libraries.insert(std::make_pair(libid, tree)).second) {
+      return antlrcpp::Any(tree);
     }
-
 
     // 繼續使用ImportResolver來解析頭文件中的import語句
     tree->accept(this);
@@ -91,7 +90,7 @@ public:
     std::vector<std::shared_ptr<antlr4::tree::ParseTree>> ret;
     for (const auto library : loaded_libraries) {
       std::cout << library.second->toStringTree() << std::endl;
-    //   *(library.second);
+      //   *(library.second);
       ret.push_back(library.second);
     }
     return ret;
@@ -101,18 +100,18 @@ public:
   visitImportStmts(CflatParser::ImportStmtsContext *ctx) override {
     antlrcpp::Any ret = visitChildren(ctx);
     // 检查loaded_libraries中的數據是否失效
-    for(const auto lib : loaded_libraries) {
-        // *(lib.second);
-        std::cout << lib.second->toStringTree() << std::endl;
+    for (const auto lib : loaded_libraries) {
+      // *(lib.second);
+      std::cout << lib.second->toStringTree() << std::endl;
     }
     return ret;
   }
 
   virtual void resolve() override {
     ast->accept(this);
-    for(const auto lib : loaded_libraries) {
-        // *(lib.second);
-        std::cout << lib.second->toStringTree() << std::endl;
+    for (const auto lib : loaded_libraries) {
+      // *(lib.second);
+      std::cout << lib.second->toStringTree() << std::endl;
     }
   }
 };
