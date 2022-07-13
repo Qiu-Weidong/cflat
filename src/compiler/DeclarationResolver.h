@@ -22,7 +22,20 @@ public:
         ast->accept(this);
         for (auto header : headers)
         {
-            header->accept(this);
+            auto p  = header.get();
+            delete p;
+            std::cout <<  header->toStringTree() <<  std::endl ;
+            if(!header) { std::cerr << "header is nullptr!" << std::endl; }
+            try
+            {
+                header->accept(this);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
+            
         }
     }
 
