@@ -33,6 +33,9 @@ StringLiteral: '"' ( EscapeSequence | ~('\\' | '"'))* '"';
 // 标识符
 Identifier: Letter (Letter | CflatIDDigit)*;
 
+ConstKeyWord: 'const';
+StaticKeyWord: 'static';
+
 /**I found this char range in JavaCC's grammar, but Letter and Digit overlap.
  Still works, but...
  */

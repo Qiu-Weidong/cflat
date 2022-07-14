@@ -15,15 +15,16 @@ importStmts: importStmt*;
 importStmt: 'import' libid ';';
 libid: name ('.' name)*;
 name: Identifier;
+
 topDefs: ( defFunc | defVars | defStruct | defUnion | typeDef)*;
 defVars:
-	('static')? ('const')? type name ('=' expr)? (
-		',' name ('=' expr)?
-	)* ';';
-defFunc: ('static')? typeRef name '(' params ')' block;
+	(StaticKeyWord? ConstKeyWord? | ConstKeyWord? StaticKeyWord?) type name (
+		'=' expr
+	)? (',' name ('=' expr)?)* ';';
+defFunc: StaticKeyWord? typeRef name '(' params ')' block;
 params: 'void' | fixedParams (',' '...')?;
 fixedParams: param (',' param)*;
-param: 'const'? type name;
+param: ConstKeyWord? type name;
 block: '{' defVarList stmts '}';
 defVarList: defVars*;
 defStruct: 'struct' name memberList ';';
@@ -31,34 +32,40 @@ defUnion: 'union' name memberList ';';
 memberList: '{' (slot ';')* '}';
 slot: type name;
 funcDecl: 'extern' typeRef name '(' params ')' ';';
-varDecl: 'extern' 'const'? type name ';';
+varDecl: 'extern' ConstKeyWord? type name ';';
 type: typeRef;
-typeRef:
-	typeRefBase typeRefSuffix*;
+typeRef: typeRefBase typeRefSuffix*;
+simpleTypeRef:
+	'void'					# VoidTypeBase
+	| 'char'				# CharTypeBase
+	| 'short'				# ShortTypeBase
+	| 'int'					# IntTypeBase
+	| 'long'				# LongTypeBase
+	| 'unsigned' 'char'		# UnsignedCharTypeBase
+	| 'unsigned' 'short'	# UnsignedShortTypeBase
+	| 'unsigned' 'int'		# UnsignedIntTypeBase
+	| 'unsigned' 'long'		# UnsignedLongTypeBase
+	| 'float'				# FloatTypeBase
+	| 'double'				# DoubleTypeBase;
+compositeTypeRef:
+	'struct' Identifier		# StructTypeBase
+	| 'union' Identifier	# UnionTypeBase
+	| typeRef '*'			# PointerTypeBase
+	| typeRef '[' integer? ']' # ArrayTypeBase
+	| typeRef '(' paramTypeRefs ')' # FunctionTypeBase
+	;
+userTypeRef	: Identifier			# UserTypeBase;
 integer: HexLiteral | DecimalLiteral | OctalLiteral;
 paramTypeRefs: 'void' | fixedParamTypeRefs vararg?;
 vararg: ',' '...';
-fixedParamTypeRefs: 'const'? typeRef (',' 'const'? typeRef)*;
-typeRefBase:
-	'void'						# VoidTypeBase
-	| 'char'					# CharTypeBase
-	| 'short'					# ShortTypeBase
-	| 'int'						# IntTypeBase
-	| 'long'					# LongTypeBase
-	| 'unsigned' 'char'			# UnsignedCharTypeBase
-	| 'unsigned' 'short'		# UnsignedShortTypeBase
-	| 'unsigned' 'int'			# UnsignedIntTypeBase
-	| 'unsigned' 'long'			# UnsignedLongTypeBase
-	| 'float'					# FloatTypeBase
-	| 'double'					# DoubleTypeBase
-	| 'struct' Identifier		# StructTypeBase
-	| 'union' Identifier		# UnionTypeBase 
-	| Identifier 				# UserTypeBase 
-	;
-typeRefSuffix: '[' integer? ']' # ArrayTypeSuffix 
-	| '*' 						# PointerTypeSuffix
-	| '(' paramTypeRefs ')'		# FunctionTypeSuffix
-	;
+fixedParamTypeRefs:
+	ConstKeyWord? typeRef (',' ConstKeyWord? typeRef)*;
+typeRefBase: 'base';
+	
+typeRefSuffix:
+	'[' integer? ']'		# ArrayTypeSuffix
+	| '*'					# PointerTypeSuffix
+	| '(' paramTypeRefs ')'	# FunctionTypeSuffix;
 typeDef: 'typedef' typeRef Identifier ';';
 stmts: stmt*;
 stmt:

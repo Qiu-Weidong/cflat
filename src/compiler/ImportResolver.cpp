@@ -80,6 +80,7 @@ antlrcpp::Any ImportResolver::visitTypeDef(CflatParser::TypeDefContext *ctx)
     if (!types.isTypeDefined(real_type->getTypeName()))
     {
         std::cerr << "Unknown type: " << real_type->getTypeName() << "; type name : " << type_name << std::endl;
+        std::cerr << ctx->getText() << std::endl;
         return antlrcpp::Any(nullptr);
     }
 
