@@ -18,7 +18,7 @@ class Compiler
     // 符號表
     std::shared_ptr<Scope> top_scope;
     // 語法樹
-    std::shared_ptr<antlr4::tree::ParseTree> ast;
+    std::shared_ptr<CflatParser> parser;
     
 public:
     Compiler() ;

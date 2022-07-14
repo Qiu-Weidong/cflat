@@ -9,18 +9,18 @@ class ImportResolver : public Resolver
     // 頭文件的搜索路徑，可以通過-I指定
     std::vector<std::string> load_paths;
 
-    std::map<std::string, std::shared_ptr<CflatParser::DeclarationFileContext>> loaded_libraries;
+    std::map<std::string, std::shared_ptr<CflatParser>> loaded_libraries;
 
 public:
     ImportResolver(std::shared_ptr<TypeTable> types,
                    std::shared_ptr<Scope> top_scope,
-                   std::shared_ptr<antlr4::tree::ParseTree> ast) : Resolver(types, top_scope, ast) {}
+                   std::shared_ptr<CflatParser> parser) : Resolver(types, top_scope, parser) {}
 
     std::vector<std::string> getLoadPaths() const { return load_paths; }
     void setLoadPaths(const std::vector<std::string> &load_paths) { this->load_paths = load_paths; }
     void addLoadPath(const std::string &path) { load_paths.push_back(path); }
 
-    // return shared_ptr<ParseTree>
+    // return shared_ptr<CflatParser>
     virtual antlrcpp::Any visitImportStmt(CflatParser::ImportStmtContext *ctx) override
     {
         std::string libid = ctx->libid()->accept(this).as<std::string>();
@@ -31,37 +31,30 @@ public:
             std::cerr << "lib exist: " << libid << std::endl;
             return antlrcpp::Any(it->second);
         }
-        
-        // std::cout << "Loading " << libid << " ..." << std::endl;
-        std::fstream is;
+
+        std::shared_ptr< std::fstream > is = std::make_shared<std::fstream>();
         // 打开并解析头文件
         for (const std::string &path : load_paths)
         {
-            is.open(path + "/" + libid, std::ios_base::in);
-            if (is.is_open())
+            is->open(path + "/" + libid, std::ios_base::in);
+            if (is->is_open())
                 break;
         }
-        if (!is.is_open())
+        if (!is->is_open())
         {
             std::cerr << "fail to open file: " << libid << std::endl;
-            return antlrcpp::Any(std::shared_ptr<CflatParser::DeclarationFileContext>(nullptr));
+            return antlrcpp::Any(std::shared_ptr<CflatParser>(nullptr));
         }
 
-        antlr4::ANTLRInputStream stream(is);
-        CflatLexer lexer(&stream);
-        antlr4::CommonTokenStream tokens(&lexer);
-        CflatParser parser(&tokens);
-        std::shared_ptr<CflatParser::DeclarationFileContext> tree = std::shared_ptr<CflatParser::DeclarationFileContext>(parser.declarationFile());
-        if(!tree) { std::cout << "parse tree fail!!!" << std::endl; }
-        // 將語法樹添加到load_libraries中
-        if (!loaded_libraries.insert_or_assign(libid, tree).second)
-        {
-            // std::cerr << "add to libraries fail! " << libid << std::endl;
-            return antlrcpp::Any(tree);
-        }
-        // 繼續使用ImportResolver來解析頭文件中的import語句
-        tree->accept(this);
-        return antlrcpp::Any(tree);
+        std::shared_ptr<antlr4::ANTLRInputStream> stream = std::make_shared<antlr4::ANTLRInputStream>(*is);
+        std::shared_ptr<CflatLexer> lexer = std::make_shared<CflatLexer>(stream);
+        std::shared_ptr<antlr4::CommonTokenStream> tokens = std::make_shared<antlr4::CommonTokenStream>(lexer);
+        std::shared_ptr<CflatParser> importParser = std::make_shared<CflatParser>(tokens);
+
+        if(! loaded_libraries.insert_or_assign(libid, importParser).second) { return antlrcpp::Any(importParser); }
+
+        importParser->compilationUnit()->accept(this);
+        return antlrcpp::Any(importParser);
     }
 
     virtual antlrcpp::Any visitLibid(CflatParser::LibidContext *ctx) override
@@ -82,8 +75,8 @@ public:
         return antlrcpp::Any(ctx->Identifier()->getText());
     }
 
-    std::vector< std::shared_ptr<CflatParser::DeclarationFileContext> > getLibraries() const {
-        std::vector<std::shared_ptr<CflatParser::DeclarationFileContext>> ret;
+    std::vector< std::shared_ptr<CflatParser> > getLibraries() const {
+        std::vector<std::shared_ptr<CflatParser>> ret;
         for(const auto library: loaded_libraries) {
             ret.push_back(library.second);
         }

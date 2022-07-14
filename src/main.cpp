@@ -20,14 +20,16 @@ int main(int argc, const char ** argv) {
 
     // llvm::cl::ParseCommandLineOptions(argc, argv, "hello cflat world!");
 
-    std::vector<std::string> InputFiles;
-    for(int i=1; i<argc; i++) InputFiles.push_back(argv[i]);
+    // std::vector<std::string> InputFiles;
+    // for(int i=1; i<argc; i++) InputFiles.push_back(argv[i]);
 
 
     std::cout << "start cflat..." << std::endl;
 
     std::vector<std::string> sourceFiles;
-    for(const auto & file : InputFiles) sourceFiles.push_back(file);
+    // for(const auto & file : InputFiles) sourceFiles.push_back(file);
+    for(int i=1; i<argc; i++) sourceFiles.push_back(argv[i]);
+
     
     Compiler compiler;
     compiler.build(sourceFiles);

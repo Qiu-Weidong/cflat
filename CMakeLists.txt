@@ -19,8 +19,8 @@ include_directories(
 
 
 link_directories(
-    # "C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\lib"
-    "C:\\Users\\56838\\Downloads\\antlr4\\runtime\\Cpp\\dist"
+    "C:\\Program Files (x86)\\LIBANTLR4 4.9.3\\lib"
+    # "C:\\Users\\56838\\Downloads\\antlr4\\runtime\\Cpp\\dist"
     # "${LLVM_LIBRARY_DIRS}"
 )
 add_subdirectory(src)
