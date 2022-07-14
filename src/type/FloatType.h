@@ -7,9 +7,6 @@ class FloatType : public Type
 {
 protected:
     int size;
-    virtual void show(std::ostream &os) const override {
-        os << "{ Float Type " + name << " }";
-    }
 public:
     FloatType(const std::string &name="float", int size = 32)
         : Type(name), size(size) {  }
@@ -34,6 +31,10 @@ public:
     virtual bool isCastableTo(const Type &target) const override
     {
         return target.isFloat() || target.isInteger();
+    }
+
+    virtual std::string toString() const override {
+        return "{ Float Type " + name + " }";
     }
 };
 

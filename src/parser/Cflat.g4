@@ -2,72 +2,78 @@ grammar Cflat;
 
 import Cflatlexer;
 // 首字母大写表示终结符，非终结符采用驼峰命名法
-compilationUnit: importStmts topDefs EOF;
-declarationFile:
-	importStmts (
-		funcDecl
-		| varDecl
-		| defStruct
-		| defUnion
-		| typeDef
-	)* EOF;
-importStmts: importStmt*;
+compilationUnit: (importStmt | definition)* EOF;
+
+declarationFile: (importStmt | declaration)* EOF;
 importStmt: 'import' libid ';';
 libid: name ('.' name)*;
 name: Identifier;
 
-topDefs: ( defFunc | defVars | defStruct | defUnion | typeDef)*;
-defVars:
+definition:
+	functionDefinition
+	| variableDefinition
+	| structDefinition
+	| unionDefinition
+	| typeDefinition;
+declaration:
+	functionDeclaration
+	| variableDeclaration
+	| structDeclaration
+	| unionDeclaration
+	| typeDefinition;
+
+// definition
+variableDefinition:
 	(StaticKeyWord? ConstKeyWord? | ConstKeyWord? StaticKeyWord?) type name (
 		'=' expr
 	)? (',' name ('=' expr)?)* ';';
-defFunc: StaticKeyWord? typeRef name '(' params ')' block;
-params: 'void' | fixedParams (',' '...')?;
+functionDefinition:
+	StaticKeyWord? type name '(' params ')' block;
+structDefinition: 'struct' name memberList ';';
+unionDefinition: 'union' name memberList ';';
+typeDefinition: 'typedef' type Identifier ';';
+// decclaration
+functionDeclaration:
+	'extern' type name '(' (params | paramTypeRefs) ')' ';';
+variableDeclaration: (
+		'extern' ConstKeyWord?
+		| ConstKeyWord? 'extern'
+	) type name ';';
+structDeclaration: 'struct' name ';';
+unionDeclaration: 'union' name ';';
+
+vararg: ',' '...';
+params: 'void' | fixedParams vararg?;
 fixedParams: param (',' param)*;
 param: ConstKeyWord? type name;
-block: '{' defVarList stmts '}';
-defVarList: defVars*;
-defStruct: 'struct' name memberList ';';
-defUnion: 'union' name memberList ';';
+paramTypeRefs: 'void' | fixedParamTypeRefs vararg?;
+fixedParamTypeRefs: paramTypeRef (',' paramTypeRef)*;
+paramTypeRef: ConstKeyWord? type;
+
+block: '{' (variableDefinition | stmt)* '}';
 memberList: '{' (slot ';')* '}';
 slot: type name;
-funcDecl: 'extern' typeRef name '(' params ')' ';';
-varDecl: 'extern' ConstKeyWord? type name ';';
-type: typeRef;
-typeRef: typeRefBase typeRefSuffix*;
-simpleTypeRef:
-	'void'					# VoidTypeBase
-	| 'char'				# CharTypeBase
-	| 'short'				# ShortTypeBase
-	| 'int'					# IntTypeBase
-	| 'long'				# LongTypeBase
-	| 'unsigned' 'char'		# UnsignedCharTypeBase
-	| 'unsigned' 'short'	# UnsignedShortTypeBase
-	| 'unsigned' 'int'		# UnsignedIntTypeBase
-	| 'unsigned' 'long'		# UnsignedLongTypeBase
-	| 'float'				# FloatTypeBase
-	| 'double'				# DoubleTypeBase;
-compositeTypeRef:
-	'struct' Identifier		# StructTypeBase
-	| 'union' Identifier	# UnionTypeBase
-	| typeRef '*'			# PointerTypeBase
-	| typeRef '[' integer? ']' # ArrayTypeBase
-	| typeRef '(' paramTypeRefs ')' # FunctionTypeBase
+
+type: 
+	'void'							# BasicVoidType
+	| 'signed'? 'char'				# BasicSignedCharType
+	| 'signed'? 'short'				# BasicSignedShortType
+	| ('signed'? 'int' | 'signed')	# BasicSignedIntType
+	| 'signed'? 'long'				# BasicSignedLongType
+	| 'unsigned' 'char'				# BasicUnsignedCharType
+	| 'unsigned' 'short'			# BasicUnsignedShortType
+	| 'unsigned' 'int'?				# BasicUnsignedIntType
+	| 'unsigned' 'long'				# BasicUnsignedLongType
+	| 'float'						# BasicFloatType
+	| 'double'						# BasicDoubleType
+	| 'struct' Identifier			# StructType
+	| 'union' Identifier			# UnionType
+	| Identifier					# UserType  
+	| type '*'						# PointerType
+	| type '[' integer? ']'			# ArrayType
+	| type '(' paramTypeRefs ')'	# FunctionType
 	;
-userTypeRef	: Identifier			# UserTypeBase;
-integer: HexLiteral | DecimalLiteral | OctalLiteral;
-paramTypeRefs: 'void' | fixedParamTypeRefs vararg?;
-vararg: ',' '...';
-fixedParamTypeRefs:
-	ConstKeyWord? typeRef (',' ConstKeyWord? typeRef)*;
-typeRefBase: 'base';
-	
-typeRefSuffix:
-	'[' integer? ']'		# ArrayTypeSuffix
-	| '*'					# PointerTypeSuffix
-	| '(' paramTypeRefs ')'	# FunctionTypeSuffix;
-typeDef: 'typedef' typeRef Identifier ';';
-stmts: stmt*;
+// stmt
 stmt:
 	';'
 	| labeledStmt
@@ -155,4 +161,4 @@ literal:
 	| FloatingPointLiteral
 	| BoolLiteral
 	| 'null';
-
+integer: HexLiteral | DecimalLiteral | OctalLiteral;

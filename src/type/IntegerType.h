@@ -9,11 +9,6 @@ protected:
     int size;
     bool is_signed;
 
-    virtual void show(std::ostream &os) const override
-    {
-        os << "{ Integer Type " << name << " }";
-    }
-
 public:
     IntegerType(const std::string &name = "int", int size = 4, bool is_signed = true)
         : size(size), is_signed(is_signed), Type(name) {}
@@ -54,6 +49,10 @@ public:
         const IntegerType &otherInteger = dynamic_cast<const IntegerType &>(other);
         return this->size == otherInteger.size && this->name == otherInteger.name &&
                this->is_signed == otherInteger.is_signed;
+    }
+
+    virtual std::string toString() const override {
+        return "{ Integer Type " + name + " }";
     }
 };
 

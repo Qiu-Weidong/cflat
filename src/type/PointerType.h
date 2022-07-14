@@ -10,10 +10,6 @@ private:
 protected:
     int size;
     std::shared_ptr<Type> base_type;
-    virtual void show(std::ostream &os) const override
-    {
-        os << "{ Pointer Type " << name << " -> " << *(base_type) << " }";
-    }
 
 public:
     PointerType(int size = 8, std::shared_ptr<Type> base_type = std::shared_ptr<Type>(nullptr)) : size(size), base_type(base_type)
@@ -57,5 +53,8 @@ public:
         return other.isPointer() || other.isInteger();
     }
 
+    virtual std::string toString() const override {
+        return "{ Pointer Type " + name + " -> " + base_type->toString() + " }";
+    }
 };
 #endif // CFLAT_TYPE_POINTERTYPE_H_

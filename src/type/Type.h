@@ -9,8 +9,6 @@ class Type
 protected:
     static const int sizeUnknown = -1;
     std::string name;
-    virtual void show(std::ostream &os) const { os << "{ Abstract Type " << name << "}" ; }
-    
 public:
     Type(const std::string & name="unknown") : name(name) {}
     std::string getTypeName() const { return name; }
@@ -45,7 +43,8 @@ public:
     virtual bool isCastableTo(const Type &target) const = 0; // 是否能够强制转换
 
     // 爲方便調試，增添輸出操作
-    friend std::ostream & operator<<(std::ostream & os, const Type & type) { type.show(os); return os; }
+    friend std::ostream & operator<<(std::ostream & os, const Type & type) { os << type.toString(); return os; }
+    virtual std::string toString() const { return "{ Abstract Type " + name + "}" ; }
 };
 
 #endif // CFLAT_TYPE_TYPE_H_

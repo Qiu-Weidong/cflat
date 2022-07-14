@@ -9,13 +9,7 @@ class CompositeType : public Type
 {
 protected:
     std::map<std::string, std::shared_ptr<Type>> members;
-    virtual void show(std::ostream &os) const override {
-        os << "{ Composite Type " << name << " -> members: " ;
-        for(auto it=members.begin(); it != members.end(); it++) {
-            os <<  it->first << " -> " << *(it->second) << ", ";
-        }
-        os << "}";
-    }
+
 public:
     CompositeType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members)
         : members(members), Type(name) { }
@@ -48,6 +42,14 @@ public:
     bool insertMember(const std::string & name, std::shared_ptr<Type> type) { return members.insert(std::make_pair(name, type)).second; }
     bool insertOrAssignMember(const std::string &name, std::shared_ptr<Type> type) { return members.insert_or_assign(name, type).second; }
 
+    virtual std::string toString() const override {
+        std::string ret = "{ Composite Type " + name + " -> members: ";
+        for(auto it=members.begin(); it != members.end(); it++) {
+            ret +=  (it->first + " -> " + it->second->toString() + ", ");
+        }
+        ret += "}";
+        return ret;
+    }
 };
 
 #endif // CFLAT_TYPE_COMPOSITETYPE_H_

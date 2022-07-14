@@ -13,10 +13,7 @@ private:
 
 protected:
     int length;
-    virtual void show(std::ostream &os) const override
-    {
-        os << "{ Array Type" << name << " -> " << *(base_type) << " }";
-    }
+    
 
 public:
     static const int undefined = -1;
@@ -79,6 +76,10 @@ public:
     virtual bool isCastableTo(const Type &target) const override
     {
         return target.isPointer() || target.isArray();
+    }
+    
+    virtual std::string toString() const override {
+        return "{ Array Type" + name + " -> " + base_type->toString() + " }";
     }
 };
 

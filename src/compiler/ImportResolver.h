@@ -25,72 +25,15 @@ public:
 
     virtual antlrcpp::Any visitName(CflatParser::NameContext *ctx) override;
 
-    virtual antlrcpp::Any visitDefStruct(CflatParser::DefStructContext *ctx) override
-    {
-        return visitChildren(ctx);
-    }
 
-    virtual antlrcpp::Any visitDefUnion(CflatParser::DefUnionContext *ctx) override
-    {
-        return visitChildren(ctx);
-    }
-
-    virtual antlrcpp::Any visitFuncDecl(CflatParser::FuncDeclContext *ctx) override
-    {
-        return visitChildren(ctx);
-    }
-
-    virtual antlrcpp::Any visitVarDecl(CflatParser::VarDeclContext *ctx) override
-    {
-        return visitChildren(ctx);
-    }
 
     // 下面全部是類型定義
-    // return std::shared_ptr<Type>
-    virtual antlrcpp::Any visitTypeDef(CflatParser::TypeDefContext *ctx) override;
-
-    // return std::shared_ptr<Type>
-    virtual antlrcpp::Any visitTypeRef(CflatParser::TypeRefContext *ctx) override;
-
-    // typeRefSuffix
-    virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *ctx) override;
-
-    virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *ctx) override;
-
-    virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *ctx) override;
-
     virtual antlrcpp::Any visitParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx) override;
 
-    virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override;
+    // virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override;
 
     // typeRefBase
-    virtual antlrcpp::Any visitVoidTypeBase(CflatParser::VoidTypeBaseContext *ctx) override;
 
-    virtual antlrcpp::Any visitCharTypeBase(CflatParser::CharTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitShortTypeBase(CflatParser::ShortTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitIntTypeBase(CflatParser::IntTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitLongTypeBase(CflatParser::LongTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitUnsignedCharTypeBase(CflatParser::UnsignedCharTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitUnsignedShortTypeBase(CflatParser::UnsignedShortTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitUnsignedIntTypeBase(CflatParser::UnsignedIntTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitUnsignedLongTypeBase(CflatParser::UnsignedLongTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitFloatTypeBase(CflatParser::FloatTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitDoubleTypeBase(CflatParser::DoubleTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitStructTypeBase(CflatParser::StructTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitUnionTypeBase(CflatParser::UnionTypeBaseContext *ctx) override;
-
-    virtual antlrcpp::Any visitUserTypeBase(CflatParser::UserTypeBaseContext *ctx) override;
 };
 
 #endif // CFLAT_COMPILER_IMPORTRESOLVER_H_

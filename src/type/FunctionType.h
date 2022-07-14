@@ -29,15 +29,6 @@ protected:
     std::vector<std::shared_ptr<Type>> paramTypes;
     bool vararg;
 
-    virtual void show(std::ostream &os) const override {
-        os << "{ Function Type " << name << " -> return : " << *returnType << ", params : ";
-        for (auto param : paramTypes)
-        {
-            os << *param << ", ";
-        }
-        os << "}";
-    }
-
 public:
     FunctionType(std::shared_ptr<Type> ret, const std::vector<std::shared_ptr<Type>> &paramTypes, bool vararg = false)
         : returnType(ret), paramTypes(paramTypes), vararg(vararg) { resetName(); }
@@ -87,6 +78,12 @@ public:
     void setParamTypes(const std::vector<std::shared_ptr<Type>> &paramTypes) { this->paramTypes = paramTypes; resetName(); }
     void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); resetName(); }
     void setVararg(bool vararg) { this->vararg = vararg; resetName(); }
+    virtual std::string toString() const override {
+        std::string ret = "{ Function Type " + name + " -> return : " + returnType->toString() + ", params : ";
+        for(auto param : paramTypes) { ret += param->toString() + ", "; }
+        ret += "}";
+        return ret;
 
+    }
 };
 #endif // CFLAT_TYPE_FUNCTIONTYPE_H_
