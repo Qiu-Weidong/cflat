@@ -36,8 +36,6 @@ antlrcpp::Any ImportResolver::visitImportStmt(CflatParser::ImportStmtContext *ct
     CommonTokenStream tokens(&lexer);
     CflatParser importParser(&tokens);
 
-    
-
     if (!loaded_libraries.insert(libid).second)
     {
         std::cerr << "insert libid failed: " << libid << std::endl;
@@ -65,33 +63,34 @@ antlrcpp::Any ImportResolver::visitName(CflatParser::NameContext *ctx)
     return antlrcpp::Any(ctx->Identifier()->getText());
 }
 
-// 下面全部是類型定義
-// return std::shared_ptr<Type>, 但實際是std::shared_ptr<UserType>
-// antlrcpp::Any ImportResolver::visitTypeDef(CflatParser::TypeDefContext *ctx)
-// {
-//     std::string type_name = ctx->Identifier()->getText();
-//     if (types.isTypeDefined(type_name))
-//     {
-//         std::cerr << type_name << " has defined!" << std::endl;
-//         return antlrcpp::Any(nullptr);
-//     }
+// typeDefinition: 'typedef' type Identifier ';' ;
+// return std::shared_ptr<Type>
+antlrcpp::Any ImportResolver::visitTypeDefinition(CflatParser::TypeDefinitionContext *ctx)
+{
+    std::string type_name = ctx->Identifier()->getText(); // 定義的類型名稱
+    if (types.isTypeDefined(type_name))
+    {
+        std::cerr << type_name << " has been defined!" << std::endl;
+        return antlrcpp::Any(types.getType(type_name));
+    }
 
-//     auto real_type = ctx->typeRef()->accept(this).as<std::shared_ptr<Type>>();
-//     if (!types.isTypeDefined(real_type->getTypeName()))
-//     {
-//         std::cerr << "Unknown type: " << real_type->getTypeName() << "; type name : " << type_name << std::endl;
-//         std::cerr << ctx->getText() << std::endl;
-//         return antlrcpp::Any(nullptr);
-//     }
+    auto real_type = ctx->type()->accept(this).as<std::shared_ptr<Type>>();
 
-//     std::shared_ptr<Type> user_type = std::make_shared<UserType>(type_name, real_type);
-//     if (!types.defineType(type_name, user_type))
-//     {
-//         std::cerr << "fail to define type: " << type_name << std::endl;
-//     }
+    if (!types.isTypeDefined(real_type->getTypeName()))
+    { // 如果realtype還沒有被定義
+        std::cerr << "Unknown type: " << real_type->getTypeName() << "; type name : " << type_name << std::endl;
+        std::cerr << ctx->getText() << std::endl;
+        return antlrcpp::Any(nullptr);
+    }
 
-//     return antlrcpp::Any(user_type);
-// }
+    std::shared_ptr<Type> user_type = std::make_shared<UserType>(type_name, real_type);
+    if (!types.defineType(type_name, user_type))
+    {
+        std::cerr << "fail to define type: " << type_name << std::endl;
+    }
+
+    return antlrcpp::Any(user_type);
+}
 
 // return std::shared_ptr<Type>
 // antlrcpp::Any ImportResolver::visitTypeRef(CflatParser::TypeRefContext *ctx)
@@ -177,11 +176,14 @@ antlrcpp::Any ImportResolver::visitParamTypeRefs(CflatParser::ParamTypeRefsConte
 {
     bool vararg = ctx->vararg();
     std::vector<std::shared_ptr<Type>> params;
-    if(ctx->fixedParamTypeRefs()) { params = ctx->fixedParamTypeRefs()->accept(this).as<std::vector<std::shared_ptr<Type>>>(); }
+    if (ctx->fixedParamTypeRefs())
+    {
+        params = ctx->fixedParamTypeRefs()->accept(this).as<std::vector<std::shared_ptr<Type>>>();
+    }
     return antlrcpp::Any(std::make_pair(params, vararg));
 }
 // return std::vector<std::shared_ptr<Type>>
-// antlrcpp::Any ImportResolver::visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) 
+// antlrcpp::Any ImportResolver::visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx)
 // {
 //     std::vector<std::shared_ptr<Type> > ret;
 //     auto typerefs = ctx->typeRef();
@@ -192,9 +194,61 @@ antlrcpp::Any ImportResolver::visitParamTypeRefs(CflatParser::ParamTypeRefsConte
 //     return antlrcpp::Any(ret);
 // }
 
-// typeRefBase
-// antlrcpp::Any ImportResolver::visitVoidTypeBase(CflatParser::VoidTypeBaseContext *ctx)
-// {
-//     return antlrcpp::Any(types.getType("void"));
-// }
+antlrcpp::Any ImportResolver::visitBasicVoidType(CflatParser::BasicVoidTypeContext *ctx) { return antlrcpp::Any(types.getType("void")); }
+antlrcpp::Any ImportResolver::visitBasicSignedCharType(CflatParser::BasicSignedCharTypeContext *ctx) { return antlrcpp::Any(types.getType("char")); }
+antlrcpp::Any ImportResolver::visitBasicSignedShortType(CflatParser::BasicSignedShortTypeContext *ctx) { return antlrcpp::Any(types.getType("short")); }
+antlrcpp::Any ImportResolver::visitBasicSignedIntType(CflatParser::BasicSignedIntTypeContext *ctx) { return antlrcpp::Any(types.getType("int")); }
+antlrcpp::Any ImportResolver::visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *ctx) { return antlrcpp::Any(types.getType("long")); }
+antlrcpp::Any ImportResolver::visitBasicUnsignedCharType(CflatParser::BasicUnsignedCharTypeContext *ctx) { return antlrcpp::Any(types.getType("unsigned char")); }
+antlrcpp::Any ImportResolver::visitBasicUnsignedShortType(CflatParser::BasicUnsignedShortTypeContext *ctx) { return antlrcpp::Any(types.getType("unsigned short")); }
+antlrcpp::Any ImportResolver::visitBasicUnsignedIntType(CflatParser::BasicUnsignedIntTypeContext *ctx) { return antlrcpp::Any(types.getType("unsigned int")); }
+antlrcpp::Any ImportResolver::visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *ctx) { return antlrcpp::Any(types.getType("unsigned long")); }
+antlrcpp::Any ImportResolver::visitBasicFloatType(CflatParser::BasicFloatTypeContext *ctx) { return antlrcpp::Any(types.getType("float")); }
+antlrcpp::Any ImportResolver::visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *ctx) { return antlrcpp::Any(types.getType("double")); }
+antlrcpp::Any ImportResolver::visitStructType(CflatParser::StructTypeContext *ctx) {
+    std::string name = ctx->Identifier()->getText();
+    if(!types.isTypeDefined(name)) { std::cerr << "struct " << name << " is not defined." << std::endl; return antlrcpp::Any(std::shared_ptr<Type>(nullptr)); }
+    auto ret = types.getType(name);
+    if(!ret->isStruct()) { std::cerr << name << " is not struct." << std::endl; return antlrcpp::Any(std::shared_ptr<Type>(nullptr)); }
+    return antlrcpp::Any(ret);
+}
+antlrcpp::Any ImportResolver::visitUnionType(CflatParser::UnionTypeContext *ctx) {
+    std::string name = ctx->Identifier()->getText();
+    if(!types.isTypeDefined(name)) { std::cerr << "union " << name << " is not defined." << std::endl; return antlrcpp::Any(std::shared_ptr<Type>(nullptr)); }
+    auto ret = types.getType(name);
+    if(!ret->isUnion()) { std::cerr << name << " is not union." << std::endl; return antlrcpp::Any(std::shared_ptr<Type>(nullptr)); }
+    return antlrcpp::Any(ret);
+}
+antlrcpp::Any ImportResolver::visitUserType(CflatParser::UserTypeContext *ctx) {
+    std::string name = ctx->Identifier()->getText();
+    if(types.isTypeDefined(name)) { std::cerr << name << " is not defined." << std::endl; return antlrcpp::Any(std::shared_ptr<Type>(nullptr)); }
+    auto ret = types.getType(name);
+    if(!ret->isUserType()) { std::cerr << name << " is not user type." << std::endl; return antlrcpp::Any(std::shared_ptr<Type>(nullptr)); }
+    return antlrcpp::Any(ret);
+}
+antlrcpp::Any ImportResolver::visitPointerType(CflatParser::PointerTypeContext *ctx) {
+    auto base_type = ctx->type()->accept(this).as<std::shared_ptr<Type>>();
+    std::string name = base_type->getTypeName() + "*";
+    if(types.isTypeDefined(name)) { return antlrcpp::Any(types.getType(name)); }
+    std::shared_ptr<Type> pointer = std::make_shared<PointerType>(8, base_type);
+    if(!types.defineType(pointer->getTypeName(), pointer)) {
+        std::cerr << "fail to insert type " << pointer->getTypeName() << std::endl;
+    }
+    return antlrcpp::Any(pointer);
+}
+antlrcpp::Any ImportResolver::visitArrayType(CflatParser::ArrayTypeContext *ctx) {
+    auto base_type = ctx->type()->accept(this).as<std::shared_ptr<Type>>();
+    int length = std::stoi(ctx->integer()->getText());
+    std::string name = base_type->getTypeName() + "[" + (length == ArrayType::undefined ? "" : std::to_string(length)) + "]";
 
+    if(types.isTypeDefined(name)) { return antlrcpp::Any(types.getType(name)); }
+    std::shared_ptr<Type> array = std::make_shared<ArrayType>(base_type, length);
+    if(!types.defineType(array->getTypeName(), array)) {
+        std::cerr << "fail to insert type " << array->getTypeName() << std::endl;
+    }
+    return antlrcpp::Any(array);
+}
+antlrcpp::Any ImportResolver::visitFunctionType(CflatParser::FunctionTypeContext *ctx) {
+    auto returnType = ctx->type()->accept(this).as<std::shared_ptr<Type>>();
+    
+}

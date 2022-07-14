@@ -28,6 +28,26 @@ public:
 
 
     // 下面全部是類型定義
+    virtual antlrcpp::Any visitTypeDefinition(CflatParser::TypeDefinitionContext *ctx) override ;
+
+    virtual antlrcpp::Any visitBasicVoidType(CflatParser::BasicVoidTypeContext *ctx) override ;
+    virtual antlrcpp::Any visitBasicSignedCharType(CflatParser::BasicSignedCharTypeContext *) override;
+    virtual antlrcpp::Any visitBasicSignedShortType(CflatParser::BasicSignedShortTypeContext *) override;
+    virtual antlrcpp::Any visitBasicSignedIntType(CflatParser::BasicSignedIntTypeContext *) override;
+    virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *) override;
+    virtual antlrcpp::Any visitBasicUnsignedCharType(CflatParser::BasicUnsignedCharTypeContext *) override;
+    virtual antlrcpp::Any visitBasicUnsignedShortType(CflatParser::BasicUnsignedShortTypeContext *) override;
+    virtual antlrcpp::Any visitBasicUnsignedIntType(CflatParser::BasicUnsignedIntTypeContext *) override;
+    virtual antlrcpp::Any visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *) override;
+    virtual antlrcpp::Any visitBasicFloatType(CflatParser::BasicFloatTypeContext *) override;
+    virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *) override;
+    virtual antlrcpp::Any visitStructType(CflatParser::StructTypeContext *) override;
+    virtual antlrcpp::Any visitUnionType(CflatParser::UnionTypeContext *) override;
+    virtual antlrcpp::Any visitUserType(CflatParser::UserTypeContext *) override;
+    virtual antlrcpp::Any visitPointerType(CflatParser::PointerTypeContext *) override;
+    virtual antlrcpp::Any visitArrayType(CflatParser::ArrayTypeContext *) override;
+    virtual antlrcpp::Any visitFunctionType(CflatParser::FunctionTypeContext *) override;
+
     virtual antlrcpp::Any visitParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx) override;
 
     // virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override;
