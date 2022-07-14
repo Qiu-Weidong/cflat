@@ -79,7 +79,7 @@ antlrcpp::Any ImportResolver::visitTypeDef(CflatParser::TypeDefContext *ctx)
     auto real_type = ctx->typeRef()->accept(this).as<std::shared_ptr<Type>>();
     if (!types.isTypeDefined(real_type->getTypeName()))
     {
-        std::cerr << "Unknown type: " << real_type->getTypeName() << std::endl;
+        std::cerr << "Unknown type: " << real_type->getTypeName() << "; type name : " << type_name << std::endl;
         return antlrcpp::Any(nullptr);
     }
 
