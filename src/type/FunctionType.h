@@ -9,9 +9,10 @@ class FunctionType : public Type
 private:
     void resetName()
     {
-        this->name = (returnType ? returnType->getTypeName() : "") + "(";
+        this->name = (returnType ? returnType->getTypeName() : "unknown") + "(";
         for (const auto param : paramTypes)
         {
+            assert(param);
             this->name += param->getTypeName() + ",";
         }
         if (*(this->name.rbegin()) == ',')
@@ -22,6 +23,12 @@ private:
             this->name += "...";
         this->name += ")";
     }
+    
+protected:
+    std::shared_ptr<Type> returnType;
+    std::vector<std::shared_ptr<Type>> paramTypes;
+    bool vararg;
+
     virtual void show(std::ostream &os) const override {
         os << "{ Function Type " << name << " -> return : " << *returnType << ", params : ";
         for (auto param : paramTypes)
@@ -30,10 +37,6 @@ private:
         }
         os << "}";
     }
-protected:
-    std::shared_ptr<Type> returnType;
-    std::vector<std::shared_ptr<Type>> paramTypes;
-    bool vararg;
 
 public:
     FunctionType(std::shared_ptr<Type> ret, const std::vector<std::shared_ptr<Type>> &paramTypes, bool vararg = false)
@@ -53,7 +56,7 @@ public:
             if (*(paramTypes[i]) != *(fun.paramTypes[i]))
                 return false;
         }
-        return (*returnType) == *(fun.returnType);
+        return (*returnType) == *(fun.returnType) && name == fun.name;
     }
 
     virtual bool isCompatible(const Type &other) const override
@@ -85,10 +88,5 @@ public:
     void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); resetName(); }
     void setVararg(bool vararg) { this->vararg = vararg; resetName(); }
 
-    // friend std::ostream &operator<<(std::ostream &os, const FunctionType &func)
-    // {
-        
-    //     return os;
-    // }
 };
 #endif // CFLAT_TYPE_FUNCTIONTYPE_H_

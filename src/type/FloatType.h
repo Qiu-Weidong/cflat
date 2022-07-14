@@ -12,7 +12,7 @@ protected:
     }
 public:
     FloatType(const std::string &name="float", int size = 32)
-        : size(size) { this->name = name; }
+        : Type(name), size(size) {  }
     virtual bool isSigned() const override { return true; }
     virtual bool isFloat() const override { return true; }
 
@@ -23,7 +23,7 @@ public:
         if (!other.isFloat())
             return false;
         const FloatType &otherFloat = dynamic_cast<const FloatType &>(other);
-        return this->size == otherFloat.size;
+        return this->size == otherFloat.size && this->name == otherFloat.name;
     }
 
     virtual bool isCompatible(const Type &other) const override
@@ -35,11 +35,6 @@ public:
     {
         return target.isFloat() || target.isInteger();
     }
-
-    // friend std::ostream & operator<<(std::ostream &os, const FloatType & floatType) {
-        
-    //     return os;
-    // }
 };
 
 #endif // CFLAT_TYPE_FLOATTYPE_H_

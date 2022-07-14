@@ -9,16 +9,20 @@ class Type
 protected:
     static const int sizeUnknown = -1;
     std::string name;
-    virtual void show(std::ostream &os) const { os << "{ Abstract Type }" ; }
+    virtual void show(std::ostream &os) const { os << "{ Abstract Type " << name << "}" ; }
     
 public:
-    virtual std::string getTypeName() const { return name; }
-    virtual void setTypeName(const std::string & name) { this->name = name; }
+    Type(const std::string & name="unknown") : name(name) {}
+    std::string getTypeName() const { return name; }
+    void setTypeName(const std::string & name) { this->name = name; }
 
     virtual int getSize() const = 0;
+    virtual int allocSize() const { return getSize(); }
+
+    // 用於比較的函數
     virtual bool operator==(const Type &other) const { return this->name == other.name; };
     virtual bool operator!=(const Type &other) const { return ! this->operator==(other); }
-    virtual int allocSize() const { return getSize(); }
+    
 
     virtual bool isVoid() const { return false; }
     virtual bool isInteger() const { return false; }

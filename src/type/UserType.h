@@ -11,7 +11,7 @@ protected:
          os << "{ User Type " << name <<" -> " << *(real_type) << "}" ;
     }
 public:
-    UserType(const std::string &name, std::shared_ptr<Type> real_type) : real_type(real_type) { this->name = name; }
+    UserType(const std::string &name, std::shared_ptr<Type> real_type) : real_type(real_type), Type(name) {  }
 
     std::shared_ptr<Type> getRealType() const { return real_type; }
     void setRealType(std::shared_ptr<Type> real_type) { this->real_type = real_type; }
@@ -44,8 +44,5 @@ public:
     }
 
     virtual bool operator==(const Type &other) { return real_type->operator==(other); }
-
-    // friend std::ostream & operator<<(std::ostream & os, const UserType & type) { 
-    //     return os; }
 };
 #endif // CFLAT_TYPE_USERTYPE_H_

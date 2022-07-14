@@ -4,7 +4,7 @@
 #include <map>
 #include "Type.h"
 
-// 这个类没什么用
+
 class CompositeType : public Type
 {
 protected:
@@ -18,7 +18,7 @@ protected:
     }
 public:
     CompositeType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members)
-        : members(members) { this->name = name; }
+        : members(members), Type(name) { }
     virtual bool isCompositeType() const override { return true; }
 
     virtual bool operator==(const Type &other) const override
@@ -35,7 +35,7 @@ public:
             it1++, it2++;
         }
 
-        return true;
+        return this->name == otherType.name;
     }
 
     std::map<std::string, std::shared_ptr<Type>> getMembers() const { return members; }
@@ -48,10 +48,6 @@ public:
     bool insertMember(const std::string & name, std::shared_ptr<Type> type) { return members.insert(std::make_pair(name, type)).second; }
     bool insertOrAssignMember(const std::string &name, std::shared_ptr<Type> type) { return members.insert_or_assign(name, type).second; }
 
-    // friend std::ostream & operator<<(std::ostream &os, const CompositeType & composite) {
-        
-    //     return os;
-    // }
 };
 
 #endif // CFLAT_TYPE_COMPOSITETYPE_H_

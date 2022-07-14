@@ -9,12 +9,14 @@ protected:
     int size;
     bool is_signed;
 
-    virtual void show(std::ostream &os) const override {
+    virtual void show(std::ostream &os) const override
+    {
         os << "{ Integer Type " << name << " }";
     }
+
 public:
-    IntegerType(const std::string &name="int", int size=4, bool is_signed=true)
-        : size(size), is_signed(is_signed) { this->name = name; }
+    IntegerType(const std::string &name = "int", int size = 4, bool is_signed = true)
+        : size(size), is_signed(is_signed), Type(name) {}
     virtual bool isInteger() const override { return true; }
     virtual bool isSigned() const override { return is_signed; }
     virtual bool isScalar() const override { return true; }
@@ -50,14 +52,9 @@ public:
         if (!other.isInteger())
             return false;
         const IntegerType &otherInteger = dynamic_cast<const IntegerType &>(other);
-        return this->size == otherInteger.size &&
+        return this->size == otherInteger.size && this->name == otherInteger.name &&
                this->is_signed == otherInteger.is_signed;
     }
-
-    // friend std::ostream & operator<<(std::ostream &os, const IntegerType & integer) {
-        
-    //     return os;
-    // }
 };
 
 #endif // CFLAT_TYPE_INTEGERTYPE_H_

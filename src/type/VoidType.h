@@ -29,8 +29,6 @@ public:
         return other.isVoid();
     }
 
-    // friend std::ostream & operator<<(std::ostream & os, const VoidType & type) { 
-    //     os << "{ VoidType " << type.name << " }" ; return os; }
 };
 
 #endif // CFLAT_TYPE_VOIDTYPE_H_

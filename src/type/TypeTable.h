@@ -59,7 +59,7 @@ public:
     }
     bool defineType(const std::string &name, std::shared_ptr<Type> type) { return table.insert(std::make_pair(name, type)).second; }
     bool defineTypeForce(const std::string &name, std::shared_ptr<Type> type) { return table.insert_or_assign(name, type).second; }
-    void undefineType(const std::string &name) { table.erase(name); } // warning 内存泄漏
+    void undefineType(const std::string &name) { table.erase(name); } 
 
     std::vector<std::shared_ptr<Type> > getAllTypes() const {
         std::vector<std::shared_ptr<Type> > ret;

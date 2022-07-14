@@ -17,7 +17,6 @@ protected:
     }
 public:
     StructType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(name, members) {}
-    virtual bool isCompositeType() const override { return true; }
     virtual bool isStruct() const override { return true; }
     virtual bool operator==(const Type &other) const override
     {
@@ -49,10 +48,6 @@ public:
         return true; // todo
     }
 
-    // friend std::ostream &operator<<(std::ostream &os, const StructType & structType) {
-        
-    //     return os;
-    // }
 };
 
 #endif // CFLAT_TYPE_STRUCTTYPE_H_
