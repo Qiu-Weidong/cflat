@@ -36,7 +36,8 @@ type: typeRef;
 typeRef:
 	typeRefBase typeRefSuffix*;
 integer: HexLiteral | DecimalLiteral | OctalLiteral;
-paramTypeRefs: 'void' | fixedParamTypeRefs (',' '...')?;
+paramTypeRefs: 'void' | fixedParamTypeRefs vararg?;
+vararg: ',' '...';
 fixedParamTypeRefs: 'const'? typeRef (',' 'const'? typeRef)*;
 typeRefBase:
 	'void'						# VoidTypeBase

@@ -88,6 +88,9 @@ public:
   virtual void enterParamTypeRefs(CflatParser::ParamTypeRefsContext * /*ctx*/) override { }
   virtual void exitParamTypeRefs(CflatParser::ParamTypeRefsContext * /*ctx*/) override { }
 
+  virtual void enterVararg(CflatParser::VarargContext * /*ctx*/) override { }
+  virtual void exitVararg(CflatParser::VarargContext * /*ctx*/) override { }
+
   virtual void enterFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext * /*ctx*/) override { }
   virtual void exitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext * /*ctx*/) override { }
 

@@ -36,13 +36,13 @@ public:
     RuleBlock = 12, RuleDefVarList = 13, RuleDefStruct = 14, RuleDefUnion = 15, 
     RuleMemberList = 16, RuleSlot = 17, RuleFuncDecl = 18, RuleVarDecl = 19, 
     RuleType = 20, RuleTypeRef = 21, RuleInteger = 22, RuleParamTypeRefs = 23, 
-    RuleFixedParamTypeRefs = 24, RuleTypeRefBase = 25, RuleTypeRefSuffix = 26, 
-    RuleTypeDef = 27, RuleStmts = 28, RuleStmt = 29, RuleLabeledStmt = 30, 
-    RuleIfStmt = 31, RuleWhileStmt = 32, RuleDowhileStmt = 33, RuleForStmt = 34, 
-    RuleSwitchStmt = 35, RuleCaseClauses = 36, RuleCaseClause = 37, RuleCases = 38, 
-    RuleDefaultClause = 39, RuleCaseBody = 40, RuleGotoStmt = 41, RuleBreakStmt = 42, 
-    RuleContinueStmt = 43, RuleReturnStmt = 44, RuleExpr = 45, RuleExprList = 46, 
-    RuleArguments = 47, RulePrimary = 48, RuleLiteral = 49
+    RuleVararg = 24, RuleFixedParamTypeRefs = 25, RuleTypeRefBase = 26, 
+    RuleTypeRefSuffix = 27, RuleTypeDef = 28, RuleStmts = 29, RuleStmt = 30, 
+    RuleLabeledStmt = 31, RuleIfStmt = 32, RuleWhileStmt = 33, RuleDowhileStmt = 34, 
+    RuleForStmt = 35, RuleSwitchStmt = 36, RuleCaseClauses = 37, RuleCaseClause = 38, 
+    RuleCases = 39, RuleDefaultClause = 40, RuleCaseBody = 41, RuleGotoStmt = 42, 
+    RuleBreakStmt = 43, RuleContinueStmt = 44, RuleReturnStmt = 45, RuleExpr = 46, 
+    RuleExprList = 47, RuleArguments = 48, RulePrimary = 49, RuleLiteral = 50
   };
 
   explicit CflatParser(antlr4::TokenStream *input);
@@ -79,6 +79,7 @@ public:
   class TypeRefContext;
   class IntegerContext;
   class ParamTypeRefsContext;
+  class VarargContext;
   class FixedParamTypeRefsContext;
   class TypeRefBaseContext;
   class TypeRefSuffixContext;
@@ -502,6 +503,7 @@ public:
     ParamTypeRefsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     FixedParamTypeRefsContext *fixedParamTypeRefs();
+    VarargContext *vararg();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -511,6 +513,20 @@ public:
   };
 
   ParamTypeRefsContext* paramTypeRefs();
+
+  class  VarargContext : public antlr4::ParserRuleContext {
+  public:
+    VarargContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  VarargContext* vararg();
 
   class  FixedParamTypeRefsContext : public antlr4::ParserRuleContext {
   public:

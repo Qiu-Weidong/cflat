@@ -86,6 +86,9 @@ public:
   virtual void enterParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx) = 0;
   virtual void exitParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx) = 0;
 
+  virtual void enterVararg(CflatParser::VarargContext *ctx) = 0;
+  virtual void exitVararg(CflatParser::VarargContext *ctx) = 0;
+
   virtual void enterFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) = 0;
   virtual void exitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) = 0;
 

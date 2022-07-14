@@ -14,11 +14,9 @@ class Compiler
 {
     std::string version;
     // 類型表
-    std::shared_ptr<TypeTable> types;
+    TypeTable types;
     // 符號表
-    std::shared_ptr<Scope> top_scope;
-    // 語法樹
-    std::shared_ptr<CflatParser> parser;
+    Scope top_scope;
     
 public:
     Compiler() ;

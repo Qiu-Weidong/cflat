@@ -67,6 +67,8 @@ public:
 
     virtual antlrcpp::Any visitParamTypeRefs(CflatParser::ParamTypeRefsContext *context) = 0;
 
+    virtual antlrcpp::Any visitVararg(CflatParser::VarargContext *context) = 0;
+
     virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *context) = 0;
 
     virtual antlrcpp::Any visitVoidTypeBase(CflatParser::VoidTypeBaseContext *context) = 0;

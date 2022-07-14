@@ -111,6 +111,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitVararg(CflatParser::VarargContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override {
     return visitChildren(ctx);
   }
