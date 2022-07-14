@@ -22,7 +22,14 @@ private:
             this->name += "...";
         this->name += ")";
     }
-
+    virtual void show(std::ostream &os) const override {
+        os << "{ Function Type " << name << " -> return : " << *returnType << ", params : ";
+        for (auto param : paramTypes)
+        {
+            os << *param << ", ";
+        }
+        os << "}";
+    }
 protected:
     std::shared_ptr<Type> returnType;
     std::vector<std::shared_ptr<Type>> paramTypes;
@@ -78,15 +85,10 @@ public:
     void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); resetName(); }
     void setVararg(bool vararg) { this->vararg = vararg; resetName(); }
 
-    friend std::ostream &operator<<(std::ostream &os, const FunctionType &func)
-    {
-        os << "{ Function Type " << func.name << " -> return : " << *func.returnType << ", params : ";
-        for (auto param : func.paramTypes)
-        {
-            os << *param << ", ";
-        }
-        os << "}";
-        return os;
-    }
+    // friend std::ostream &operator<<(std::ostream &os, const FunctionType &func)
+    // {
+        
+    //     return os;
+    // }
 };
 #endif // CFLAT_TYPE_FUNCTIONTYPE_H_

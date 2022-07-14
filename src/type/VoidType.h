@@ -4,6 +4,10 @@
 
 class VoidType : public Type
 {
+protected:
+    virtual void show(std::ostream &os) const override {
+        os << "{ VoidType " << name << " }" ;
+    }
 public:
     VoidType(const std::string &name="void") { this->name = name; }
 
@@ -25,8 +29,8 @@ public:
         return other.isVoid();
     }
 
-    friend std::ostream & operator<<(std::ostream & os, const VoidType & type) { 
-        os << "{ VoidType " << type.name << " }" ; return os; }
+    // friend std::ostream & operator<<(std::ostream & os, const VoidType & type) { 
+    //     os << "{ VoidType " << type.name << " }" ; return os; }
 };
 
 #endif // CFLAT_TYPE_VOIDTYPE_H_

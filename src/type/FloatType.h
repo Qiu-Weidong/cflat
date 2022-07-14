@@ -7,7 +7,9 @@ class FloatType : public Type
 {
 protected:
     int size;
-
+    virtual void show(std::ostream &os) const override {
+        os << "{ Float Type " + name << " }";
+    }
 public:
     FloatType(const std::string &name="float", int size = 32)
         : size(size) { this->name = name; }
@@ -34,10 +36,10 @@ public:
         return target.isFloat() || target.isInteger();
     }
 
-    friend std::ostream & operator<<(std::ostream &os, const FloatType & floatType) {
-        os << "{ Float Type " + floatType.name << " }";
-        return os;
-    }
+    // friend std::ostream & operator<<(std::ostream &os, const FloatType & floatType) {
+        
+    //     return os;
+    // }
 };
 
 #endif // CFLAT_TYPE_FLOATTYPE_H_

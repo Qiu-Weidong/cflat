@@ -8,7 +8,13 @@ class StructType : public CompositeType
 {
 protected:
     std::map<std::string, std::shared_ptr<Type>> members;
-
+    virtual void show(std::ostream &os) const override {
+        os << "{ Struct Type " << name <<  " -> members: " ;
+        for(auto it=members.begin(); it != members.end(); it++) {
+            os <<  it->first << " -> " << *(it->second) << ", ";
+        }
+        os << "}";
+    }
 public:
     StructType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(name, members) {}
     virtual bool isCompositeType() const override { return true; }
@@ -43,14 +49,10 @@ public:
         return true; // todo
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const StructType & structType) {
-        os << "{ Struct Type " << structType.name <<  " -> members: " ;
-        for(auto it=structType.members.begin(); it != structType.members.end(); it++) {
-            os <<  it->first << " -> " << *(it->second) << ", ";
-        }
-        os << "}";
-        return os;
-    }
+    // friend std::ostream &operator<<(std::ostream &os, const StructType & structType) {
+        
+    //     return os;
+    // }
 };
 
 #endif // CFLAT_TYPE_STRUCTTYPE_H_

@@ -7,7 +7,9 @@ class UserType : public Type
 {
 protected:
     std::shared_ptr<Type> real_type;
-
+    virtual void show(std::ostream &os) const override {
+         os << "{ User Type " << name <<" -> " << *(real_type) << "}" ;
+    }
 public:
     UserType(const std::string &name, std::shared_ptr<Type> real_type) : real_type(real_type) { this->name = name; }
 
@@ -43,7 +45,7 @@ public:
 
     virtual bool operator==(const Type &other) { return real_type->operator==(other); }
 
-    friend std::ostream & operator<<(std::ostream & os, const UserType & type) { 
-        os << "{ User Type " << type.name <<" -> " << *(type.real_type) << "}" ; return os; }
+    // friend std::ostream & operator<<(std::ostream & os, const UserType & type) { 
+    //     return os; }
 };
 #endif // CFLAT_TYPE_USERTYPE_H_

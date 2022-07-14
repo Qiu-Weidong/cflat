@@ -9,6 +9,9 @@ protected:
     int size;
     bool is_signed;
 
+    virtual void show(std::ostream &os) const override {
+        os << "{ Integer Type " << name << " }";
+    }
 public:
     IntegerType(const std::string &name="int", int size=4, bool is_signed=true)
         : size(size), is_signed(is_signed) { this->name = name; }
@@ -51,10 +54,10 @@ public:
                this->is_signed == otherInteger.is_signed;
     }
 
-    friend std::ostream & operator<<(std::ostream &os, const IntegerType & integer) {
-        os << "{ Integer Type " << integer.name << " }";
-        return os;
-    }
+    // friend std::ostream & operator<<(std::ostream &os, const IntegerType & integer) {
+        
+    //     return os;
+    // }
 };
 
 #endif // CFLAT_TYPE_INTEGERTYPE_H_

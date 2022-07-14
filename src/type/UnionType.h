@@ -8,7 +8,13 @@ class UnionType : public CompositeType
 {
 protected:
     std::map<std::string, std::shared_ptr<Type>> members;
-
+    virtual void show(std::ostream &os) const override {
+        os << "{ Union Type " << name <<  " -> members: " ;
+        for(auto it=members.begin(); it != members.end(); it++) {
+            os <<  it->first << " -> " << *(it->second) << ", ";
+        }
+        os << "}";
+    }
 public:
     UnionType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(name, members) {}
     virtual bool isCompositeType() const override { return true; }
@@ -40,14 +46,10 @@ public:
         return true; // todo
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const UnionType & unionType) {
-        os << "{ Union Type " << unionType.name <<  " -> members: " ;
-        for(auto it=unionType.members.begin(); it != unionType.members.end(); it++) {
-            os <<  it->first << " -> " << *(it->second) << ", ";
-        }
-        os << "}";
-        return os;
-    }
+    // friend std::ostream &operator<<(std::ostream &os, const UnionType & unionType) {
+        
+    //     return os;
+    // }
 };
 
 #endif // CFLAT_TYPE_UNIONTYPE_H_

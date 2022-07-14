@@ -11,11 +11,15 @@ private:
     }
 protected:
     int length;
+    virtual void show(std::ostream &os) const override {
+        os << "{ Array Type" << name << " -> " << *(base_type) << " }";
+    }
+
 public:
     static const int undefined = -1;
 
     ArrayType(std::shared_ptr<Type> base_type, int length=undefined, int pointerSize=8)
-        : PointerType(pointerSize, base_type), length(length) { if(base_type) resetName(); }
+        : PointerType(pointerSize, base_type), length(length) { if(base_type) resetName(); else name = "array"; }
 
     virtual bool isArray() const override { return true; }
     virtual bool isAllocatedArray() const override
@@ -68,10 +72,10 @@ public:
         return target.isPointer() || target.isArray();
     }
 
-    friend std::ostream & operator<<(std::ostream & os, const ArrayType & array) {
-        os << "{ Array Type" << array.name << " -> " << *(array.base_type) << " }";
-        return os;
-    }
+    // friend std::ostream & operator<<(std::ostream & os, const ArrayType & array) {
+    //     os << "{ Array Type" << array.name << " -> " << *(array.base_type) << " }";
+    //     return os;
+    // }
 };
 
 #endif // CFLAT_TYPE_ARRAYTYPE_H_

@@ -24,16 +24,9 @@ void Compiler::compile(const std::string &filename)
     ImportResolver resolver(types, top_scope, parser);
     resolver.addLoadPath("./import");
     resolver.resolve();
+    for(const auto type : types.getAllTypes()) { std::cout << *(type) << std::endl; }
 
-    // auto imports = resolver.getLibraries();
-
-    // std::cout << "imports size: " << imports.size() << std::endl;
-
-    // DeclarationResolver declare_resolver(types, top_scope, parser, imports);
-    // declare_resolver.resolve();
-
-    // std::cout << "declare resolve done..." << std::endl;
-    // for(const auto type : types->getAllTypes()) { std::cout << *(type) << std::endl; }
+    
 
 
     // 遍历语法树 listener

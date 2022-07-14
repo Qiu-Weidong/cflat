@@ -7,11 +7,14 @@ class PointerType : public Type
 protected:
     int size;
     std::shared_ptr<Type> base_type;
-
+    virtual void show(std::ostream &os) const override {
+        os << "{ Pointer Type " << name << " -> " << *(base_type) << " }";
+    }
 public:
     PointerType(int size, std::shared_ptr<Type> base_type) : size(size), base_type(base_type) {
         if(base_type)
         this->name = base_type->getTypeName() + "*";
+        else this->name = "pointer";
     }
 
     virtual int getSize() const override { return size; }
@@ -47,9 +50,9 @@ public:
         return other.isPointer() || other.isInteger();
     }
 
-    friend std::ostream & operator<<(std::ostream & os, const PointerType & pointer) {
-        os << "{ Pointer Type " << pointer.name << " -> " << *(pointer.base_type) << " }";
-        return os;
-    }
+    // friend std::ostream & operator<<(std::ostream & os, const PointerType & pointer) {
+        
+    //     return os;
+    // }
 };
 #endif // CFLAT_TYPE_POINTERTYPE_H_
