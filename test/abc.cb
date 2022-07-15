@@ -1,3 +1,2 @@
-// typedef int (char *, ...)*  printf;
-// typedef int[23][12] hello;
-typedef int * fuck;
+
+typedef char ** (int, short *, float)* abcd;

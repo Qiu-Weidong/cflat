@@ -24,9 +24,7 @@ declaration:
 
 // definition
 variableDefinition:
-	StaticKeyWord?  type name (
-		'=' expr
-	)? (',' name ('=' expr)?)* ';';
+	StaticKeyWord? type name ('=' expr)? (',' name ('=' expr)?)* ';';
 functionDefinition:
 	StaticKeyWord? type name '(' params ')' block;
 structDefinition: 'struct' name memberList ';';
@@ -51,10 +49,21 @@ block: '{' (variableDefinition | stmt)* '}';
 memberList: '{' (slot ';')* '}';
 slot: type name;
 
-type: basicType typeSuffix* ;
+// 消除左遞歸的版本 type: basicType typeSuffix* ; basicType: 'void' # BasicVoidType | 'signed'? 'char' #
+// BasicSignedCharType | 'signed'? 'short' # BasicSignedShortType | ('signed'? 'int' | 'signed') #
+// BasicSignedIntType | 'signed'? 'long' # BasicSignedLongType | 'unsigned' 'char' #
+// BasicUnsignedCharType | 'unsigned' 'short' # BasicUnsignedShortType | 'unsigned' 'int'? #
+// BasicUnsignedIntType | 'unsigned' 'long' # BasicUnsignedLongType | 'float' # BasicFloatType |
+// 'double' # BasicDoubleType | 'struct' Identifier # BasicStructType | 'union' Identifier #
+// BasicUnionType | Identifier # BasicUserType; typeSuffix: '*' # PointerTypeSuffix | '[' integer?
+// ']' # ArrayTypeSuffix | '(' paramTypeRefs ')' # FunctionTypeSuffix ;
 
-basicType:
-	'void'							# BasicVoidType
+// 未消除左遞歸版本
+type:
+	type '*'						# PointerType
+	| type '[' integer? ']'			# ArrayType
+	| type '(' paramTypeRefs ')'	# FunctionType
+	| 'void'						# BasicVoidType
 	| 'signed'? 'char'				# BasicSignedCharType
 	| 'signed'? 'short'				# BasicSignedShortType
 	| ('signed'? 'int' | 'signed')	# BasicSignedIntType
@@ -68,11 +77,6 @@ basicType:
 	| 'struct' Identifier			# BasicStructType
 	| 'union' Identifier			# BasicUnionType
 	| Identifier					# BasicUserType;
-typeSuffix:
-	'*'								# PointerTypeSuffix
-	| '[' integer? ']'				# ArrayTypeSuffix
-	| '(' paramTypeRefs ')'         # FunctionTypeSuffix
-	;
 // stmt
 stmt:
 	';'

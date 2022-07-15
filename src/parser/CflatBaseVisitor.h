@@ -119,7 +119,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitType(CflatParser::TypeContext *ctx) override {
+  virtual antlrcpp::Any visitBasicUnsignedShortType(CflatParser::BasicUnsignedShortTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -127,35 +127,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitBasicSignedCharType(CflatParser::BasicSignedCharTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitBasicSignedShortType(CflatParser::BasicSignedShortTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBasicSignedIntType(CflatParser::BasicSignedIntTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBasicUnsignedCharType(CflatParser::BasicUnsignedCharTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBasicUnsignedShortType(CflatParser::BasicUnsignedShortTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBasicUnsignedIntType(CflatParser::BasicUnsignedIntTypeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -163,7 +135,19 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *ctx) override {
+  virtual antlrcpp::Any visitBasicUnionType(CflatParser::BasicUnionTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFunctionType(CflatParser::FunctionTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPointerType(CflatParser::PointerTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -171,7 +155,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitBasicUnionType(CflatParser::BasicUnionTypeContext *ctx) override {
+  virtual antlrcpp::Any visitBasicSignedCharType(CflatParser::BasicSignedCharTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitArrayType(CflatParser::ArrayTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -179,15 +167,23 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *ctx) override {
+  virtual antlrcpp::Any visitBasicSignedIntType(CflatParser::BasicSignedIntTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *ctx) override {
+  virtual antlrcpp::Any visitBasicUnsignedCharType(CflatParser::BasicUnsignedCharTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *ctx) override {
+  virtual antlrcpp::Any visitBasicUnsignedIntType(CflatParser::BasicUnsignedIntTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 

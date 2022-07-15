@@ -71,41 +71,39 @@ public:
 
     virtual antlrcpp::Any visitSlot(CflatParser::SlotContext *context) = 0;
 
-    virtual antlrcpp::Any visitType(CflatParser::TypeContext *context) = 0;
+    virtual antlrcpp::Any visitBasicUnsignedShortType(CflatParser::BasicUnsignedShortTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitBasicVoidType(CflatParser::BasicVoidTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitBasicSignedCharType(CflatParser::BasicSignedCharTypeContext *context) = 0;
-
     virtual antlrcpp::Any visitBasicSignedShortType(CflatParser::BasicSignedShortTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBasicSignedIntType(CflatParser::BasicSignedIntTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBasicUnsignedCharType(CflatParser::BasicUnsignedCharTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBasicUnsignedShortType(CflatParser::BasicUnsignedShortTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBasicUnsignedIntType(CflatParser::BasicUnsignedIntTypeContext *context) = 0;
-
-    virtual antlrcpp::Any visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitBasicFloatType(CflatParser::BasicFloatTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *context) = 0;
+    virtual antlrcpp::Any visitBasicUnionType(CflatParser::BasicUnionTypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitFunctionType(CflatParser::FunctionTypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitPointerType(CflatParser::PointerTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitBasicStructType(CflatParser::BasicStructTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitBasicUnionType(CflatParser::BasicUnionTypeContext *context) = 0;
+    virtual antlrcpp::Any visitBasicSignedCharType(CflatParser::BasicSignedCharTypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitArrayType(CflatParser::ArrayTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitBasicUserType(CflatParser::BasicUserTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *context) = 0;
+    virtual antlrcpp::Any visitBasicSignedIntType(CflatParser::BasicSignedIntTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *context) = 0;
+    virtual antlrcpp::Any visitBasicUnsignedCharType(CflatParser::BasicUnsignedCharTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *context) = 0;
+    virtual antlrcpp::Any visitBasicUnsignedIntType(CflatParser::BasicUnsignedIntTypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitStmt(CflatParser::StmtContext *context) = 0;
 

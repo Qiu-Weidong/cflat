@@ -44,15 +44,22 @@ public:
     virtual antlrcpp::Any visitBasicStructType(CflatParser::BasicStructTypeContext *) override;
     virtual antlrcpp::Any visitBasicUnionType(CflatParser::BasicUnionTypeContext *) override;
     virtual antlrcpp::Any visitBasicUserType(CflatParser::BasicUserTypeContext *) override;
-    virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *) override;
-    virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *) override;
-    virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *) override;
+    // virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *) override;
+    // virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *) override;
+    // virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *) override;
 
     virtual antlrcpp::Any visitParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx) override;
     virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override;
     virtual antlrcpp::Any visitParamTypeRef(CflatParser::ParamTypeRefContext *) override;
 
-    virtual antlrcpp::Any visitType(CflatParser::TypeContext *) override;
+    // virtual antlrcpp::Any visitType(CflatParser::TypeContext *) override;
+
+
+
+    // 未消除左遞歸版本
+    virtual antlrcpp::Any visitPointerType(CflatParser::PointerTypeContext *) override;
+    virtual antlrcpp::Any visitArrayType(CflatParser::ArrayTypeContext *) override;
+    virtual antlrcpp::Any visitFunctionType(CflatParser::FunctionTypeContext *) override;
 
 };
 
