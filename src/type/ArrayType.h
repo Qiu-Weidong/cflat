@@ -79,7 +79,7 @@ public:
     }
     
     virtual std::string toString() const override {
-        return "{ Array Type" + name + " -> " + base_type->toString() + " }";
+        return "{ Array Type " + name + " -> " + base_type->toString() + " }";
     }
 };
 

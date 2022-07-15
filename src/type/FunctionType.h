@@ -20,7 +20,7 @@ private:
             this->name.pop_back();
         } // 刪除末尾多餘的逗號
         if (vararg)
-            this->name += "...";
+            this->name += ",...";
         this->name += ")";
     }
     

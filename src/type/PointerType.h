@@ -6,7 +6,8 @@
 class PointerType : public Type
 {
 private:
-    void resetName() { this->name == (base_type ? base_type->getTypeName() : "unkown") + "*"; }
+    void resetName() { 
+        this->name = (base_type ? base_type->getTypeName() : "unkown") + "*"; }
 protected:
     int size;
     std::shared_ptr<Type> base_type;

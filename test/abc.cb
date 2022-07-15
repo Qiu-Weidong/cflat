@@ -1,1 +1,3 @@
-typedef int (const char *, ...) * printf;
+// typedef int (char *, ...)*  printf;
+// typedef int[23][12] hello;
+typedef int * fuck;

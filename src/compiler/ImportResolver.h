@@ -41,18 +41,18 @@ public:
     virtual antlrcpp::Any visitBasicUnsignedLongType(CflatParser::BasicUnsignedLongTypeContext *) override;
     virtual antlrcpp::Any visitBasicFloatType(CflatParser::BasicFloatTypeContext *) override;
     virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *) override;
-    virtual antlrcpp::Any visitStructType(CflatParser::StructTypeContext *) override;
-    virtual antlrcpp::Any visitUnionType(CflatParser::UnionTypeContext *) override;
-    virtual antlrcpp::Any visitUserType(CflatParser::UserTypeContext *) override;
-    virtual antlrcpp::Any visitPointerType(CflatParser::PointerTypeContext *) override;
-    virtual antlrcpp::Any visitArrayType(CflatParser::ArrayTypeContext *) override;
-    virtual antlrcpp::Any visitFunctionType(CflatParser::FunctionTypeContext *) override;
+    virtual antlrcpp::Any visitBasicStructType(CflatParser::BasicStructTypeContext *) override;
+    virtual antlrcpp::Any visitBasicUnionType(CflatParser::BasicUnionTypeContext *) override;
+    virtual antlrcpp::Any visitBasicUserType(CflatParser::BasicUserTypeContext *) override;
+    virtual antlrcpp::Any visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *) override;
+    virtual antlrcpp::Any visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *) override;
+    virtual antlrcpp::Any visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *) override;
 
     virtual antlrcpp::Any visitParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx) override;
+    virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override;
+    virtual antlrcpp::Any visitParamTypeRef(CflatParser::ParamTypeRefContext *) override;
 
-    // virtual antlrcpp::Any visitFixedParamTypeRefs(CflatParser::FixedParamTypeRefsContext *ctx) override;
-
-    // typeRefBase
+    virtual antlrcpp::Any visitType(CflatParser::TypeContext *) override;
 
 };
 

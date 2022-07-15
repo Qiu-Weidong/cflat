@@ -24,7 +24,7 @@ declaration:
 
 // definition
 variableDefinition:
-	(StaticKeyWord? ConstKeyWord? | ConstKeyWord? StaticKeyWord?) type name (
+	StaticKeyWord?  type name (
 		'=' expr
 	)? (',' name ('=' expr)?)* ';';
 functionDefinition:
@@ -35,26 +35,25 @@ typeDefinition: 'typedef' type Identifier ';';
 // decclaration
 functionDeclaration:
 	'extern' type name '(' (params | paramTypeRefs) ')' ';';
-variableDeclaration: (
-		'extern' ConstKeyWord?
-		| ConstKeyWord? 'extern'
-	) type name ';';
+variableDeclaration: 'extern' type name ';';
 structDeclaration: 'struct' name ';';
 unionDeclaration: 'union' name ';';
 
 vararg: ',' '...';
 params: 'void' | fixedParams vararg?;
 fixedParams: param (',' param)*;
-param: ConstKeyWord? type name;
+param: type name;
 paramTypeRefs: 'void' | fixedParamTypeRefs vararg?;
 fixedParamTypeRefs: paramTypeRef (',' paramTypeRef)*;
-paramTypeRef: ConstKeyWord? type;
+paramTypeRef: type;
 
 block: '{' (variableDefinition | stmt)* '}';
 memberList: '{' (slot ';')* '}';
 slot: type name;
 
-type: 
+type: basicType typeSuffix* ;
+
+basicType:
 	'void'							# BasicVoidType
 	| 'signed'? 'char'				# BasicSignedCharType
 	| 'signed'? 'short'				# BasicSignedShortType
@@ -66,12 +65,13 @@ type:
 	| 'unsigned' 'long'				# BasicUnsignedLongType
 	| 'float'						# BasicFloatType
 	| 'double'						# BasicDoubleType
-	| 'struct' Identifier			# StructType
-	| 'union' Identifier			# UnionType
-	| Identifier					# UserType  
-	| type '*'						# PointerType
-	| type '[' integer? ']'			# ArrayType
-	| type '(' paramTypeRefs ')'	# FunctionType
+	| 'struct' Identifier			# BasicStructType
+	| 'union' Identifier			# BasicUnionType
+	| Identifier					# BasicUserType;
+typeSuffix:
+	'*'								# PointerTypeSuffix
+	| '[' integer? ']'				# ArrayTypeSuffix
+	| '(' paramTypeRefs ')'         # FunctionTypeSuffix
 	;
 // stmt
 stmt:

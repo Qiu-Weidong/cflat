@@ -25,8 +25,8 @@ public:
     T__62 = 63, T__63 = 64, T__64 = 65, T__65 = 66, T__66 = 67, T__67 = 68, 
     T__68 = 69, HexLiteral = 70, DecimalLiteral = 71, OctalLiteral = 72, 
     BoolLiteral = 73, FloatingPointLiteral = 74, CharacterLiteral = 75, 
-    StringLiteral = 76, Identifier = 77, ConstKeyWord = 78, StaticKeyWord = 79, 
-    BLOCK_COMMENT = 80, SPACES = 81, LINE_COMMENT = 82
+    StringLiteral = 76, Identifier = 77, StaticKeyWord = 78, BLOCK_COMMENT = 79, 
+    SPACES = 80, LINE_COMMENT = 81
   };
 
   explicit CflatLexer(antlr4::CharStream *input);
