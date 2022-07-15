@@ -1,2 +1,2 @@
 
-typedef char ** (int, short *, float)* abcd;
+typedef char ** (int, const short *, const float)* abcd;

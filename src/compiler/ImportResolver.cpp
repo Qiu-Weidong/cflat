@@ -154,26 +154,6 @@ antlrcpp::Any ImportResolver::visitBasicUserType(CflatParser::BasicUserTypeConte
     }
     return antlrcpp::Any(ret);
 }
-
-// antlrcpp::Any ImportResolver::visitPointerTypeSuffix(CflatParser::PointerTypeSuffixContext *ctx)
-// {
-//     std::shared_ptr<Type> pointer = std::make_shared<PointerType>();
-//     return antlrcpp::Any(pointer);
-// }
-// antlrcpp::Any ImportResolver::visitArrayTypeSuffix(CflatParser::ArrayTypeSuffixContext *ctx)
-// {
-//     int length = ArrayType::undefined;
-//     if(ctx->integer()) length = std::stoi(ctx->integer()->getText());
-//     std::shared_ptr<Type> array = std::make_shared<ArrayType>(std::shared_ptr<Type>(nullptr), length);
-//     return antlrcpp::Any(array);
-// }
-// antlrcpp::Any ImportResolver::visitFunctionTypeSuffix(CflatParser::FunctionTypeSuffixContext *ctx)
-// {
-//     auto returnType = std::shared_ptr<Type>(nullptr);
-//     auto pair = ctx->paramTypeRefs()->accept(this).as<std::pair<std::vector<std::shared_ptr<Type>>, bool>>();
-//     std::shared_ptr<Type> function = std::make_shared<FunctionType>(returnType, pair.first, pair.second);
-//     return antlrcpp::Any(function);
-// }
 // paramTypeRefs: 'void' | fixedParamTypeRefs vararg?;
 // return std::pair<std::shared_ptr<Type>, bool>
 antlrcpp::Any ImportResolver::visitParamTypeRefs(CflatParser::ParamTypeRefsContext *ctx)
@@ -200,68 +180,113 @@ antlrcpp::Any ImportResolver::visitParamTypeRef(CflatParser::ParamTypeRefContext
 {
     return ctx->type()->accept(this);
 }
-
-
-// antlrcpp::Any ImportResolver::visitType(CflatParser::TypeContext *ctx) {
-//     typedef std::shared_ptr<Type> TypePointer;
-    
-//     TypePointer base_type = ctx->basicType()->accept(this).as<TypePointer>();
-//     assert(base_type);
-    
-//     for(auto suffix : ctx->typeSuffix()) {
-//         TypePointer type = suffix->accept(this).as<TypePointer>();
-//         if(type->isFunction()) {
-//             auto fun = std::dynamic_pointer_cast<FunctionType>(type);
-//             fun->setReturnType(base_type);
-//         }
-//         else if(type->isArray()) {
-//             auto array = std::dynamic_pointer_cast<ArrayType>(type);
-//             array->setBaseType(base_type);
-//         }
-//         else if(type->isPointer()) {
-//             auto pointer = std::dynamic_pointer_cast<PointerType>(type);
-//             pointer->setBaseType(base_type);
-//         }
-//         else { std::cerr << "unkonw suffix" << std::endl;  assert(false); }
-        
-//         base_type = type;
-//         if(!types.isTypeDefined(base_type->getTypeName())) {
-//             types.defineType(base_type->getTypeName(), base_type);
-//         }
-//     }
-//     return antlrcpp::Any(base_type);
-// }
-
-
+// params: 'void' | fixedParams vararg?;
+// return std::pair<std::shared_ptr<Type>, bool>
+antlrcpp::Any ImportResolver:: visitParam(CflatParser::ParamContext *ctx) {
+    return ctx->type()->accept(this);
+}
+antlrcpp::Any ImportResolver:: visitParams(CflatParser::ParamsContext *ctx) {
+    bool vararg = ctx->vararg() != nullptr;
+    Type::TypeList params;
+    if(ctx->fixedParams()) {
+        params = ctx->fixedParams()->accept(this).as<Type::TypeList>();
+    }
+    return antlrcpp::Any(std::make_pair(params, vararg));
+}
+antlrcpp::Any ImportResolver:: visitFixedParams(CflatParser::FixedParamsContext *ctx) {
+    Type::TypeList params;
+    for(auto param : ctx->param()) {
+        auto p = param->accept(this).as<Type::TypePointer>();
+        params.push_back(p);
+    }
+    return antlrcpp::Any(params);
+}
 
 // 未消除左遞歸版本
-antlrcpp::Any ImportResolver::visitPointerType(CflatParser::PointerTypeContext *ctx) {
+antlrcpp::Any ImportResolver::visitPointerType(CflatParser::PointerTypeContext *ctx)
+{
     typedef std::shared_ptr<Type> TypePointer;
     TypePointer base_type = ctx->type()->accept(this).as<TypePointer>();
     TypePointer pointer = std::make_shared<PointerType>(8, base_type);
-    if(!types.isTypeDefined(pointer->getTypeName())) {
+    if (!types.isTypeDefined(pointer->getTypeName()))
+    {
         types.defineType(pointer->getTypeName(), pointer);
     }
     return types.getType(pointer->getTypeName());
 }
-antlrcpp::Any ImportResolver::visitArrayType(CflatParser::ArrayTypeContext *ctx) {
+antlrcpp::Any ImportResolver::visitArrayType(CflatParser::ArrayTypeContext *ctx)
+{
     typedef std::shared_ptr<Type> TypePointer;
     TypePointer base_type = ctx->type()->accept(this).as<TypePointer>();
     int length = ctx->integer() ? std::stoi(ctx->integer()->getText()) : ArrayType::undefined;
     TypePointer array = std::make_shared<ArrayType>(base_type, length);
-    if(!types.isTypeDefined(array->getTypeName())) {
+    if (!types.isTypeDefined(array->getTypeName()))
+    {
         types.defineType(array->getTypeName(), array);
     }
     return types.getType(array->getTypeName());
 }
-antlrcpp::Any ImportResolver::visitFunctionType(CflatParser::FunctionTypeContext *ctx) {
+antlrcpp::Any ImportResolver::visitFunctionType(CflatParser::FunctionTypeContext *ctx)
+{
     typedef std::shared_ptr<Type> TypePointer;
     TypePointer retType = ctx->type()->accept(this).as<TypePointer>();
     typedef std::pair<std::vector<std::shared_ptr<Type>>, bool> ReturnType;
     ReturnType pair = ctx->paramTypeRefs()->accept(this).as<ReturnType>();
     TypePointer function = std::make_shared<FunctionType>(retType, pair.first, pair.second);
-    if(!types.isTypeDefined(function->getTypeName())) {
+    if (!types.isTypeDefined(function->getTypeName()))
+    {
         types.defineType(function->getTypeName(), function);
     }
     return types.getType(function->getTypeName());
 }
+
+antlrcpp::Any ImportResolver::visitConstType(CflatParser::ConstTypeContext *ctx)
+{
+    return ctx->type()->accept(this);
+}
+
+antlrcpp::Any ImportResolver::visitStructDeclaration(CflatParser::StructDeclarationContext *ctx) {
+    std::string name = ctx->name()->accept(this).as<std::string>();
+    Type::TypeDict members; 
+    if(!types.isTypeDefined(name)) { types.defineType(name, std::make_shared<StructType>(name, members)); } // 插入一個空的struct
+    else if(!types.getType(name)->isStruct()) { std::cerr << name << " is not a struct." << std::endl; }
+    return defaultResult();
+}
+antlrcpp::Any ImportResolver::visitUnionDeclaration(CflatParser::UnionDeclarationContext *ctx) {
+    std::string name = ctx->name()->accept(this).as<std::string>();
+    Type::TypeDict members; 
+    if(!types.isTypeDefined(name)) { types.defineType(name, std::make_shared<UnionType>(name, members)); } // 插入一個空的union
+    else if(!types.getType(name)->isUnion()) { std::cerr << name << " is not a union." << std::endl; }
+    return defaultResult();
+}
+antlrcpp::Any ImportResolver::visitFunctionDeclaration(CflatParser::FunctionDeclarationContext *ctx) {
+    std::string name = ctx->name()->accept(this).as<std::string>();
+    
+    auto retType = ctx->type()->accept(this).as<Type::TypePointer>();
+    std::pair<Type::TypeList, bool> pair;
+    if(ctx->paramTypeRefs()) {  
+        pair = ctx->paramTypeRefs()->accept(this).as<std::pair<Type::TypeList, bool>>();
+    }
+    else if(ctx->params()) {
+        pair = ctx->params()->accept(this).as<std::pair<Type::TypeList, bool>>();
+    }
+    else { assert(false); }
+    Type::TypePointer func = std::make_shared<FunctionType>(retType, pair.first, pair.second);
+    // 檢查該函數是否在類型表中
+    if(!types.isTypeDefined(func->getTypeName())) {
+        types.defineType(func->getTypeName(), func);
+    }
+
+
+    if(top_scope.isEntityDefined(name)) {
+        auto f = top_scope.getEntity(name);
+        if(!f->isFunction()) { std::cerr << name << " is not a function." << std::endl; }
+        // 檢查函數簽名是否匹配
+        if(*(f->getType()) != *func ) { std::cerr << "function " << name << " conflict." << std::endl; } 
+        return defaultResult();
+    }
+    // 將該函數插入符號表中
+    return defaultResult();
+
+}
+antlrcpp::Any ImportResolver::visitVariableDeclaration(CflatParser::VariableDeclarationContext *) { return defaultResult(); }

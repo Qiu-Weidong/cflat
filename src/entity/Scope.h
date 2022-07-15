@@ -36,6 +36,6 @@ public:
     
     bool defineEntityForce(const std::string &name, std::shared_ptr<Entity> entity) { return entities.insert_or_assign(name, entity).second; }
 
-
+    bool isEntityDefined(const std::string & name) const { return entities.find(name) != entities.end(); }
 };
 #endif // CFLAT_ENTITY_SCOPE_H_

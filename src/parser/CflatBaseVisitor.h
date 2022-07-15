@@ -183,6 +183,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitConstType(CflatParser::ConstTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *ctx) override {
     return visitChildren(ctx);
   }

@@ -9,7 +9,7 @@
 class TypeTable
 {
 private:
-    std::map<std::string, std::shared_ptr<Type>> table;
+    Type::TypeDict table;
 
 public:
     TypeTable()
@@ -22,7 +22,7 @@ public:
         table.clear();
 
         // 添加基础类型 `char` `unsigned char` 等。
-        std::shared_ptr<Type> type = std::make_shared<VoidType>("void");
+        Type::TypePointer type = std::make_shared<VoidType>("void");
         table.insert(std::make_pair(type->getTypeName(), type));
         type = std::make_shared<IntegerType>("char", 1, true);
         table.insert(std::make_pair(type->getTypeName(), type));
@@ -51,18 +51,18 @@ public:
     }
 
     bool isTypeDefined(const std::string &name) const { return table.find(name) != table.end(); }
-    std::shared_ptr<Type> getType(const std::string &name) const
+    Type::TypePointer getType(const std::string &name) const
     {
         auto ret = table.find(name);
-        if(ret == table.end()) return std::shared_ptr<Type>(nullptr);
+        if(ret == table.end()) return Type::TypePointer(nullptr);
         else return table.find(name)->second;
     }
-    bool defineType(const std::string &name, std::shared_ptr<Type> type) { return table.insert(std::make_pair(name, type)).second; }
-    bool defineTypeForce(const std::string &name, std::shared_ptr<Type> type) { return table.insert_or_assign(name, type).second; }
+    bool defineType(const std::string &name, Type::TypePointer type) { return table.insert(std::make_pair(name, type)).second; }
+    bool defineTypeForce(const std::string &name, Type::TypePointer type) { return table.insert_or_assign(name, type).second; }
     void undefineType(const std::string &name) { table.erase(name); } 
 
-    std::vector<std::shared_ptr<Type> > getAllTypes() const {
-        std::vector<std::shared_ptr<Type> > ret;
+    Type::TypeList getAllTypes() const {
+        Type::TypeList ret;
         for(auto it=table.begin(); it!=table.end(); it++) { ret.push_back(it->second); }
         return ret;
     }

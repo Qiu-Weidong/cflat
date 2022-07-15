@@ -10,10 +10,10 @@ private:
         this->name = (base_type ? base_type->getTypeName() : "unkown") + "*"; }
 protected:
     int size;
-    std::shared_ptr<Type> base_type;
+    TypePointer base_type;
 
 public:
-    PointerType(int size = 8, std::shared_ptr<Type> base_type = std::shared_ptr<Type>(nullptr)) : size(size), base_type(base_type)
+    PointerType(int size = 8, TypePointer base_type = TypePointer(nullptr)) : size(size), base_type(base_type)
     {
         resetName();
     }
@@ -30,8 +30,8 @@ public:
     virtual bool isScalar() const override { return true; }
     virtual bool isCallable() const override { return base_type->isFunction(); }
 
-    std::shared_ptr<Type> getBaseType() const { return base_type; }
-    virtual void setBaseType(std::shared_ptr<Type> base_type)
+    TypePointer getBaseType() const { return base_type; }
+    virtual void setBaseType(TypePointer base_type)
     {
         assert(base_type);
         this->base_type = base_type;

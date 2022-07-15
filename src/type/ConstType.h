@@ -1,17 +1,21 @@
-#ifndef CFLAT_TYPE_USERTYPE_H_
-#define CFLAT_TYPE_USERTYPE_H_
-#include <string>
+#ifndef CFLAT_TYPE_CONSTTYPE_H_
+#define CFLAT_TYPE_CONSTTYPE_H_
 #include "Type.h"
 
-class UserType : public Type
-{
+// todo
+class ConstType : public Type {
 protected:
     TypePointer real_type;
 public:
-    UserType(const std::string &name, TypePointer real_type) : real_type(real_type), Type(name) {  }
+    ConstType(TypePointer real_type) : real_type(real_type) {
+        this->name = "const " + real_type->getTypeName();
+    }
 
     TypePointer getRealType() const { return real_type; }
-    void setRealType(TypePointer real_type) { this->real_type = real_type; }
+    void setRealType(TypePointer real_type) { 
+        this->real_type = real_type; 
+        this->name = "const " + real_type->getTypeName();    
+    }
 
     virtual int getSize() const override { return real_type->getSize(); }
     virtual int allocSize() const override { return real_type->allocSize(); }
@@ -23,8 +27,10 @@ public:
     virtual bool isArray() const override { return real_type->isArray(); }
     virtual bool isStruct() const override { return real_type->isStruct(); }
     virtual bool isUnion() const override { return real_type->isUnion(); }
-    virtual bool isUserType() const override { return true; }
+    virtual bool isUserType() const override { return real_type->isUserType(); }
     virtual bool isFunction() const override { return real_type->isFunction(); }
+    virtual bool isCompositeType() const override { return real_type->isCompositeType(); }
+    virtual bool isConstType() const override { return true; }
 
     virtual bool isAllocatedArray() const override { return real_type->isAllocatedArray(); }
     virtual bool isIncompleteArray() const override { return real_type->isIncompleteArray(); }
@@ -43,7 +49,9 @@ public:
     virtual bool operator==(const Type &other) { return real_type->operator==(other); }
 
     virtual std::string toString() const override {
-        return "{ User Type " + name + " -> " + real_type->toString() + "}";
+        return "{ Const Type " + name + " -> " + real_type->toString() + "}";
     }
 };
-#endif // CFLAT_TYPE_USERTYPE_H_
+
+#endif // CFLAT_TYPE_CONSTTYPE_H_
+

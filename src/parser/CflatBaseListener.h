@@ -142,6 +142,9 @@ public:
   virtual void enterBasicDoubleType(CflatParser::BasicDoubleTypeContext * /*ctx*/) override { }
   virtual void exitBasicDoubleType(CflatParser::BasicDoubleTypeContext * /*ctx*/) override { }
 
+  virtual void enterConstType(CflatParser::ConstTypeContext * /*ctx*/) override { }
+  virtual void exitConstType(CflatParser::ConstTypeContext * /*ctx*/) override { }
+
   virtual void enterBasicSignedLongType(CflatParser::BasicSignedLongTypeContext * /*ctx*/) override { }
   virtual void exitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext * /*ctx*/) override { }
 

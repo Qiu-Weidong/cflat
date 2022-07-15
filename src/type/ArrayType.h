@@ -18,7 +18,7 @@ protected:
 public:
     static const int undefined = -1;
 
-    ArrayType(std::shared_ptr<Type> base_type = std::shared_ptr<Type>(nullptr), int length = undefined, int pointerSize = 8)
+    ArrayType(TypePointer base_type = TypePointer(nullptr), int length = undefined, int pointerSize = 8)
         : PointerType(pointerSize, base_type), length(length) { resetName(); }
 
     virtual bool isArray() const override { return true; }
@@ -41,7 +41,7 @@ public:
         this->length = length;
         resetName();
     }
-    virtual void setBaseType(std::shared_ptr<Type> base_type)
+    virtual void setBaseType(TypePointer base_type)
     {
         this->base_type = base_type;
         resetName();

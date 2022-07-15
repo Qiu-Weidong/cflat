@@ -140,6 +140,9 @@ public:
   virtual void enterBasicDoubleType(CflatParser::BasicDoubleTypeContext *ctx) = 0;
   virtual void exitBasicDoubleType(CflatParser::BasicDoubleTypeContext *ctx) = 0;
 
+  virtual void enterConstType(CflatParser::ConstTypeContext *ctx) = 0;
+  virtual void exitConstType(CflatParser::ConstTypeContext *ctx) = 0;
+
   virtual void enterBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *ctx) = 0;
   virtual void exitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *ctx) = 0;
 

@@ -25,12 +25,12 @@ private:
     }
     
 protected:
-    std::shared_ptr<Type> returnType;
-    std::vector<std::shared_ptr<Type>> paramTypes;
+    TypePointer returnType;
+    TypeList paramTypes;
     bool vararg;
 
 public:
-    FunctionType(std::shared_ptr<Type> ret, const std::vector<std::shared_ptr<Type>> &paramTypes, bool vararg = false)
+    FunctionType(TypePointer ret, const TypeList &paramTypes, bool vararg = false)
         : returnType(ret), paramTypes(paramTypes), vararg(vararg) { resetName(); }
     virtual bool isFunction() const override { return true; }
     virtual bool isCallable() const override { return true; }
@@ -70,13 +70,13 @@ public:
     }
 
     virtual int getSize() const override { return 1; }
-    std::shared_ptr<Type> getReturnType() const { return returnType; }
-    std::vector<std::shared_ptr<Type>> getParamTypes() const { return paramTypes; }
+    TypePointer getReturnType() const { return returnType; }
+    TypeList getParamTypes() const { return paramTypes; }
     bool isVararg() const { return vararg; }
 
-    void setReturnType(std::shared_ptr<Type> returnType) { this->returnType = returnType; resetName(); }
-    void setParamTypes(const std::vector<std::shared_ptr<Type>> &paramTypes) { this->paramTypes = paramTypes; resetName(); }
-    void pushParamType(std::shared_ptr<Type> paramType) { paramTypes.push_back(paramType); resetName(); }
+    void setReturnType(TypePointer returnType) { this->returnType = returnType; resetName(); }
+    void setParamTypes(const TypeList &paramTypes) { this->paramTypes = paramTypes; resetName(); }
+    void pushParamType(TypePointer paramType) { paramTypes.push_back(paramType); resetName(); }
     void setVararg(bool vararg) { this->vararg = vararg; resetName(); }
     virtual std::string toString() const override {
         std::string ret = "{ Function Type " + name + " -> return : " + returnType->toString() + ", params : ";

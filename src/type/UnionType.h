@@ -6,10 +6,8 @@
 
 class UnionType : public CompositeType
 {
-protected:
-    std::map<std::string, std::shared_ptr<Type>> members;
 public:
-    UnionType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members) : CompositeType(name, members) {}
+    UnionType(const std::string &name, const std::map<std::string, TypePointer> &members) : CompositeType(name, members) {}
     virtual bool isUnion() const override { return true; }
     virtual bool operator==(const Type &other) const override
     {

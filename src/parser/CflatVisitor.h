@@ -103,6 +103,8 @@ public:
 
     virtual antlrcpp::Any visitBasicDoubleType(CflatParser::BasicDoubleTypeContext *context) = 0;
 
+    virtual antlrcpp::Any visitConstType(CflatParser::ConstTypeContext *context) = 0;
+
     virtual antlrcpp::Any visitBasicSignedLongType(CflatParser::BasicSignedLongTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitStmt(CflatParser::StmtContext *context) = 0;

@@ -63,6 +63,7 @@ type:
 	type '*'						# PointerType
 	| type '[' integer? ']'			# ArrayType
 	| type '(' paramTypeRefs ')'	# FunctionType
+	| 'const' type					# ConstType
 	| 'void'						# BasicVoidType
 	| 'signed'? 'char'				# BasicSignedCharType
 	| 'signed'? 'short'				# BasicSignedShortType
@@ -76,7 +77,8 @@ type:
 	| 'double'						# BasicDoubleType
 	| 'struct' Identifier			# BasicStructType
 	| 'union' Identifier			# BasicUnionType
-	| Identifier					# BasicUserType;
+	| Identifier					# BasicUserType
+	;
 // stmt
 stmt:
 	';'

@@ -6,8 +6,12 @@
 // 表示类型的基类
 class Type
 {
-protected:
+public:
+    typedef std::shared_ptr<Type> TypePointer;
+    typedef std::vector<TypePointer> TypeList;
+    typedef std::map<std::string, TypePointer> TypeDict;
     static const int sizeUnknown = -1;
+protected:
     std::string name;
 public:
     Type(const std::string & name="unknown") : name(name) {}
@@ -33,6 +37,7 @@ public:
     virtual bool isUserType() const { return false; }
     virtual bool isFunction() const { return false; }
     virtual bool isCompositeType() const { return false; }
+    virtual bool isConstType() const { return false; }
 
     virtual bool isAllocatedArray() const { return false; }
     virtual bool isIncompleteArray() const { return false; }
@@ -48,3 +53,4 @@ public:
 };
 
 #endif // CFLAT_TYPE_TYPE_H_
+

@@ -8,10 +8,10 @@
 class CompositeType : public Type
 {
 protected:
-    std::map<std::string, std::shared_ptr<Type>> members;
+    TypeDict members;
 
 public:
-    CompositeType(const std::string &name, const std::map<std::string, std::shared_ptr<Type>> &members)
+    CompositeType(const std::string &name, const TypeDict &members)
         : members(members), Type(name) { }
     virtual bool isCompositeType() const override { return true; }
 
@@ -32,15 +32,15 @@ public:
         return this->name == otherType.name;
     }
 
-    std::map<std::string, std::shared_ptr<Type>> getMembers() const { return members; }
-    std::shared_ptr<Type> getMemberType(const std::string & name) { 
+    TypeDict getMembers() const { return members; }
+    TypePointer getMemberType(const std::string & name) { 
         auto it = members.find(name);
-        if(it == members.end()) return std::shared_ptr<Type>(nullptr);
+        if(it == members.end()) return TypePointer(nullptr);
         else return it->second;
     }
-    void setMembers(const std::map<std::string, std::shared_ptr<Type>> & members) { this->members = members; }
-    bool insertMember(const std::string & name, std::shared_ptr<Type> type) { return members.insert(std::make_pair(name, type)).second; }
-    bool insertOrAssignMember(const std::string &name, std::shared_ptr<Type> type) { return members.insert_or_assign(name, type).second; }
+    void setMembers(const TypeDict & members) { this->members = members; }
+    bool insertMember(const std::string & name, TypePointer type) { return members.insert(std::make_pair(name, type)).second; }
+    bool insertOrAssignMember(const std::string &name, TypePointer type) { return members.insert_or_assign(name, type).second; }
 
     virtual std::string toString() const override {
         std::string ret = "{ Composite Type " + name + " -> members: ";
